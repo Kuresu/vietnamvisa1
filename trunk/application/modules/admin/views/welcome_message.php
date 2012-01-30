@@ -6,6 +6,6 @@
 	<title>Welcome to Vietnamvisa1</title>
 </head>
 <body>
-	<h1 align="center" style="font-style: italic;color: green;font-family: serif;">WELCOME TO VIETNAMVISA1.COM</h1>
+	<h1 align="center" style="font-style: italic;color: green;font-family: serif;">WELCOME TO VIETNAMVISA1.COM - ADMIN</h1>
 </body>
 </html>
