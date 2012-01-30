@@ -7,5 +7,6 @@
 </head>
 <body>
 	<h1 align="center" style="font-style: italic;color: green;font-family: serif;">WELCOME TO VIETNAMVISA1.COM - CLIENT</h1>
+	<a href="<?php echo action_link('apply_online', 'apply');?>" >Apply online</a>
 </body>
 </html>
