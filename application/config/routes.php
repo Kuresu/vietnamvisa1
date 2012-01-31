@@ -38,10 +38,10 @@
 |
 */
 
-$route['default_controller'] 	= 	"client/welcome";
-$route['404_override'] 			= 	'';
+$route['default_controller'] 		= 	"client/welcome";
+$route['404_override'] 				= 	'';
 
-$route['admin']					=	"admin/welcome_admin";
+$route['admin']						=	"admin/welcome_admin";
 $route['(:any)/(:any)']				=	"client/$1/$2";
 
 
