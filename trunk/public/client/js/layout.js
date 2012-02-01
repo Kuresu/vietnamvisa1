@@ -50,22 +50,42 @@
 			mode: 'range',
 			starts: 1
 		});
-		$('.inputDate').DatePicker({
+		$('.date_arrival').DatePicker({
 			format:'m/d/Y',
-			date: $('#inputDate').val(),
-			current: $('#inputDate').val(),
+			date: $('#date_arrival').val(),
+			current: $('#date_arrival').val(),
 			starts: 1,
 			position: 'right',
 			onBeforeShow: function(){
-				$('#inputDate').DatePickerSetDate($('#inputDate').val(), true);
+				$('#date_arrival').DatePickerSetDate($('#date_arrival').val(), true);
 			},
 			onChange: function(formated, dates){
-				$('#inputDate').val(formated);
+				$('#date_arrival').val(formated);
 				if ($('#closeOnSelect input').attr('checked')) {
-					$('#inputDate').DatePickerHide();
+					$('#date_arrival').DatePickerHide();
 				}
 			}
 		});
+		
+		
+		$('.date_exit').DatePicker({
+			format:'m/d/Y',
+			date: $('#date_exit').val(),
+			current: $('#date_exit').val(),
+			starts: 1,
+			position: 'right',
+			onBeforeShow: function(){
+				$('#date_exit').DatePickerSetDate($('#date_exit').val(), true);
+			},
+			onChange: function(formated, dates){
+				$('#date_exit').val(formated);
+				if ($('#closeOnSelect input').attr('checked')) {
+					$('#date_exit').DatePickerHide();
+				}
+			}
+		});
+		
+		
 		var now3 = new Date();
 		now3.addDays(-4);
 		var now4 = new Date()
