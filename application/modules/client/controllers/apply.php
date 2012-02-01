@@ -36,6 +36,17 @@ class Apply extends CI_Controller {
 		//exit('step_2');
 		$this->load->view('step_2', $data);
 	}
+	
+	function change_type(){
+		$type_id	=	$_POST['type_id'];
+		echo "<p>".$type_id ."</p>";
+	}
+	
+	function change_number(){
+		$number_id	=	$_POST['number_id'];
+		echo "<p>".$number_id ."</p>";
+		
+	}
 
 }
 

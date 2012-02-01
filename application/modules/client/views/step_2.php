@@ -13,17 +13,17 @@
 <form action="<?php echo base_url().'apply/step_2';?>" method="post">
 	<table align="center">
 		<tr>
-			<td>Date of arrival :</td>
+			<td>Date of arrival (mm/dd/yyyy) </td>
 			<td>
-				<input type="text" class="date_arrival" id="date_arrival" value="01/01/2012" style="width: 120;" name="date_arrival" /> 
+				<input type="text" class="date_arrival" id="date_arrival" value="<?php echo date('m/d/Y');?>" style="width: 120;" name="date_arrival" /> 
 				<label id="closeOnSelect"><input type="checkbox" checked /> Close on selection</label>
 			</td>
 		</tr>
 		
 		<tr>
-			<td>Date of exit :</td>
+			<td>Date of exit (mm/dd/yyyy) </td>
 			<td>
-				<input type="text" class="date_exit" id="date_exit" value="01/01/2012" style="width: 120;" name="date_exit" /> 
+				<input type="text" class="date_exit" id="date_exit" value="<?php echo date('m/d/Y');?>" style="width: 120;" name="date_exit" /> 
 				<label id="closeOnSelect"><input type="checkbox" checked /> Close on selection</label>
 			</td>
 		</tr>
