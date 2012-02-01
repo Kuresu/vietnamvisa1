@@ -1,10 +1,11 @@
-<h1 align="center" style="color: green;">APLLY ONLINE</h1>
-<form>
+
+<h1 align="center" style="color: green;">APLLY ONLINE - STEP 1</h1>
+<form action="<?php echo base_url().'apply/step_1';?>" method="post">
 	<table align="center">
 		<tr>
 			<td>Number of visa</td>
 			<td>
-				<select name ="number_visa" style="width: 200;">
+				<select name ="number_visa" style="width: 200;" >
 					<option value="1">1 Applicant</option>
 					<option value="2">2 Applicants</option>
 					<option value="3">3 Applicants</option>
@@ -23,9 +24,9 @@
 			<td>
 				<select name ="type_visa" style="width: 200;">
 					<option value="type_visa_1">1 month single</option>
-					<option value="type_visa_1">3 months single</option>
-					<option value="type_visa_1">1 month multiple</option>
-					<option value="type_visa_1">3 months multiple</option>
+					<option value="type_visa_2">3 months single</option>
+					<option value="type_visa_3">1 month multiple</option>
+					<option value="type_visa_4">3 months multiple</option>
 				</select>
 			</td>
 		</tr>
@@ -38,6 +39,10 @@
 					<option value="super_urgent">Super Urgent (4 - 8 hours)</option>
 				</select>
 			</td>
+		</tr>
+		
+		<tr>
+			<td><input type="submit" value="Apply now" /></td>
 		</tr>
 	</table>
 	
