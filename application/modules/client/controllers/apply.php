@@ -5,6 +5,7 @@ class Apply extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->helper(array('link'));
+		$this->load->model(array('apply_model'));
 
 	}
 
@@ -20,7 +21,13 @@ class Apply extends CI_Controller {
 			$this->session->set_userdata('para', $para);
 			redirect('apply/step_2', 'refresh');
 		}
-		$this->load->view('step_1');
+		#get type of visa from DB.
+		$type_of_visa			=	$this->apply_model->get_type_of_visa();
+		
+		#assign data.
+		$data['type_of_visa']	=	$type_of_visa;
+		
+		$this->load->view('step_1', $data);
 	}
 	
 	
@@ -39,16 +46,50 @@ class Apply extends CI_Controller {
 	
 	function change_type(){
 		$type_id	=	$_POST['type_id'];
-		echo "<p>".$type_id ."</p>";
+		
+		
+		if($type_id == "1 month single"){
+			echo "<p>".$type_id.' entry' ."<br>(30-day stay, only 1 time entry/exit)</p>";
+		}
+		
+		if($type_id == "3 months single"){
+			echo "<p>".$type_id.' entry' ."<br>(90-day stay, only 1 time entry/exit)</p>";
+		}
+		
+		if($type_id == "1 month multiple"){
+			echo "<p>".$type_id.' entry' ."<br>(30-day stay, multiple entry/exit)</p>";
+		}
+
+		if($type_id == "3 months multiple"){
+			echo "<p>".$type_id.' entry' ."<br>(90-day stay, multiple entry/exit)</p>";
+		}
+		
 	}
 	
 	function change_number(){
 		$number_id	=	$_POST['number_id'];
-		echo "<p>".$number_id ."</p>";
+		if($number_id >1){
+			echo "<p>".$number_id.' Applicants' ."</p>";
+		}else {
+			echo "<p>".$number_id.' Applicant' ."</p>";
+		}
 		
+		
+	}
+	
+	
+	function get_price_ajax(){
+		//$services		=	$_POST['service'];
+		$number_visa	=	$_POST['number_visa'];
+		$type_visa		=	$_POST['type_visa'];
+		
+		$price			=	$this->apply_model->get_price($number_visa, $type_visa);
+		
+		echo "$".($price['fee_end']*$price['number_visa']);
+		exit();
 	}
 
 }
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+/* End of file apply.php */
+/* Location: ./application/controllers/apply.php */
