@@ -7,3 +7,12 @@
 .services{
 	
 }
+
+#show_total_price{
+	font-size: 50px;
+	color: red;
+}
+
+.tipped{
+	color: #BBBBBB;
+}

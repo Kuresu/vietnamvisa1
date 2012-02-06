@@ -285,6 +285,6 @@ input.inputDate {
 	color: #b6f063;
 }
 
-#closeOnSelect{
+.closeOnSelect{
 	display: none;
 }
