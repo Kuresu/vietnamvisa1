@@ -2,7 +2,8 @@
 
 class Apply_model extends CI_Model{
 	
-	var	$table	=	"pricing_group";
+	var	$table				=	"pricing_group";
+	var $table_country		=	"country";
 	
 	function __construct(){
         parent::__construct(); 
@@ -10,11 +11,11 @@ class Apply_model extends CI_Model{
 	
 	
 	function get_price($number_visa, $type_visa){
-		$price		=	array();
+		$price					=	array();
 		$price['number_visa'] 	= $number_visa;
-		$option		=	$this->db->where(array('type'=>$type_visa))
-							 	 ->get($this->table)
-							 	 ->result();
+		$option					=	$this->db->where(array('type'=>$type_visa))
+							 		 		 ->get($this->table)
+							 	 			 ->result();
 		if(!empty($option)){
 			$price['fee_end']	=	$option[0]->fee;
 			return $price;
@@ -27,8 +28,20 @@ class Apply_model extends CI_Model{
 		$type	=	$this->db->where('note','online' )
 							 ->get($this->table)
 							 ->result();
-		if(!(empty($type))){
+		if(!empty($type)){
 			return $type;
+		}
+		return false;
+	}
+	
+	
+	function get_country(){
+		$country	=	$this->db->select(array('id', 'name'))
+								 ->where('active', 'yes')
+								 ->get($this->table_country)
+								 ->result();
+		if(!empty($country)){
+			return	$country;
 		}
 		return false;
 	}

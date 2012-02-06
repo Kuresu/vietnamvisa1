@@ -33,14 +33,45 @@ class Apply extends CI_Controller {
 	
 	function step_2(){
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
-			echo 'Date of arrival:  '.$this->input->post('date_arrival').'<br>';
-			echo 'Date of exit:  '.$this->input->post('date_exit').'<br>';
+			$number_applicant			=	$_POST['number_applicant'];
+			$applicant_info				=	array();
+			
+			$contact_info				=	array();
+			$contact_info['fullname']	=	$this->input->post('fullname_contact');
+			$contact_info['email']		=	$this->input->post('email_contact');
+			$contact_info['phone']		=	$this->input->post('phone_contact');
+			$contact_info['purpose']	=	$this->input->post('purpose_arrival'); 
+
+			for ($i = 1; $i <= $number_applicant; $i++){
+				#get value from step 2 - form.
+				$name								=	'full_name_'.$i;
+				$passport_number					=	'passport_number_'.$i;
+				$passport_expiration				=	'passport_expiration_'.$i;
+				$nationality						=	'nationality_'.$i;
+				$birth_date							=	'birth_date_'.$i;
+				$gender								=	'gender_'.$i;
+				
+				#assign data to an array.
+				$applicant_info[$i]['full_name']			=	$this->input->post($name);
+				$applicant_info[$i]['passport_number']		=	$this->input->post($passport_number);
+				$applicant_info[$i]['passport_expiration']	=	$this->input->post($passport_expiration);
+				$applicant_info[$i]['nationality']			=	$this->input->post($nationality);
+				$applicant_info[$i]['birth_date']			=	$this->input->post($birth_date);
+				$applicant_info[$i]['gender']				=	$this->input->post($gender);
+			}
+			echo '<pre>';
+			print_r($applicant_info);
+			echo '</pre>';
 			exit('no');
 		}
-		$para_step1	=	$this->session->userdata('para');
+		#get data.
+		$para_step1			=	$this->session->userdata('para');
+		$country			=	$this->apply_model->get_country();
+
+		#assign data.
 		$data['para_step1']	=	$para_step1;
-		//print_r($para['number_visa']);
-		//exit('step_2');
+		$data['country']	=	$country;
+		
 		$this->load->view('step_2', $data);
 	}
 	
