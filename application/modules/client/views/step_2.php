@@ -8,6 +8,7 @@
 <link rel="stylesheet" media="screen" type="text/css" href="<?php echo css_link('template.css');?>" />
 <link rel="stylesheet" media="screen" type="text/css" href="<?php echo css_link('validationEngine.jquery.css');?>" />
 
+
 <script type="text/javascript" src="<?php echo js_link('jquery-1.6.1.min.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('jquery-1.6.min.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('jquery.validationEngine.js');?>" charset="utf-8"></script>
@@ -18,7 +19,7 @@
 <script type="text/javascript" src="<?php echo js_link('eye.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('utils.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('layout.js');?>" charset="utf-8"></script>
-
+<script type="text/javascript" src="<?php echo js_link('jquery.infieldlabel.min.js');?>" charset="utf-8"></script>
 
 
 <script type="text/javascript">
@@ -28,6 +29,8 @@
 		// binds form submission and fields to the validation engine
 		jQuery("#formID").validationEngine();
 	});
+
+	$(function(){ $("label").inFieldLabels(); });
 </script>
 </head>
 <body>
@@ -69,8 +72,14 @@
 					<td>
 					<?php for($i=1; $i <= $para_step1['number_visa']; $i ++) {?>
 						<?php echo '<span style="color: red; font-style: italic; size: 40px;">Applicant '.$i.'</span><br>';?>
-						Full name*: <input type="text" name="full_name_<?php echo $i;?>"  id="full_name_<?php echo $i;?>" class="validate[required] text-input" /><br><br>
-						Passport number*: <input type="text" name="passport_number_<?php echo $i;?>" value="" id="passport_number_<?php echo $i;?>" /><br><br>
+						<p>
+							<label for="full_name_<?php echo $i;?>">Full name...</label>
+							<input type="text" name="full_name_<?php echo $i;?>"  id="full_name_<?php echo $i;?>" class="validate[required] text-input" />
+						</p>	
+						<p>
+							<label for="passport_number_<?php echo $i;?>">Passport number...</label>
+							<input type="text" name="passport_number_<?php echo $i;?>" value="" id="passport_number_<?php echo $i;?>" class="validate[required] text-input" /><br><br>
+						</p>
 						Passport expiration date*:
 							<input type="text" class="passport_expiration" id="passport_expiration_<?php echo $i;?>" value="<?php echo date('m/d/Y');?>" style="width: 120;" name="passport_expiration_<?php echo $i;?>" /> 
 							<label class="closeOnSelect"><input type="checkbox" checked="checked" /> Close on selection</label> 
@@ -118,19 +127,39 @@
 				</tr>
 				<tr>
 					<td>Fullname*</td>
-					<td><input type="text" name="fullname_contact" value="" width="200" id="fullname_contact" class="validate[required] text-input" /></td>
+					<td>
+						<p>
+							<label for="fullname_contact">Full name...</label>
+							<input type="text" name="fullname_contact" value="" width="200" id="fullname_contact" class="validate[required] text-input" />
+						</p>
+					</td>
 				</tr>
 				<tr>
 					<td>Email*</td>
-					<td><input type="text" name="email_contact" value="Type your email here" width="200" id="email_contact" class="validate[required,custom[email]] text-input"  /></td>
+					<td>
+						<p>
+							<label for="email_contact">abc@gmail.com</label>
+							<input type="text" name="email_contact" value="" width="200" id="email_contact" class="validate[required,custom[email]] text-input"  />
+						</p>
+					</td>
 				</tr>
 				<tr>
 					<td>Confirm Email*</td>
-					<td><input type="text" name="confirm_email_contact" value="Type your email here.." width="200" id="confirm_email_contact" class="validate[required,equals[email_contact]] text-input"  /></td>
+					<td>
+						<p>
+							<label for="confirm_email_contact">Confirm Email...</label>
+							<input type="text" name="confirm_email_contact" value="" width="200" id="confirm_email_contact" class="validate[required,equals[email_contact]] text-input"  />
+						</p>
+					</td>
 				</tr>
 				<tr>
-					<td>Phone number*<br>(example: +103-304-340-4300-043 )</td>
-					<td><input type="text" name="phone_contact" value="Youre phone goes here..." width="200" id="phone_contact" class="validate[custom[phone]] text-input" /></td>
+					<td>Phone number*<br>(example: +103 304 340 4300 043 )</td>
+					<td>
+						<p>
+							<label for="phone_contact">Phone number...</label>
+							<input type="text" name="phone_contact" value="" width="200" id="phone_contact" class="validate[custom[phone]] text-input" />
+						</p>
+					</td>
 				</tr>
 				<tr>
 					<td>Purpose of arrival</td>
