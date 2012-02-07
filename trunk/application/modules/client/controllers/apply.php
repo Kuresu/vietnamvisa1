@@ -10,6 +10,8 @@ class Apply extends CI_Controller {
 	}
 
 	
+	
+	
 	function step_1(){
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$para = array(
@@ -29,6 +31,8 @@ class Apply extends CI_Controller {
 		
 		$this->load->view('step_1', $data);
 	}
+	
+	
 	
 	
 	function step_2(){
@@ -59,6 +63,8 @@ class Apply extends CI_Controller {
 				$applicant_info[$i]['birth_date']			=	$this->input->post($birth_date);
 				$applicant_info[$i]['gender']				=	$this->input->post($gender);
 			}
+			
+			redirect('apply/step3', 'refresh');
 			echo '<pre>';
 			print_r($applicant_info);
 			echo '</pre>';
@@ -74,6 +80,22 @@ class Apply extends CI_Controller {
 		
 		$this->load->view('step_2', $data);
 	}
+	
+	
+	
+	function step3(){
+		if($_SERVER['REQUEST_METHOD'] == 'POST'){
+			exit('no way');
+		}
+		
+		#get data .
+		
+		#assign data.
+		$data['test']	=	'test';
+		$this->load->view('step_3', $data);
+	}
+	
+	
 	
 	function change_type(){
 		$type_id	=	$_POST['type_id'];
