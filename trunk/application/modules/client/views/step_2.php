@@ -7,27 +7,36 @@
 <link rel="stylesheet" media="screen" type="text/css" href="<?php echo css_link('style.css');?>" />
 <link rel="stylesheet" media="screen" type="text/css" href="<?php echo css_link('template.css');?>" />
 <link rel="stylesheet" media="screen" type="text/css" href="<?php echo css_link('validationEngine.jquery.css');?>" />
-
+<link rel="stylesheet" media="screen" type="text/css" href="<?php echo css_link('calendar.css');?>" />
+<link rel="stylesheet" media="screen" type="text/css" href="<?php echo css_link('jquery.ui.all.css');?>" />
 
 <script type="text/javascript" src="<?php echo js_link('jquery-1.6.1.min.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('jquery-1.6.min.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('jquery.validationEngine.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('jquery.validationEngine-en.js');?>" charset="utf-8"></script>
 
+<script type="text/javascript" src="<?php echo js_link('jquery.ui.core.js');?>" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo js_link('jquery.ui.widget.js');?>" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo js_link('jquery.ui.datepicker.js');?>" charset="utf-8"></script>
 
-<script type="text/javascript" src="<?php echo js_link('datepicker.js');?>" charset="utf-8"></script>
-<script type="text/javascript" src="<?php echo js_link('eye.js');?>" charset="utf-8"></script>
-<script type="text/javascript" src="<?php echo js_link('utils.js');?>" charset="utf-8"></script>
+
 <script type="text/javascript" src="<?php echo js_link('layout.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('jquery.infieldlabel.min.js');?>" charset="utf-8"></script>
 
 
 <script type="text/javascript">
-	var	number_visa	=	<?php echo $para_step1['number_visa']; ?>;
+	var	number_visa		=	<?php echo $para_step1['number_visa']; ?>; 
 
 	$(document).ready(function(){
 		// binds form submission and fields to the validation engine
 		jQuery("#formID").validationEngine();
+
+		// binds form submission and fields to the validation engine
+
+		$( ".datepicker" ).datepicker();
+
+		jQuery("#formID").validationEngine();
+	
 	});
 
 	$(function(){ $("label").inFieldLabels(); });
@@ -36,7 +45,6 @@
 <body>
 <h1 align="center" style="color: green;">APLLY ONLINE - STEP 2</h1>
 <form action="<?php echo base_url().'apply/step_2';?>" method="post" name="step2Form"  id="formID"  >
-	
 	<div style="display: inline; width: 100%;">
 		<div style="width: 50%; float: left;">
 		<h1>Application Form</h1>
@@ -44,16 +52,16 @@
 				<tr>
 					<td>Date of arrival (mm/dd/yyyy) </td>
 					<td>
-						<input type="text" id="date_arrival" value="<?php echo date('m/d/Y');?>" style="width: 120;" name="date_arrival"   /> 
-						<label class="closeOnSelect"><input type="checkbox" checked  /> Close on selection</label>
+						<label>
+							<input value="<?php echo date('m/d/Y');?>" class="validate[required] text-input datepicker validate[dateRange[grp1]]" readonly="" type="hidden" name="date1" id="date1" />
+							<input value="" class="validate[required] text-input datepicker validate[dateRange[grp1]]" type="text" name="date_arrival" readonly="" id="date_arrival" />
+						</label>
 					</td>
 				</tr>
-				
 				<tr>
 					<td>Date of exit (mm/dd/yyyy) </td>
 					<td>
-						<input type="text"  id="date_exit" value="<?php echo date('m/d/Y');?>" style="width: 120;" name="date_exit"  /> 
-						<label class="closeOnSelect"><input type="checkbox" checked /> Close on selection</label>
+						<input type="text"  class="validate[required] text-input datepicker " readonly="" id="date_exit" value="" style="width: 120;" name="date_exit"  /> 
 					</td>
 				</tr>
 				<tr>
@@ -67,7 +75,6 @@
 						</select>
 					</td>
 				</tr>
-				
 				<tr>
 					<td>
 					<?php for($i=1; $i <= $para_step1['number_visa']; $i ++) {?>
@@ -81,10 +88,10 @@
 							<input type="text" name="passport_number_<?php echo $i;?>" value="" id="passport_number_<?php echo $i;?>" class="validate[required] text-input" /><br><br>
 						</p>
 						Passport expiration date*:
-							<input type="text" class="passport_expiration" id="passport_expiration_<?php echo $i;?>" value="<?php echo date('m/d/Y');?>" style="width: 120;" name="passport_expiration_<?php echo $i;?>" /> 
+							<input type="text" class="validate[required] text-input datepicker" id="passport_expiration_<?php echo $i;?>" value="" style="width: 120;" name="passport_expiration_<?php echo $i;?>" /> 
 							<label class="closeOnSelect"><input type="checkbox" checked="checked" /> Close on selection</label> 
 						<br><br>
-						Nationality*: 
+						Nationality*:
 							<?php if(count($country)>0){?>
 								<select name="nationality_<?php echo $i;?>" class="validate[required]" id="nationality_<?php echo $i;?>">
 									<option value="">Select...</option>
@@ -94,9 +101,9 @@
 								</select>
 							<?php }?>
 						<br><br>
-						Date of birth*: 
-							<input type="text" class="birth_date" id="birth_date_<?php echo $i;?>" value="<?php echo date('m/d/Y');?>" style="width: 120;" name="birth_date_<?php echo $i;?>" /> 
-							<label class="closeOnSelect"><input type="checkbox" checked="checked" /> Close on selection</label> 
+						Date of birth*:
+							<input type="text" class="validate[required] text-input datepicker validate[dateRange[birth<?php echo $i;?>]]" id="birth_date_<?php echo $i;?>" value="" style="width: 120;" name="birth_date_<?php echo $i;?>" /> 
+							<input type="hidden" class="validate[required] text-input datepicker validate[dateRange[birth<?php echo $i;?>]"  value="<?php echo date('m/d/Y');?>" style="width: 120;" id="birth<?php echo $i;?>" />
 						<br><br>
 						Gender*: 
 							<select name="gender_<?php echo $i;?>">
@@ -147,7 +154,7 @@
 					<td>Confirm Email*</td>
 					<td>
 						<p>
-							<label for="confirm_email_contact">Confirm Email...</label>
+							<label for="confirm_email_contact">abc@gmail.com</label>
 							<input type="text" name="confirm_email_contact" value="" width="200" id="confirm_email_contact" class="validate[required,equals[email_contact]] text-input"  />
 						</p>
 					</td>
@@ -156,8 +163,8 @@
 					<td>Phone number*<br>(example: +103 304 340 4300 043 )</td>
 					<td>
 						<p>
-							<label for="phone_contact">Phone number...</label>
-							<input type="text" name="phone_contact" value="" width="200" id="phone_contact" class="validate[custom[phone]] text-input" />
+							<label for="phone_contact">+xxx xxx xxx xxxx</label>
+							<input type="text" name="phone_contact" value="" width="200" id="phone_contact" class="validate[required,custom[phone]]  text-input" />
 						</p>
 					</td>
 				</tr>
@@ -173,10 +180,22 @@
 						</select>
 					</td>
 				</tr>
+				<tr>
+					<td>Message</td>
+					<td>
+						<p>
+							<label for="message">Leave your message here...</label><br />
+							<textarea cols="30" rows="10" name="message" id="message"></textarea>
+						</p>
+					</td>
+				</tr>
 				
 			</table>
 		</div>
 	</div>
-		 
+	
+	<div id="hidden_information">
+		<input id="hidde_type_of_visa" value="<?php echo $para_step1['type_visa'];?>" type="hidden" />
+	</div>	 
 </form>
 </body>
