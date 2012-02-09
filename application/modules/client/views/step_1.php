@@ -33,7 +33,7 @@
 							<?php if(isset($type_of_visa)) {?>
 								<select name ="type_visa" style="width: 200;"  id="type_of_visa" class="type_of_visa change_price" >
 									<?php foreach ($type_of_visa as $k => $v){?>
-										<option value="<?php echo $v->type;?>"><?php echo $v->type.' entry';?></option>
+										<option value="<?php echo $v->type_visa;?>"><?php echo $v->type_visa.' entry';?></option>
 									<?php }?>
 								</select>
 							<?php }?>
@@ -81,6 +81,7 @@
 					<td>Type of visa : </td>
 					<td>
 						<div id = "show_type_of_visa">
+							<input type="button" value=""  />
 						 	<p>show the type of visa....</p>
 						 </div>
 					</td>

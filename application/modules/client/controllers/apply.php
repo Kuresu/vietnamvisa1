@@ -44,7 +44,8 @@ class Apply extends CI_Controller {
 			$contact_info['fullname']	=	$this->input->post('fullname_contact');
 			$contact_info['email']		=	$this->input->post('email_contact');
 			$contact_info['phone']		=	$this->input->post('phone_contact');
-			$contact_info['purpose']	=	$this->input->post('purpose_arrival'); 
+			$contact_info['purpose']	=	$this->input->post('purpose_arrival');
+			$contact_info['message']	=	$this->input->post('message'); 
 
 			for ($i = 1; $i <= $number_applicant; $i++){
 				#get value from step 2 - form.
@@ -64,7 +65,7 @@ class Apply extends CI_Controller {
 				$applicant_info[$i]['gender']				=	$this->input->post($gender);
 			}
 			
-			redirect('apply/step3', 'refresh');
+			//redirect('apply/step3', 'refresh');
 			echo '<pre>';
 			print_r($applicant_info);
 			echo '</pre>';
@@ -135,11 +136,43 @@ class Apply extends CI_Controller {
 		//$services		=	$_POST['service'];
 		$number_visa	=	$_POST['number_visa'];
 		$type_visa		=	$_POST['type_visa'];
+		$service		=	$_POST['service'];
+		$total_service	=	0;
 		
-		$price			=	$this->apply_model->get_price($number_visa, $type_visa);
+		$price			=	$this->apply_model->get_price($type_visa);
 		
-		echo "$".($price['fee_end']*$price['number_visa']);
-		exit();
+		$group_prices	=	explode('|', $price['prices']);
+		
+		switch ($number_visa){
+			case 1: 
+				$fee_per_each	=	$group_prices[0];
+				break;
+			case 2:	
+				$fee_per_each	=	$group_prices[1];
+				break;
+			case ($number_visa >=3 && $number_visa <= 5 ):
+				$fee_per_each	=	$group_prices[2];
+				break;
+			case ($number_visa >= 6 && $number_visa <= 9 ):
+				$fee_per_each	=	$group_prices[3];
+				break;
+			case ($number_visa >= 10):
+				$fee_per_each	=	$group_prices[4];
+				break;				
+		}
+		
+		if($service	==	'urgent'){
+			$total_service		=	$number_visa * $price['urgent_service'];
+		}elseif ($service	==	'super_urgent'){
+			die('---');
+		}
+		echo "$".($fee_per_each * $number_visa + $total_service );
+	}
+	
+	
+	
+	function validate_date_exit(){
+		exit('come into validate_date_exit');
 	}
 
 }
