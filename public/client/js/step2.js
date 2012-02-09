@@ -1,3 +1,5 @@
+
+
 	function send_info() {
 			var valid = true;
 			if($('#arrival_port').val() == "") { $('#arrival_port').css('background','#fff3a0'); valid = false; }
@@ -37,5 +39,14 @@
 	
 	
 	
+
+	$(document).ready(function(){
+		var path	=	base_url;
+		
+		$.post(path+'apply/validate_date_exit/',{date_arrival:$("#date_arrival").val()},function(data){
+			$("#aaa").html(data);
+		});
+		
+	});
 
 

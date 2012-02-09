@@ -73,14 +73,15 @@
 		});
 		
 		$(".change_price_click").change(function(){
+			$("#show_total_price").html("Loading ...");
+			var service	=	'';
 			if($(this).attr("checked") == true && $(this).val() == "super_urgent"){
 				$("#show_note").show();
 			}else{
 				$('#show_note').hide();
 			} 
-			$("#show_total_price").html("Loading ...");
 			$.post(
-					base_url+'get_price_ajax',
+					base_url+'apply/get_price_ajax/',
 					{number_visa:$(".number_of_visa :selected").val(),type_visa:$(".type_of_visa :selected").val(),service:$(this).val()},
 					function (data){
 						$("#show_total_price").html(data);
