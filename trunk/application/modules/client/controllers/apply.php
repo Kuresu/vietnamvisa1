@@ -171,9 +171,74 @@ class Apply extends CI_Controller {
 	
 	
 	
-	function validate_date_exit(){
-		exit('come into validate_date_exit');
+	function validate_date_exit_ceiling(){
+		#get data form form.
+		$date_arrival			=	$_POST['date_arrival'];
+		$type_of_visa			=	$_POST['type_of_visa'];
+		
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+
+		
+		#validate date of exit.
+		if($type_of_visa == '1 month single' || $type_of_visa == '1 month multiple'){
+			if($month_arrival == 12){
+				$date_exit		=	$date_arrival;
+				$month_exit		=	1;
+				$year_exit		=	$year_arrival + 1;
+			}else {
+				$date_exit		=	$date_arrival;
+				$month_exit		=	$month_arrival + 1;
+				$year_exit		=	$year_arrival;
+			}
+		}
+		
+		if($type_of_visa == '3 months single' || $type_of_visa == '3 months multiple'){
+			$date_exit			=	$date_arrival;
+			switch ($month_arrival){
+				case 10:
+					$month_exit	=	1;
+					$year_exit	=	$year_arrival + 1;
+					break;
+				case 11:
+					$month_exit	=	2;
+					$year_exit	=	$year_arrival + 1;
+					break;
+				case 12:
+					$month_exit	=	3;
+					$year_exit	=	$year_arrival + 1;
+					break;
+				default:
+					$month_exit	=	$month_arrival + 3;
+					$year_exit	=	$year_arrival;
+					break;
+			}
+		}
+		
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[grp2]]' id='date_exit2' value='".$month_exit.'/'.$date_exit.'/'.$year_exit."' />";
+		
 	}
+
+	
+	
+	
+	function validate_date_exit_floor(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+	
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+		
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[grp3]]' id='date_3' value='".$month_arrival.'/'.$date_arrival.'/'.$year_arrival."'/>";
+	}
+	
+
 
 }
 
