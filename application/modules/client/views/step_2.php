@@ -18,30 +18,15 @@
 <script type="text/javascript" src="<?php echo js_link('jquery.ui.core.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('jquery.ui.widget.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('jquery.ui.datepicker.js');?>" charset="utf-8"></script>
-
-
 <script type="text/javascript" src="<?php echo js_link('layout.js');?>" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo js_link('jquery.infieldlabel.min.js');?>" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo js_link('step2.js');?>" charset="utf-8"></script>
 
 
 <script type="text/javascript">
 	var	number_visa		=	<?php echo $para_step1['number_visa']; ?>; 
-
-	$(document).ready(function(){
-		// binds form submission and fields to the validation engine
-		jQuery("#formID").validationEngine();
-
-		// binds form submission and fields to the validation engine
-
-		$( ".datepicker" ).datepicker({
-			numberOfMonths: 3,
-			}).unbind('blur');
-
-		jQuery("#formID").validationEngine();
-	
-	});
-
-	$(function(){ $("label").inFieldLabels(); });
+	var base_url		=	'<?php echo base_url();?>';
+	var	type_visa		=	'<?php echo $para_step1['type_visa'];?>';	
 </script>
 </head>
 <body>
@@ -63,7 +48,13 @@
 				<tr>
 					<td>Date of exit (mm/dd/yyyy) </td>
 					<td>
-						<input type="text"  class="validate[required] text-input datepicker " readonly="" id="date_exit" value="" style="width: 120;" name="date_exit"  /> 
+						<div id = "exit_min">
+							<input type="hidden"  class="validate[required] text-input datepicker validate[dateRange[grp3]]"  id="date_exit3" value="" style="width: 120;"   />
+						</div>
+							<input type="text"  class="validate[required] text-input datepicker validate[dateRange[grp2]] validate[dateRange[grp3]]" readonly="" id="date_exit" value="" style="width: 120;" name="date_exit"  /> 
+						<div id = "exit_max">	
+							<input type="hidden"  class="validate[required] text-input datepicker validate[dateRange[grp2]]"  id="date_exit2" value=""  /> 
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -195,7 +186,8 @@
 			</table>
 		</div>
 	</div>
-	
+	<div id="aaa">
+		<input type="button" value="show result here..."  /></div>
 	<div id="hidden_information">
 		<input id="hidde_type_of_visa" value="<?php echo $para_step1['type_visa'];?>" type="hidden" />
 	</div>	 
