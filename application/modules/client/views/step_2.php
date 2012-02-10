@@ -33,7 +33,9 @@
 
 		// binds form submission and fields to the validation engine
 
-		$( ".datepicker" ).datepicker();
+		$( ".datepicker" ).datepicker({
+			numberOfMonths: 3,
+			}).unbind('blur');
 
 		jQuery("#formID").validationEngine();
 	
