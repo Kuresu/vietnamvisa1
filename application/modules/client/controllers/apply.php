@@ -238,8 +238,489 @@ class Apply extends CI_Controller {
 		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[grp3]]' id='date_3' value='".$month_arrival.'/'.$date_arrival.'/'.$year_arrival."'/>";
 	}
 	
+	
+	
+	function validate_passport_expiration_1(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+		
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+		
+		#validate passport expriation date.
+		$date_expire			=	$date_arrival;
+		switch ($month_arrival){
+			case 7:
+				$month_expire	=	1;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 8:
+				$month_expire	=	2;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 9:
+				$month_expire	=	3;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 10:
+				$month_expire	=	4;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 11:
+				$month_expire	=	5;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 12:
+				$month_expire	=	6;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			default:
+				$month_expire	=	$month_arrival + 6;
+				$year_expire	=	$year_arrival;
+				break;
+		}
+		
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[pass_expiration_1]]' id='expiration_pass_1' value='".$month_expire.'/'.$date_expire.'/'.$year_expire."'/>";
+	}
+
+	
+	
+	function validate_passport_expiration_2(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+		
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+		
+		#validate passport expriation date.
+		$date_expire			=	$date_arrival;
+		switch ($month_arrival){
+			case 7:
+				$month_expire	=	1;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 8:
+				$month_expire	=	2;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 9:
+				$month_expire	=	3;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 10:
+				$month_expire	=	4;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 11:
+				$month_expire	=	5;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 12:
+				$month_expire	=	6;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			default:
+				$month_expire	=	$month_arrival + 6;
+				$year_expire	=	$year_arrival;
+				break;
+		}
+		
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[pass_expiration_2]]' id='expiration_pass_2' value='".$month_expire.'/'.$date_expire.'/'.$year_expire."'/>";
+	}
+	
+	
+	
+	function validate_passport_expiration_3(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+	
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+	
+		#validate passport expriation date.
+		$date_expire			=	$date_arrival;
+		switch ($month_arrival){
+			case 7:
+				$month_expire	=	1;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 8:
+				$month_expire	=	2;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 9:
+				$month_expire	=	3;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 10:
+				$month_expire	=	4;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 11:
+				$month_expire	=	5;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 12:
+				$month_expire	=	6;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			default:
+				$month_expire	=	$month_arrival + 6;
+				$year_expire	=	$year_arrival;
+				break;
+		}
+	
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[pass_expiration_3]]' id='expiration_pass_3' value='".$month_expire.'/'.$date_expire.'/'.$year_expire."'/>";
+	}
+	
+	
+	
+	function validate_passport_expiration_4(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+		
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+	
+		#validate passport expriation date.
+		$date_expire			=	$date_arrival;
+		switch ($month_arrival){
+			case 7:
+				$month_expire	=	1;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 8:
+				$month_expire	=	2;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 9:
+				$month_expire	=	3;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 10:
+				$month_expire	=	4;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 11:
+				$month_expire	=	5;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 12:
+				$month_expire	=	6;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			default:
+				$month_expire	=	$month_arrival + 6;
+				$year_expire	=	$year_arrival;
+				break;
+		}
+	
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[pass_expiration_4]]' id='expiration_pass_4' value='".$month_expire.'/'.$date_expire.'/'.$year_expire."'/>";
+	}
 
 
+	
+	function validate_passport_expiration_5(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+	
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+		
+		#validate passport expriation date.
+		$date_expire			=	$date_arrival;
+		switch ($month_arrival){
+			case 7:
+				$month_expire	=	1;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 8:
+				$month_expire	=	2;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 9:
+				$month_expire	=	3;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 10:
+				$month_expire	=	4;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 11:
+				$month_expire	=	5;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 12:
+				$month_expire	=	6;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			default:
+				$month_expire	=	$month_arrival + 6;
+				$year_expire	=	$year_arrival;
+				break;
+		}
+	
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[pass_expiration_5]]' id='expiration_pass_5' value='".$month_expire.'/'.$date_expire.'/'.$year_expire."'/>";
+	}
+	
+	
+	
+	function validate_passport_expiration_6(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+	
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+		
+		#validate passport expriation date.
+		$date_expire			=	$date_arrival;
+		switch ($month_arrival){
+			case 7:
+				$month_expire	=	1;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 8:
+				$month_expire	=	2;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 9:
+				$month_expire	=	3;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 10:
+				$month_expire	=	4;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 11:
+				$month_expire	=	5;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 12:
+				$month_expire	=	6;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			default:
+				$month_expire	=	$month_arrival + 6;
+				$year_expire	=	$year_arrival;
+				break;
+		}
+	
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[pass_expiration_6]]' id='expiration_pass_6' value='".$month_expire.'/'.$date_expire.'/'.$year_expire."'/>";
+	}
+	
+	
+	
+	function validate_passport_expiration_7(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+	
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+	
+		#validate passport expriation date.
+		$date_expire			=	$date_arrival;
+		switch ($month_arrival){
+			case 7:
+				$month_expire	=	1;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 8:
+				$month_expire	=	2;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 9:
+				$month_expire	=	3;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 10:
+				$month_expire	=	4;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 11:
+				$month_expire	=	5;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 12:
+				$month_expire	=	6;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			default:
+				$month_expire	=	$month_arrival + 6;
+				$year_expire	=	$year_arrival;
+				break;
+		}
+	
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[pass_expiration_7]]' id='expiration_pass_7' value='".$month_expire.'/'.$date_expire.'/'.$year_expire."'/>";
+	}
+	
+	
+	
+	function validate_passport_expiration_8(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+	
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+	
+		#validate passport expriation date.
+		$date_expire			=	$date_arrival;
+		switch ($month_arrival){
+			case 7:
+				$month_expire	=	1;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 8:
+				$month_expire	=	2;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 9:
+				$month_expire	=	3;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 10:
+				$month_expire	=	4;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 11:
+				$month_expire	=	5;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 12:
+				$month_expire	=	6;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			default:
+				$month_expire	=	$month_arrival + 6;
+				$year_expire	=	$year_arrival;
+				break;
+		}
+	
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[pass_expiration_8]]' id='expiration_pass_8' value='".$month_expire.'/'.$date_expire.'/'.$year_expire."'/>";
+	}
+	
+	
+	
+	function validate_passport_expiration_9(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+	
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+		
+		#validate passport expriation date.
+		$date_expire			=	$date_arrival;
+		switch ($month_arrival){
+			case 7:
+				$month_expire	=	1;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 8:
+				$month_expire	=	2;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 9:
+				$month_expire	=	3;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 10:
+				$month_expire	=	4;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 11:
+				$month_expire	=	5;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 12:
+				$month_expire	=	6;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			default:
+				$month_expire	=	$month_arrival + 6;
+				$year_expire	=	$year_arrival;
+				break;
+		}
+	
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[pass_expiration_9]]' id='expiration_pass_9' value='".$month_expire.'/'.$date_expire.'/'.$year_expire."'/>";
+	}
+	
+	
+	
+	
+	function validate_passport_expiration_10(){
+		#get data form form.
+		$date_arrival		=	$_POST['date_arrival'];
+	
+		#get detail of arrival date includes date, month, year.
+		$validate_date_exit		=	explode('/', $date_arrival);
+		$date_arrival			=	$validate_date_exit[1];
+		$month_arrival			=	$validate_date_exit[0];
+		$year_arrival			=	$validate_date_exit[2];
+		
+		#validate passport expriation date.
+		$date_expire			=	$date_arrival;
+		switch ($month_arrival){
+			case 7:
+				$month_expire	=	1;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 8:
+				$month_expire	=	2;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 9:
+				$month_expire	=	3;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 10:
+				$month_expire	=	4;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 11:
+				$month_expire	=	5;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			case 12:
+				$month_expire	=	6;
+				$year_expire	=	$year_arrival + 1;
+				break;
+			default:
+				$month_expire	=	$month_arrival + 6;
+				$year_expire	=	$year_arrival;
+				break;
+		}
+	
+		echo "<input type='hidden' class='validate[required] text-input datepicker validate[dateRange[pass_expiration_10]]' id='expiration_pass_10' value='".$month_expire.'/'.$date_expire.'/'.$year_expire."'/>";
+	}
+	
+	
+	
 }
 
 /* End of file apply.php */
