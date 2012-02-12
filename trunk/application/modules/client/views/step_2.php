@@ -51,7 +51,7 @@
 						<div id = "exit_min">
 							<input type="hidden"  class="validate[required] text-input datepicker validate[dateRange[grp3]]"  id="date_exit3" value="" style="width: 120;"   />
 						</div>
-							<input type="text"  class="validate[required] text-input datepicker validate[dateRange[grp2]] validate[dateRange[grp3]]" readonly="" id="date_exit" value="" style="width: 120;" name="date_exit"  /> 
+							<input type="text"  class="validate[required] text-input datepicker validate[dateRange[grp2]] validate[dateRange[grp3]]" readonly="" id="date_exit" value="3/12/2012" style="width: 120;" name="date_exit"  /> 
 						<div id = "exit_max">	
 							<input type="hidden"  class="validate[required] text-input datepicker validate[dateRange[grp2]]"  id="date_exit2" value=""  /> 
 						</div>
@@ -81,8 +81,11 @@
 							<input type="text" name="passport_number_<?php echo $i;?>" value="" id="passport_number_<?php echo $i;?>" class="validate[required] text-input" /><br><br>
 						</p>
 						Passport expiration date*:
-							<input type="text" class="validate[required] text-input datepicker" id="passport_expiration_<?php echo $i;?>" value="" style="width: 120;" name="passport_expiration_<?php echo $i;?>" /> 
-							<label class="closeOnSelect"><input type="checkbox" checked="checked" /> Close on selection</label> 
+							<div id="pass_expire_<?php echo $i;?>">
+								<input type="hidden" class='validate[required] text-input datepicker validate[dateRange[pass_expiration_<?php echo $i;?>]]' id="expiration_pass_<?php echo $i;?>" value="" />
+							</div>
+							<input type="text" class="validate[required] text-input datepicker validate[dateRange[pass_expiration_<?php echo $i;?>]" id="passport_expiration_<?php echo $i;?>" value="" style="width: 120;" name="passport_expiration_<?php echo $i;?>" /> 
+							 
 						<br><br>
 						Nationality*:
 							<?php if(count($country)>0){?>
