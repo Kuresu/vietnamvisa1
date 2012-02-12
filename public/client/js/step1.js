@@ -6,10 +6,6 @@
 		});
 	}
 	
-	function changeNumber(){
-		var path = base_url;
-		
-	}
 	
 	$(document).ready(function(){
 		var path	=	base_url;
@@ -23,7 +19,7 @@
 			$.post(path+'apply/change_type/',{type_id:$("#type_of_visa :selected").val()},function(data){
 				$("#show_type_of_visa").html(data);
 			});
-		})
+		});
 		
 		$.post(
 				path+'apply/change_number/',
@@ -41,7 +37,7 @@
 						$("#show_number_of_visa").html(data);
 					}
 			);
-		})
+		});
 		
 		$(".change_price_click").each(function(index) {
 			if($(this).attr("checked") == true)
@@ -58,7 +54,7 @@
 		
 		$(".change_price").change(function(){
 			$("#show_total_price").html("Loading ...");
-			var service = '';
+			
 			$(".change_price_click").each(function(index) {
 				if($(this).attr("checked") == true)
 					services = $(this).val();
@@ -74,7 +70,7 @@
 		
 		$(".change_price_click").change(function(){
 			$("#show_total_price").html("Loading ...");
-			var service	=	'';
+			
 			if($(this).attr("checked") == true && $(this).val() == "super_urgent"){
 				$("#show_note").show();
 			}else{
