@@ -40,8 +40,8 @@
 					<td>Date of arrival (mm/dd/yyyy) </td>
 					<td>
 						<label>
-							<input value="<?php echo date('m/d/Y');?>" class="validate[required] text-input datepicker validate[dateRange[grp1]]" readonly="" type="hidden" name="date1" id="date1" />
-							<input value="" class="validate[required] text-input datepicker validate[dateRange[grp1]]" type="text" name="date_arrival" readonly="" id="date_arrival" />
+							<input value="<?php echo date('m/d/Y');?>" class="validate[required] text-input datepicker validate[arrivalDate[grp1]]" readonly="" type="hidden" name="date1" id="date1" />
+							<input value="" class="validate[required] text-input datepicker validate[arrivalDate[grp1]]" type="text" name="date_arrival" readonly="" id="date_arrival" />
 						</label>
 					</td>
 				</tr>
@@ -49,11 +49,11 @@
 					<td>Date of exit (mm/dd/yyyy) </td>
 					<td>
 						<div id = "exit_min">
-							<input type="hidden"  class="validate[required] text-input datepicker validate[dateRange[grp3]]"  id="date_exit3" value="" style="width: 120;"   />
+							<input type="hidden"  class="validate[required] text-input datepicker validate[exitDateFloor[grp3]]"  id="date_exit3" value="" style="width: 120;"   />
 						</div>
-							<input type="text"  class="validate[required] text-input datepicker validate[dateRange[grp2]] validate[dateRange[grp3]]" readonly="" id="date_exit" value="3/12/2012" style="width: 120;" name="date_exit"  /> 
+							<input type="text"  class="validate[required] text-input datepicker validate[exitDateCeiling[grp2]] validate[exitDateFloor[grp3]]" readonly="" id="date_exit" value="" style="width: 120;" name="date_exit"  /> 
 						<div id = "exit_max">	
-							<input type="hidden"  class="validate[required] text-input datepicker validate[dateRange[grp2]]"  id="date_exit2" value=""  /> 
+							<input type="hidden"  class="validate[required] text-input datepicker validate[exitDateCeiling[grp2]]"  id="date_exit2" value=""  /> 
 						</div>
 					</td>
 				</tr>
@@ -78,13 +78,13 @@
 						</p>	
 						<p>
 							<label for="passport_number_<?php echo $i;?>">Passport number...</label>
-							<input type="text" name="passport_number_<?php echo $i;?>" value="" id="passport_number_<?php echo $i;?>" class="validate[required] text-input" /><br><br>
+							<input type="text" name="passport_number_<?php echo $i;?>" value="" id="passport_number_<?php echo $i;?>" class="validate[required,custom[onlyLetterNumber]] text-input" /><br><br>
 						</p>
 						Passport expiration date*:
 							<div id="pass_expire_<?php echo $i;?>">
-								<input type="hidden" class='validate[required] text-input datepicker validate[dateRange[pass_expiration_<?php echo $i;?>]]' id="expiration_pass_<?php echo $i;?>" value="" />
+								<input type="hidden" class='validate[required] text-input datepicker validate[expirePass[pass_expiration_<?php echo $i;?>]]' id="expiration_pass_<?php echo $i;?>" value="" />
 							</div>
-							<input type="text" class="validate[required] text-input datepicker validate[dateRange[pass_expiration_<?php echo $i;?>]" id="passport_expiration_<?php echo $i;?>" value="" style="width: 120;" name="passport_expiration_<?php echo $i;?>" /> 
+							<input type="text" class="validate[required] text-input datepicker validate[expirePass[pass_expiration_<?php echo $i;?>]" id="passport_expiration_<?php echo $i;?>" value="" style="width: 120;" name="passport_expiration_<?php echo $i;?>" /> 
 							 
 						<br><br>
 						Nationality*:
@@ -98,8 +98,8 @@
 							<?php }?>
 						<br><br>
 						Date of birth*:
-							<input type="text" class="validate[required] text-input datepicker validate[dateRange[birth<?php echo $i;?>]]" id="birth_date_<?php echo $i;?>" value="" style="width: 120;" name="birth_date_<?php echo $i;?>" /> 
-							<input type="hidden" class="validate[required] text-input datepicker validate[dateRange[birth<?php echo $i;?>]"  value="<?php echo date('m/d/Y');?>" style="width: 120;" id="birth<?php echo $i;?>" />
+							<input type="text" class="validate[required] text-input datepicker validate[birthDay[birth<?php echo $i;?>]]" id="birth_date_<?php echo $i;?>" value="" style="width: 120;" name="birth_date_<?php echo $i;?>" /> 
+							<input type="hidden" class="validate[required] text-input datepicker validate[birthDay[birth<?php echo $i;?>]"  value="<?php echo date('m/d/Y');?>" style="width: 120;" id="birth<?php echo $i;?>" />
 						<br><br>
 						Gender*: 
 							<select name="gender_<?php echo $i;?>">
@@ -189,10 +189,11 @@
 			</table>
 		</div>
 	</div>
-	<div id="aaa">
-		<input type="button" value="show result here..."  /></div>
+	
 	<div id="hidden_information">
-		<input id="hidde_type_of_visa" value="<?php echo $para_step1['type_visa'];?>" type="hidden" />
+		<input id="hidden_type_visa" name="hidden_type_visa" value="<?php echo $para_step1['type_visa'];?>" type="hidden" />
+		<input id="hidden_number_visa" name="hidden_number_visa" value="<?php echo $para_step1['number_visa'];?>" type="hidden" />
+		<input id="hidden_processing_time" name="hidden_processing_time" value="<?php echo $para_step1['processing_time'];?>" type="hidden" />
 	</div>	 
 </form>
 </body>
