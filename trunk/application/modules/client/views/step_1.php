@@ -3,7 +3,7 @@
 	<script type="text/javascript" src="<?php echo js_link('jquery-1.6.1.min.js');?>" ></script>
 	<script type="text/javascript" src="<?php echo js_link('jquery-1.5.min.js');?>" ></script>
 	<script type="text/javascript" src="<?php echo js_link('jquery-1.4.3.min.js');?>" ></script>
-	<script type="text/javascript" src="<?php echo js_link('step1.js');?>" ></script>
+
 	<script type="text/javascript">
 		var base_url	=	'<?php echo base_url();?>';
 	</script>
@@ -81,7 +81,7 @@
 					<td>Type of visa : </td>
 					<td>
 						<div id = "show_type_of_visa">
-							<input type="button" value=""  />
+							<input type="text" value=""  />
 						 	<p>show the type of visa....</p>
 						 </div>
 					</td>
