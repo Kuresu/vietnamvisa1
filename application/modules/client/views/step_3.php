@@ -11,8 +11,14 @@
 
 <body>
 	<h1 align="center" style="color: green;">APLLY ONLINE - STEP 3</h1>
+	<h2>REVIEW YOUR VISA APPLICATION DETAILs.</h2>
 	<table>
-		
+		<tr>
+			<th colspan="2">Customer information</th>
+		</tr>
+		<tr>
+			<td></td>
+		</tr>
 	</table>
 </body>
 </html>
