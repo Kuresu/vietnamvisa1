@@ -37,14 +37,37 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+$handle = opendir(APPPATH.'modules');
+if ($handle)
+{
+	while ( false !== ($module = readdir($handle)) )
+	{
+		// make sure we don't map silly dirs like .svn, or . or ..
 
-$route['default_controller'] 		= 	"client/welcome";
+		if (substr($module, 0, 1) != ".")
+		{
+			if ( file_exists(APPPATH.'modules/'.$module.'/'.$module.'_routes.php') )
+			{
+				include(APPPATH.'modules/'.$module.'/'.$module.'_routes.php');
+			}
+
+			if ( file_exists(APPPATH.'modules/'.$module.'/controllers/admin.php') )
+			{
+				$route['admin/'.$module] = $module.'/admin';
+				$route['admin/'.$module.'/(.*)'] = $module.'/admin/$1';
+			}
+
+			if ( file_exists(APPPATH.'modules/'.$module.'/controllers/'.$module.'.php') )
+			{
+				$route[$module] = $module;
+				$route[$module.'/(.*)'] = $module.'/$1';
+			}
+		}
+	}
+}
+
+$route['default_controller'] 		= 	"home/home";
 $route['404_override'] 				= 	'';
-
-$route['admin']						=	"admin/welcome_admin";
-$route['(:any)/(:any)']				=	"client/$1/$2";
-
-
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
