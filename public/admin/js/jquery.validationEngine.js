@@ -478,6 +478,70 @@
 						required = true;
 						errorMsg = methods._required(field, rules, i, options);
 						break;
+					case "purposeRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "dateExitRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "dateArrivalRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "arrivalPortRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "fullNameRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "phoneRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "emailRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "confirmEmailRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "nationalityRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "birthMonthRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "birthDateRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "birthYearRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "expirationMonthRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "expirationDateRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "expirationYearRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
+					case "passportRequired":
+						required = true;
+						errorMsg = methods._required(field, rules, i, options);
+						break;
 					case "custom":
 						errorMsg = methods._customRegex(field, rules, i, options);
 						break;
@@ -532,6 +596,31 @@
 						if (errorMsg) required = true;
 						options.showArrow = false;
 						break;
+					case "arrivalDateRange":
+						var classGroup = "["+options.validateAttribute+"*=" + rules[i + 1] + "]";
+						var firstOfGroup = form.find(classGroup).eq(0);
+						var secondOfGroup = form.find(classGroup).eq(1);
+
+						//if one entry out of the pair has value then proceed to run through validation
+						if (firstOfGroup[0].value || secondOfGroup[0].value) {
+							errorMsg = methods._dateRange(firstOfGroup, secondOfGroup, rules, i, options);
+						}
+						if (errorMsg) required = true;
+						options.showArrow = false;
+						break;
+					case "exitDateRange":
+						var classGroup = "["+options.validateAttribute+"*=" + rules[i + 1] + "]";
+						var firstOfGroup = form.find(classGroup).eq(0);
+						var secondOfGroup = form.find(classGroup).eq(1);
+						var thirdOfGroup = form.find(classGroup).eq(2);
+						
+						//if one entry out of the pair has value then proceed to run through validation
+						if (firstOfGroup[0].value || secondOfGroup[0].value || thirdOfGroup[0].value) {
+							errorMsg = methods._exitDateRange(firstOfGroup, secondOfGroup, thirdOfGroup, rules, i, options);
+						}
+						if (errorMsg) required = true;
+						options.showArrow = false;
+						break;
 					case "expirePass":
 						var classGroup = "["+options.validateAttribute+"*=" + rules[i + 1] + "]";
 						var firstOfGroup = form.find(classGroup).eq(0);
@@ -539,48 +628,12 @@
 
 						//if one entry out of the pair has value then proceed to run through validation
 						if (firstOfGroup[0].value || secondOfGroup[0].value) {
-							errorMsg = methods._dateRange(firstOfGroup, secondOfGroup, rules, i, options);
+							errorMsg = methods._arrivalDateRange(firstOfGroup, secondOfGroup, rules, i, options);
 						}
 						if (errorMsg) required = true;
 						options.showArrow = false;
 						break;
 					case "birthDay":
-						var classGroup = "["+options.validateAttribute+"*=" + rules[i + 1] + "]";
-						var firstOfGroup = form.find(classGroup).eq(0);
-						var secondOfGroup = form.find(classGroup).eq(1);
-
-						//if one entry out of the pair has value then proceed to run through validation
-						if (firstOfGroup[0].value || secondOfGroup[0].value) {
-							errorMsg = methods._dateRange(firstOfGroup, secondOfGroup, rules, i, options);
-						}
-						if (errorMsg) required = true;
-						options.showArrow = false;
-						break;
-					case "arrivalDate":
-						var classGroup = "["+options.validateAttribute+"*=" + rules[i + 1] + "]";
-						var firstOfGroup = form.find(classGroup).eq(0);
-						var secondOfGroup = form.find(classGroup).eq(1);
-
-						//if one entry out of the pair has value then proceed to run through validation
-						if (firstOfGroup[0].value || secondOfGroup[0].value) {
-							errorMsg = methods._arrivalDate(firstOfGroup, secondOfGroup, rules, i, options);
-						}
-						if (errorMsg) required = true;
-						options.showArrow = false;
-						break;
-					case "exitDateFloor":
-						var classGroup = "["+options.validateAttribute+"*=" + rules[i + 1] + "]";
-						var firstOfGroup = form.find(classGroup).eq(0);
-						var secondOfGroup = form.find(classGroup).eq(1);
-
-						//if one entry out of the pair has value then proceed to run through validation
-						if (firstOfGroup[0].value || secondOfGroup[0].value) {
-							errorMsg = methods._dateRange(firstOfGroup, secondOfGroup, rules, i, options);
-						}
-						if (errorMsg) required = true;
-						options.showArrow = false;
-						break;
-					case "exitDateCeiling":
 						var classGroup = "["+options.validateAttribute+"*=" + rules[i + 1] + "]";
 						var firstOfGroup = form.find(classGroup).eq(0);
 						var secondOfGroup = form.find(classGroup).eq(1);
@@ -711,6 +764,7 @@
 						return options.allrules[rules[i]].alertText;
 			}
 		},
+		
 		/**
 		* Validate that 1 from the group field is required
 		*
@@ -942,9 +996,6 @@
 		//Checks if the start date is before the end date
 		//returns true if end is later than start
 		_dateCompare: function (start, end) {
-			return (new Date(start.toString()) < new Date(end.toString()));
-		},
-		_dateCompareArrival: function (start, end) {
 			return (new Date(start.toString()) <= new Date(end.toString()));
 		},
 		/**
@@ -967,6 +1018,22 @@
 
 			//are both dates but range is off
 			if (!methods._dateCompare(first[0].value, second[0].value)) {
+				return options.allrules[rules[i]].alertText + options.allrules[rules[i]].alertText2;
+			}
+		},
+		
+		_arrivalDateRange: function (first, second, rules, i, options) {
+
+			//are both dates but range is off
+			if (!methods._dateCompare(first[0].value, second[0].value)) {
+				return options.allrules[rules[i]].alertText + options.allrules[rules[i]].alertText2;
+			}
+		},
+		
+		_exitDateRange: function (first, second, third, rules, i, options) {
+
+			//are both dates but range is off
+			if (!methods._dateCompare(first[0].value, second[0].value) || !methods._dateCompare(second[0].value, third[0].value)) {
 				return options.allrules[rules[i]].alertText + options.allrules[rules[i]].alertText2;
 			}
 		},
@@ -1805,3 +1872,7 @@
 	}};
 	$(function(){$.validationEngine.defaults.promptPosition = methods.isRTL()?'topLeft':"topRight"});
 })(jQuery);
+ 
+ 
+ 
+ 

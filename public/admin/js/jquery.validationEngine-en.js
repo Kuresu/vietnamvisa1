@@ -8,13 +8,95 @@
                     "regex": "none",
                     "alertText": "* This field is required",
                     "alertTextCheckboxMultiple": "* Please select an option",
-                    "alertTextCheckboxe": "* This checkbox is required",
+                    "alertTextCheckboxe": "* Have you read the Terms of Services?",
                     "alertTextDateRange": "* Both date range fields are required"
+                },
+                "purposeRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please choose your purpose of visit",
+                },
+                "dateExitRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please choose date of exit",
+                },
+                "dateArrivalRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please choose date of arrival",
+                },
+                "arrivalPortRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please select arrival port",
+                },
+                "fullNameRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please add the applicant's full name",
+                },
+                "phoneRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please add your phone number",
+                },
+                "emailRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please add your email",
+                },
+                "confirmEmailRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please add confirmation email",
+                },
+                "nationalityRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please select your nationality",
+                },
+                "birthMonthRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please select month of birth",
+                },
+                "birthDateRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please select day of birth",
+                },
+                "birthYearRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please select year of birth",
+                },
+                "expirationMonthRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please select passport expiration month ",
+                },
+                "expirationDateRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please select passport expiration day",
+                },
+                "expirationYearRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please select passport expiration year",
+                },
+                "birthdayRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please select the applicant's birth date",
+                },
+                "passportRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please add the applicant's passport number",
+                },
+                "expirePassportRequired": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* Please select the applicant's passport expiration date",
                 },
                 "dateRange": {
                     "regex": "none",
                     "alertText": "* Invalid ",
                     "alertText2": "Date Range"
+                },
+                "arrivalDateRange": {
+                    "regex": "none",
+                    "alertText": "* Arrival date ",
+                    "alertText2": "could not be a past date"
+                },
+                "exitDateRange": {
+                    "regex": "none",
+                    "alertText": "* Exit date ",
+                    "alertText2": "does not match"
                 },
                 "expirePass": {
                     "regex": "none",
@@ -23,7 +105,7 @@
                 },
                 "birthDay": {
                     "regex": "none",
-                    "alertText": "* Your birth date is",
+                    "alertText": "* The applicant's birth date is",
                     "alertText2": " invalid"
                 },
                 "arrivalDate": {
@@ -88,7 +170,7 @@
                 },
                 "equals": {
                     "regex": "none",
-                    "alertText": "* Fields do not match"
+                    "alertText": "* Confirmation password does not match"
                 },
                 "creditCard": {
                     "regex": "none",
@@ -105,13 +187,22 @@
                     "alertText": "* Invalid email address"
                 },
                 "integer": {
-                    "regex": /^[\-\+]?\d+$/,
-                    "alertText": "* Not a valid integer"
+                    "regex": /^[\+]?\d+$/,
+                    "alertText": "* Invalid Order ID"
+                },
+                "checkstatus": {
+                    "regex": /^[\+]?\d+$/,
+                    "alertText": "* Invalid Order ID"
                 },
                 "number": {
                     // Number, including positive, negative, and floating decimal. credit: orefalo
-                    "regex": /^[\-\+]?(([0-9]+)([\.,]([0-9]+))?|([\.,]([0-9]+))?)$/,
+                    "regex": /^[\+]?(([0-9]+)([\.,]([0-9]+))?|([\.,]([0-9]+))?)$/,
                     "alertText": "* Invalid floating decimal number"
+                },
+                "amount": {
+                    // Number, including positive, negative, and floating decimal. credit: orefalo
+                    "regex": /^[\+]?(([0-9]+)([\.,]([0-9]+))?|([\.,]([0-9]+))?)$/,
+                    "alertText": "* Invalid amount"
                 },
                 "date": {
                     "regex": /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/,
