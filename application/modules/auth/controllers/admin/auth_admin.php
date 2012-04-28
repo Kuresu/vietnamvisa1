@@ -46,9 +46,44 @@ class Auth_admin extends CI_Controller {
 	
 	
 	function forgot_password(){
-		exit('no');
+		if($_SERVER['REQUEST_METHOD'] == 'POST'){
+			#set rules
+			$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim|xss_clean');
+			#assign data.
+			$data['username']	=	$this->input->post('username');
+			$data['email']		=	$this->input->post('email');
+			
+			if($this->form_validation->run() == true){
+				#get data.
+				$user	=	$this->input->post('username');
+				$email	=	$this->input->post('email');
+				
+				#check in db.
+				$result	=	$this->auth_model->forgot_pass($user, $email);
+				if($result == true){
+					$status	=	$result['active'];
+					if($status	==	'no'){
+						#assign data.
+						$data['username']	=	$user;
+						$data['email']		=	$email;
+						$data['error']	=	"Sorry! Your account has been deactivated.";		
+					}else {
+						#assign data.
+						$data['username']	=	$user;
+						$data['email']		=	$email;
+						$data['inform']		=	"A new password has been sent to your email!";
+					}
+				}else {
+					#assign data.
+					$data['username']	=	$user;
+					$data['email']		=	$email;
+					$data['error']	=	"Username or Email is incorrect!";
+				}
+			} 
+		}
 		$data['tpl_file']	=	"";
-		$this->load->view('admin/forgot_password', $data);
+		$this->load->view('admin/forgot', $data);
 	}
 	
 	

@@ -19,7 +19,7 @@
             <div class="error" style="width:96%; margin-left:5px; display:inline; color: red;"><h2><?php echo $error;?></h2></div>
             <?php }?>
             <div class="bglogin">
-            	<form action="<?php echo base_url();?>home_admin/login" method="post">
+            	<form action="<?php echo admin_url('login');?>" method="post">
 	            	<ul>
 	                	<li><input type="text" name="username" value="<?php echo (isset($name))?$name : "Username" ;?>" class="text" onfocus="if (this.value == 'Username') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Username';}" /></li>
 	                    <li><input type="password" name="password" value="<?php echo (isset($pass))?$pass : "" ;?>" class="text" onfocus="if (this.value == 'Password') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Password';}" /></li>
@@ -29,7 +29,7 @@
 	                    </li>
 	                    <li class="end">
 	                    	<span class="left"><a href="<?php echo base_url();?>">Home</a></span>
-	                        <span class="right"><a href="<?php echo base_url();?>">Forgot password ?</a></span>
+	                        <span class="right"><a href="<?php echo admin_url('forgot-password');?>">Forgot password ?</a></span>
 	                    </li>
 	                </ul>
                 </form>
