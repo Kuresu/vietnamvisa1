@@ -24,7 +24,7 @@ function admin_redirect($uri = '', $method = 'location', $http_response_code = 3
 }
 
 
-function css_link($css_file = '', $module = 'client', $folder = 'css')
+function css_link($css_file = '', $module = '', $folder = 'css')
 {
     if($module == '') {
         $CI =& get_instance();
@@ -33,16 +33,16 @@ function css_link($css_file = '', $module = 'client', $folder = 'css')
     return base_url().'public/'.$module.'/'.$folder.'/'.$css_file;
 }
 
-function img_link($img_file = '', $module = 'client', $folder = 'img')
+function img_link($img_file = '', $module = '', $folder = 'img')
 {
     if($module == '') {
         $CI =& get_instance();
         $module = $CI->router->fetch_module();
     }
-    return base_url().config_item('static_dir').$module.'/'.$folder.'/'.$img_file;
+    return base_url().'public/'.$module.'/'.$folder.'/'.$img_file;
 }
 
-function js_link($js_file = '', $module = 'client', $folder = 'js')
+function js_link($js_file = '', $module = '', $folder = 'js')
 {
     if($module == '') {
         $CI =& get_instance();
