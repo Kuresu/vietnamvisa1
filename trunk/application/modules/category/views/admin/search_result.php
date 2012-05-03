@@ -20,7 +20,7 @@
 	        </span>
 	    </div>
     </form>
-    <form action="<?php echo admin_url();?>/category" method="post" id="list_categories_form">
+    <form action="<?php echo admin_url();?>/category/search-results/" method="post" id="list-cate-search">
 	    <div class="topart">
 	    	<span class="left">
 	    		<?php 
@@ -29,18 +29,6 @@
 	    		?>
 	    		<font class="number">(<?php echo $total_amount;?>)</font> <a href="javascript:;">All</a><font class="line">|</font><font class="number">(<?php echo $active;?>)</font> <a href="javascript:;"><font color="#0b9901">Active</font></a><font class="line">|</font><font class="number">(<?php echo $total_amount - $active;?>)</font> <a href="javascript:;"><font color="#c60001">Pending</font></a>
 	        </span>
-	        <span class="right1">
-	        	<select style="width:50px;" name="perpage" id="perpage" onchange="changeItemNumber()">
-	            	<option value="6" <?php echo ($current_perpage==6)?'selected':'';?>>6</option>
-	                <option value="12" <?php echo ($current_perpage==12)?'selected':'';?>>12</option>
-	                <option value="24" <?php echo ($current_perpage==24)?'selected':'';?>>24</option>
-	                <option value="all" <?php echo ($current_perpage=='all')?'selected':'';?>>All</option>
-	            </select>
-	            <div class="pagination">
-	                <?php if(isset($pagination)){echo $pagination;}?>
-	            </div>
-	        </span>
-	        
 	    </div>
 	</form>
     <div class="tableout">
@@ -53,8 +41,8 @@
 	            <div class="column" style="width: 20%;">Order</div>
 	            <div class="column" style="width: 5%;">Status</div>
 	        </div>
-	        <?php if(isset($cate_list)){?>
-		        <?php foreach ($cate_list as $k => $v){?>
+	        <?php if(count($search_list[0])>0){?>
+		        <?php foreach ($search_list as $k => $v){?>
 		        <div class="linecate2">
 		        	<div class="column" style="width: 2%;"><input name="id[]" value="<?php echo $v->id;?>" type="checkbox" /></div>
 		            <div class="column" style="width:4%;"><?php $pagin	=	$this->uri->segment(3); if(isset($pagin)){echo $k+1+$pagin;}?></div>
@@ -81,8 +69,8 @@
 		            </div>
 		        </div>
 		        <?php }?>
-	        <?php } else {?>
-	        	<div class="column" style="width: 2%;"><span>There are no match result</span></div>
+	        <?php }else {?>
+	        	<p style="padding: 10px;font-size: 16px; font-style: italic; color: green;" >There are no results match !</p>
 	        <?php }?>
 	        <div class="bottom1">
 	        	<div class="column" style="width: 2%;"><input class="check_all" onclick="check_all(this)" type="checkbox"></div>
@@ -95,26 +83,19 @@
 	                </select>
 	                <input type="submit" name="" value="Apply" class="btn" />
 	            </div>
-	            <span class="right1">
-	                <div class="pagination">
-	                <?php if(isset($pagination)){echo $pagination;}?>
-	            </div>
-	            </span>
 	        </div>
         </form>
 	</div>
 	
 <script type="text/javascript">
-	function changeItemNumber() {
-		$("#list_categories_form").submit();
+	function changeCateNumber() {
+		$("#list-cate-search").submit();
 	}
-
-	jQuery(document).ready(function(){
-		jQuery("#edit-adminstrator-form").validationEngine();
-	});
 
 	var inform	=	'no';
 	if(inform == 'edit cate success'){alert("Edit Successfully !");}
+	
+	if(inform == 'delete cate success') {alert("Delete Successfully !");}
 
 	$('#cate_form').iframer({
 	    onComplete: function(msg){

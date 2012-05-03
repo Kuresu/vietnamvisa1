@@ -16,7 +16,7 @@
     	<div class="bgform_in">
         	<h1 class="png">Forgot Password</h1>
         	<?php if(isset($error) && $error != ""){?>
-            	<div class="error" style="width:96%; margin-left:5px; display:inline; color: red;"><h2><?php echo $error;?></h2></div>
+            	<div class="error" style="width:100%;color: red;"><h2><?php echo $error;?></h2></div>
             <?php }?>
             <?php $valid =  validation_errors(); if($valid == true){?>
 				<div class="error" style="width:100%; margin-right:5px; display:inline; color: red;"><h2><?php echo validation_errors();?></h2></div>
