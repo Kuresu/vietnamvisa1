@@ -83,12 +83,12 @@ class Adminstrators_model extends CI_Model{
     
     
     function add_adminstrator($info = array()){
-    	$this->db->insert($this->table_admin, $info);
+    	return $this->db->insert($this->table_admin, $info);
     }
     
     
     function count_active(){
-    	return $this->db->where('active', 'Yes')->count_all_results($this->table_admin);
+    	return $this->db->where('active', 'yes')->count_all_results($this->table_admin);
     }
     
     

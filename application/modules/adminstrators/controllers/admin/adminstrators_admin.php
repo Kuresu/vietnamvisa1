@@ -25,7 +25,7 @@ class Adminstrators_admin extends Admin_controller {
     		}
     	}
     	
-    	#get total category's products
+    	#get total item in DB.
     	$total_acc					= 	count($this->adminstrators_model->get_all_acc());
     	
     	$this->load->library('pagination');
@@ -44,7 +44,7 @@ class Adminstrators_admin extends Admin_controller {
 		$config['num_links']		= 	4;
 		$config['cur_tag_open']		= 	'<a class="currentpage">';
 		$config['cur_tag_close']	= 	'</a>';
-		$config['base_url']			= 	base_url().'home_admin/adminstrators-management/';
+		$config['base_url']			= 	admin_url().'/adminstrators-management/';
 		$config['uri_segment']		= 	3;
 		$this->pagination->initialize($config);
 		
@@ -86,7 +86,7 @@ class Adminstrators_admin extends Admin_controller {
         	$this->form_validation->set_rules('fullname', 'Full name', 'trim|xss_clean');
     		$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
     		$this->form_validation->set_rules('password', 'Password', 'required|trim|xss_clean|min_length[6]|max_length[12]');
-			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim|xss_clean');    		                      ;
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim|xss_clean');
 
     		if($this->form_validation->run() == TRUE){
                 $info = array(
@@ -94,7 +94,6 @@ class Adminstrators_admin extends Admin_controller {
 			                    'username'   => $this->input->post('username'),
 			                    'password'   => md5($this->input->post('password')),
 			                    'email'      => $this->input->post('email'),
-			                    'active'     => 'Yes',
 			                    'time'  	 => date('Y-m-d'),
 			                    'group'		 => $this->input->post('add-group'),
 			                    'active'	 => $this->input->post('status')
@@ -160,7 +159,7 @@ class Adminstrators_admin extends Admin_controller {
     		
     	$delete	=	"delete";
     	$this->session->set_userdata('delete_result', $delete);
-    	redirect('home_admin/adminstrators-management','refresh');
+    	redirect(admin_url('adminstrators-management'),'refresh');
     }
     
     
@@ -195,10 +194,10 @@ class Adminstrators_admin extends Admin_controller {
     			$this->adminstrators_model->delete_many($id_list);
     		}
     		elseif($action == 'suspend') {
-    			$this->adminstrators_model->update_many($id_list, array('active' => 'No'));
+    			$this->adminstrators_model->update_many($id_list, array('active' => 'no'));
     		}
     		elseif($action == 'active') {
-    			$this->adminstrators_model->update_many($id_list, array('active' => 'Yes'));
+    			$this->adminstrators_model->update_many($id_list, array('active' => 'yes'));
     		}
     			
     		die('yes');

@@ -24,7 +24,7 @@
 	                	<li><input type="text" name="username" value="<?php echo (isset($name))?$name : "Username" ;?>" class="text" onfocus="if (this.value == 'Username') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Username';}" /></li>
 	                    <li><input type="password" name="password" value="<?php echo (isset($pass))?$pass : "" ;?>" class="text" onfocus="if (this.value == 'Password') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Password';}" /></li>
 	                    <li>
-	                    	<span class="left" style="padding-top:5px;"><input type="checkbox" name="" value="" style="border:0; padding:0; margin:0;" />Remember me</span>
+	                    	<span class="left" style="padding-top:5px;"><input type="checkbox" name="autologin" value="1" style="border:0; padding:0; margin:0;" />Remember me</span>
 	                        <span class="right"><input type="submit" name="" value="" class="btnlogin png" /></span>
 	                    </li>
 	                    <li class="end">
