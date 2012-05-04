@@ -6,17 +6,220 @@ class Page_admin extends Admin_controller {
 	
 	function __construct(){
         parent::__construct(); 
-       // $this->load->model(array('admin/page_model'));
+        $this->load->model(array('admin/page_model'));
         $this->load->library(array('session','upload'));
 		$this->load->helper(array('link'));
     }
     
     
     function index(){
+    	#get number item on perpage.
+    	if(isset($_REQUEST['perpage'])) {
+    		$perpage		= 	$_REQUEST['perpage'];
+    		$this->session->set_userdata('page_perpage',$perpage);
+    	} else {
+    		if($this->session->userdata('page_perpage')) {
+    			$perpage	= 	$this->session->userdata('page_perpage');
+    		} else {
+    			$perpage 	= 	'all';
+    			$this->session->set_userdata('page_perpage',$perpage);
+    		}
+    	}
+    	 
+    	#get total item in DB.
+    	$total_page					= 	count($this->page_model->get_all_page());
+    	$this->load->library('pagination');
+    	$config['total_rows'] 		= 	$total_page;
+	  	$config['per_page'] 		= 	$perpage;
+    	$config['first_link']		= 	'First';
+    	$config['last_link']		= 	'Last';
+    	$config['next_link']		= 	'Next »';
+    	$config['prev_link']		= 	'« Prev';
+    	$config['first_tag_open']	= 	'<span>';
+    	$config['first_tag_close']	= 	'</span>';
+    	$config['last_tag_open']	= 	'<span>';
+    	$config['last_tag_close']	= 	'</span>';
+    	$config['num_tag_open']		= 	'<span style="padding:0 2px 0 2px">';
+    	$config['num_tag_close']	= 	'</span>';
+    	$config['num_links']		= 	4;
+    	$config['cur_tag_open']		= 	'<a class="currentpage">';
+    	$config['cur_tag_close']	= 	'</a>';
+    	$config['base_url']			= 	admin_url().'/page/';
+    	$config['uri_segment']		= 	3;
+    	$this->pagination->initialize($config);
+    	 
+    	$pagination					= 	$this->pagination->create_links();
+    	$offset 					= 	($this->uri->segment(3)=='') ? 0 : $this->uri->segment(3);
+    	 
+    	#get info.
+    	$page_list					= 	$this->page_model->get_page_list($perpage, $offset);
+    	$delete_page				=	$this->session->userdata('delete_page');
+    	$this->session->unset_userdata('delete_page');
     	
+    	if(isset($delete_page) && $delete_page == 'delete page'){
+    		$inform	=	'delete page success';
+    	}else {
+    		$inform = "";
+    	}
+    	
+    	#assign data.
+    	$data['page_list']			=	$page_list;
+    	$data['pagination']			=	$pagination;
+    	$data['current_perpage']	=	$perpage;
+    	$data['inform']				=	$inform;
     	$data['act']				=	"page";
     	$data['tpl_file']			=	"admin/index";
     	$this->load->view('admin/admin_layout/index', $data);
+    }
+    
+    
+    function add(){
+    	if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    		 
+    		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean');
+    		$this->form_validation->set_rules('title', 'Title', 'trim|xss_clean');
+    		$this->form_validation->set_rules('keyword', 'Keyword', 'trim|xss_clean');
+    		$this->form_validation->set_rules('description', 'Description', 'trim|xss_clean');
+    		$this->form_validation->set_rules('content', 'Content', 'required|trim|xss_clean');
+    		 
+    		if($this->form_validation->run() == TRUE){
+    			$url	=	'page/'.ascii_link($this->input->post('name'));
+    			$info = array(
+        	                				'name'   		=> $this->input->post('name'),
+        				                    'name_ascii'   	=> ascii_link($this->input->post('name')),
+        				                    'title'			=> $this->input->post('title'),
+        				                    'keyword'		=> $this->input->post('keyword'),
+        				                    'description'	=> $this->input->post('description'),
+        				                    'content'		=> $this->input->post('content'),
+        				                    'status'	 	=> $this->input->post('status'),
+        				                    'url'			=> $url,
+        				                    'order'			=> $this->input->post('order')
+    			);
+    			if($this->page_model->check_exist($info['name'])) {
+    				die('This name is exist!');
+    			}elseif ($this->page_model->check_order_exist($info['order'])){
+    				die('This order is exist !');
+    			}else{
+    				$this->page_model->add_page($info);
+    				die('yes');
+    			}
+    		}else {
+    			die(validation_errors());
+    		}
+    	}
+    	#get info.
+    	$cate_info			=	$this->page_model->get_cate();
+    	
+    	$data['cate_info']	=	$cate_info;
+    	$data['total']		=	count($this->page_model->get_all_page());
+    	$this->load->view('admin/add', $data);
+    }
+    
+    
+    function edit($page_id	=	''){
+    	/* if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean');
+    
+    		if($this->form_validation->run() == TRUE){
+    			$url	=	'category/'.ascii_link($this->input->post('name'));
+    			$info = array(
+        		    	                'name'   		=> $this->input->post('name'),
+        		    				    'name_ascii'   	=> ascii_link($this->input->post('name')),
+        		    				    'status'	 	=> $this->input->post('status'),
+        		    				    'url'			=> $url,
+        		    				    'order'			=> $this->input->post('order')
+    			);
+    
+    			if($this->category_model->check_exist_edit($cate_id, $info['name'])) {
+    				die('This username is exist!');
+    			}elseif ($this->category_model->check_order_exist_edit($cate_id, $info['order'])){
+    				die('This order is exist !');
+    			}else{
+    				$this->category_model->edit_category($cate_id, $info);
+    				die('yes');
+    			}
+    		}else {
+    			die(validation_errors());
+    		}
+    	} */
+    	$cate_info			=	$this->page_model->get_cate();
+    	$page_info			=	$this->page_model->get_match($page_id);
+    	
+    	$data['cate_info']	=	$cate_info;
+    	$data['page_info']	=	$page_info;
+    	$data['hello']		=	"";
+    	$this->load->view('admin/edit', $data);
+    }
+    
+    
+    function change_status(){
+    	if($_SERVER['REQUEST_METHOD'] == "POST"){
+    		$id     		= $this->input->post('id');
+    		$status 		= $this->input->post('status');
+    		 
+    		$info			=	array();
+    		$info['active']	=	$status;
+    		 
+    		$this->page_model->change_status($id, $info);
+    		die('yes');
+    	}
+    }
+    
+    
+    function load_row($id = ''){
+    
+    	$data['page'] = $this->page_model->get_match($id);
+    	$this->load->view('admin/row', $data);
+    }
+    
+    
+    function do_action(){
+    	if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    		 
+    		$id_list = $this->input->post('id');
+    		$action  = $this->input->post('action');
+    
+    		if($action == 'delete') {
+    			$this->page_model->delete_many($id_list);
+    		}
+    		elseif($action == 'suspend') {
+    			$this->page_model->update_many($id_list, array('active' => 'no'));
+    		}
+    		elseif($action == 'active') {
+    			$this->page_model->update_many($id_list, array('active' => 'yes'));
+    		}
+    		 
+    		die('yes');
+    	}
+    }
+    
+    
+    function delete($page_id){
+    	#delete in DB.
+    	$this->page_model->delete($page_id);
+     
+	    $delete	=	"delete page";
+	    $this->session->set_userdata('delete_page', $delete);
+	    redirect(admin_url('page'),'refresh');
+    }
+    
+    
+    function change_order() {
+    	$page_id 		= 	$this->input->post('page_id');
+    	$page_order 	= 	$this->input->post('page_order');
+    	 
+    	$page 			= 	$this->page_model->get_match($page_id); //cate will be changed order position.
+    	$page_order 	= 	$this->page_model->get_match_order($page_order); // Check 'order' exists or not?
+    	 
+    	if (count($cate_order) > 0) {
+    		$this->page_model->update_order($cate_order['id'], array('order' => $cate->order));
+    		$this->page_model->update_order($cate_id, array('order' => $page_order));
+    		 
+    	} else {
+    		$this->category_model->update_order($cate_id, array('order' => $page_order));
+    	}
+    	 
+    	redirect(admin_url('page'), 'refresh');
     }
     
     
