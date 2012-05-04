@@ -67,7 +67,6 @@
 		                </div>
 		            </div>
 		            <div class="column" style="width:40%;">
-		            	<a href="#" target="blank" class="art">
 		            		<?php 
 		            			$content = $v->description;
 		            			$content = strip_tags($content);
@@ -80,11 +79,10 @@
 		            				echo $content;
 		            			}
 		            		?>
-		            	</a>
 		            </div>
 		            <div class="column " style="width:15%;"><?php echo $v->cate_name;?></div>
 		            <div class="column" style="width:8%;">
-		            	<input type="text" name="order" class="order" value="<?php echo $v->order;?>" style="width:45px; float:left;" />
+		            	<input type="text" name="order" class="order" id="<?php echo $v->id;?>" value="<?php echo $v->order;?>" style="width:45px; float:left;" />
 		            </div>
 		            <div class="column" style="width:5%;">
 		            <?php if($v->active == 'yes'){?>
@@ -149,10 +147,10 @@
 			
             if(event.keyCode == 13) { // Enter pressed
 	            var page_order = $(this).val(); 
-	            var page_id = $(this).attr('id');
+	            var page_id = $(this).attr('id');alert(page_id);
 	            $('input[name="page_id"]').val(page_id);
 	            $('input[name="page_order"]').val(page_order);
-	            $('#change_order_cate').submit();
+	            $('#change_order_page').submit();
         	}
         });
 	})
