@@ -209,14 +209,14 @@ class Page_admin extends Admin_controller {
     	$page_order 	= 	$this->input->post('page_order');
     	 
     	$page 			= 	$this->page_model->get_match($page_id); //cate will be changed order position.
-    	$page_order 	= 	$this->page_model->get_match_order($page_order); // Check 'order' exists or not?
+    	$order		 	= 	$this->page_model->get_match_order($page_order); // Check 'order' exists or not?
     	 
-    	if (count($cate_order) > 0) {
-    		$this->page_model->update_order($cate_order['id'], array('order' => $cate->order));
-    		$this->page_model->update_order($cate_id, array('order' => $page_order));
+    	if (count($order) > 0) {
+    		$this->page_model->update_order($order['id'], array('order' => $page->order));
+    		$this->page_model->update_order($page_id, array('order' => $page_order));
     		 
     	} else {
-    		$this->category_model->update_order($cate_id, array('order' => $page_order));
+    		$this->page_model->update_order($page_id, array('order' => $page_order));
     	}
     	 
     	redirect(admin_url('page'), 'refresh');
