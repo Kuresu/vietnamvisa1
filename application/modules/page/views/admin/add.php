@@ -28,11 +28,19 @@
 		                <span class="left"><b>Category* : </b></span>
 		                <span class="right">
 		                	<?php if(count($cate_info)>0){?>
-		                	<select name="category" class="add-status" style="width: 150px;">
-		                		<?php for($i=0; $i<=count($cate_info)-1; $i++){?>
-		                		<option value="<?php echo $cate_info[$i]->name;?>" selected="selected"><?php echo $cate_info[$i]->name;?></option>
-		                		<?php }?>
-		                	</select>
+			                	<select name="category[]" class="" style="width: 150px;" multiple="multiple" >
+			                		<?php foreach($cate_info as $leaf) {?>
+										<option value="<?php echo $leaf->id;?>">
+											<?php
+												for($i=0; $i<$leaf->level-1; $i++) {
+													echo '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+												} 
+												if($leaf->level>0) echo '&nbsp&nbsp&nbsp&nbsp|__ ';
+												echo $leaf->name;
+											?>
+										</option>
+									<?php }?>
+			                	</select>
 		                	<?php }?>
 		                </span>
 		            </li>
@@ -57,7 +65,7 @@
 		            </li>
 			        <li>
 			        	<span class="left"><b>Content* : </b></span>
-			            <span style="padding: 25px 5px 5px 5px;"><textarea name="content" id="add-content-page"></textarea></span>
+			            <span style="padding: 25px 5px 5px 5px;"><textarea name="content" id="content"></textarea></span>
 			        </li>               
 			    </ul>
 			    <div class="btarticle">
@@ -77,7 +85,9 @@ $('#add-page-form').iframer({
     	else show_error('div_message', msg)
     }
 });
-	
+	if(CKEDITOR.instances['content']) {						
+		CKEDITOR.remove(CKEDITOR.instances['content']);
+	}
 	CKEDITOR.replace( 'content', {
     filebrowserBrowseUrl : '<?php echo base_url()."public/ckfinder/ckfinder.html"; ?>',
     filebrowserImageBrowseUrl : '<?php echo base_url()."public/ckfinder/ckfinder.html?Type=Images";?>',

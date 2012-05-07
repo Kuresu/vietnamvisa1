@@ -12,6 +12,27 @@
 			        	<span class="left"><b>Name* : </b></span>
 			            <span class="right"><input type="text" name="name" value="" style="width:98%;" id="add-name-cate" /></span>
 			        </li>
+			        <li>
+		                <span class="left"><b>Parent* : </b></span>
+		                <span class="right">
+		                	<select name="parent" class="add-parent" style="width: 150px;">
+		                	<option value="0">Parent</option>
+		                	<?php if(count($tree_cate)>0){?>
+		                		<?php foreach($tree_cate as $leaf) {?>
+									<option value="<?php echo $leaf->id;?>">
+										<?php
+											for($i=0; $i<$leaf->level-1; $i++) {
+												echo '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+											} 
+											if($leaf->level>0) echo '&nbsp&nbsp&nbsp&nbsp|__ ';
+											echo $leaf->name;
+										?>
+									</option>
+								<?php }?>
+		                	<?php }?>	
+		                	</select>
+		                </span>
+		            </li>
 		            <li>
 		                <span class="left"><b>Order* : </b></span>
 		                <span class="right">

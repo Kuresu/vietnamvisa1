@@ -86,6 +86,7 @@ class Category_admin extends Admin_controller {
     				                    'name_ascii'   	=> ascii_link($this->input->post('name')),
     				                    'status'	 	=> $this->input->post('status'),
     				                    'url'			=> $url,
+    				                    'parent_id'		=> $this->input->post('parent'),
     				                    'order'			=> $this->input->post('order')
     						);
     	
@@ -101,8 +102,9 @@ class Category_admin extends Admin_controller {
     			die(validation_errors());
     		}
     	}
+    	$data['tree_cate']	=	$this->category_model->get_tree();
     	$data['total']		=	count($this->category_model->get_all_cate());	
-    	$data['hello']	=	"";
+    	$data['hello']		=	"";
         $this->load->view('admin/add', $data);
     }
     
@@ -118,6 +120,7 @@ class Category_admin extends Admin_controller {
     		    				    'name_ascii'   	=> ascii_link($this->input->post('name')),
     		    				    'status'	 	=> $this->input->post('status'),
     		    				    'url'			=> $url,
+    								'parent_id'		=> $this->input->post('parent'),
     		    				    'order'			=> $this->input->post('order')
     						 );
     			 
@@ -134,7 +137,7 @@ class Category_admin extends Admin_controller {
     		}
     	}
     	
-    	$data['total']		=	count($this->category_model->get_all_cate());
+    	$data['tree_cate']	=	$this->category_model->get_tree_edit($cate_id);
     	$data['cate_id']	=	$cate_id;
     	$data['cate_info']	=	$this->category_model->get_match($cate_id);
     	$data['hello']		=	"";

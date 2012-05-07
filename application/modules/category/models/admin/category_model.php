@@ -130,6 +130,18 @@ class Category_model extends CI_Model{
     }
     
     
+    function get_match_parent($parent_id){
+    	$res	=	$this->db->select()
+					    	 ->where('id', $parent_id)
+					    	 ->get($this->table)
+					    	 ->row_array();
+    	if(!empty($res)){
+    		return $res;
+    	}
+    	return false;
+    }
+    
+    
     function update_many($id_list, $info = array()){
     	return $this->db->where_in('id', $id_list)
 				    	->set($info)
@@ -164,5 +176,92 @@ class Category_model extends CI_Model{
     	return false;
     }
     
+    
+    
+    function check_is_parent($id){
+    	$check = $this->db->where('parent_id', $id)
+    					  ->get($this->table)
+    					  ->row_array();
+    	return $check; 
+    }
+    
+    
+    
+	function get_tree() {
+		$parent = 0;
+		$children = array();
+		$children = $this->get_children($children, $parent);
+		foreach($children as $item) {
+			if($this->check_is_parent($item->id)) {
+				$item->is_parent = 1;
+			} else {
+				$item->is_parent = 0;
+			}
+		}
+		return $children;
+	}
+	
+	
+	
+	function get_children($list = array(), $parent = 0, $level = 0) {
+		#arrange list.
+		$this->db->order_by("parent_id", "ASC");
+
+		#get item those has parent_id == 0 (Grand Parents)
+		$query = $this->db->where('parent_id', $parent)
+						  ->get($this->table);
+		
+		#if item who have parent_id == 0 exist, it will be assign into an array() of many objects as name $list[] (Parents)
+		if($query->row_array()) {
+			$results = $query->result();		# Get all objects those belong to their parent.
+			foreach($results as $xyz) {			# Loop through all objects.
+				$xyz->level = $level;			# Add one more property to each object.
+				$list[] 	= $xyz;				# Assign each object to array $list[].
+				$list 		= $this->get_children($list, $xyz->id, $level+1);	# Then at last, get the list of Childrens  
+			}
+		} else {
+			return $list;
+		}
+		return $list;
+	}
+    
+	
+	# For edit function.
+	function get_tree_edit($id){
+		$papa	=	$this->get_match($id);
+		$parent = 0;
+		$children = array();
+			$children = $this->get_children_edit($children, $parent, $id);
+			foreach($children as $item) {
+				if($this->check_is_parent($item->id)) {
+					$item->is_parent = 1;
+				} else {
+					$item->is_parent = 0;
+				}
+			}
+			return $children;
+	}
+	
+	
+	
+	function get_children_edit($list = array(), $parent_id, $id, $level = 0){
+		$grand	=	$this->db->select()
+							 ->where('id !=', $id)
+							 ->where('parent_id', $parent_id)
+							 ->get($this->table);
+		if($grand->row_array()){ 
+			$parents	=	$grand->result();
+			foreach ($parents as $babies){
+				$babies->level	=	$level;
+				$list[]			=	$babies;
+				$list			=	$this->get_children_edit($list, $babies->id,$id, $level + 1);
+			}
+		}else {
+			return $list;
+		}
+		return $list;
+	}
+	
+	
   
 }

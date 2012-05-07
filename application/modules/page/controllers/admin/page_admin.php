@@ -52,6 +52,7 @@ class Page_admin extends Admin_controller {
     	$offset 					= 	($this->uri->segment(3)=='') ? 0 : $this->uri->segment(3);
     	 
     	#get info.
+    	$cate_info					=	$this->page_model->get_tree_cate();
     	$page_list					= 	$this->page_model->get_page_list($perpage, $offset);
     	$delete_page				=	$this->session->userdata('delete_page');
     	$this->session->unset_userdata('delete_page');
@@ -63,6 +64,7 @@ class Page_admin extends Admin_controller {
     	}
     	
     	#assign data.
+    	$data['cate_info']			=	$cate_info;
     	$data['page_list']			=	$page_list;
     	$data['pagination']			=	$pagination;
     	$data['current_perpage']	=	$perpage;
@@ -83,7 +85,16 @@ class Page_admin extends Admin_controller {
     		$this->form_validation->set_rules('content', 'Content', 'required|trim|xss_clean');
     		 
     		if($this->form_validation->run() == TRUE){
-    			$url	=	'page/'.ascii_link($this->input->post('name'));
+    			$url		=	'page/'.ascii_link($this->input->post('name'));
+    			$cate_id	=	$this->input->post('category');
+    			$cate_name	=	$this->get_cate_match($cate_id);
+    			
+    			#get serie of category name.
+    			$cate_imp	=	array();
+    			foreach ($cate_name as $k => $v){
+    				$cate_imp[]	=	$v->name;
+    			}
+    			
     			$info = array(
         	                				'name'   		=> $this->input->post('name'),
         				                    'name_ascii'   	=> ascii_link($this->input->post('name')),
@@ -91,10 +102,13 @@ class Page_admin extends Admin_controller {
         				                    'keyword'		=> $this->input->post('keyword'),
         				                    'description'	=> $this->input->post('description'),
         				                    'content'		=> $this->input->post('content'),
-        				                    'status'	 	=> $this->input->post('status'),
+        				                    'active'	 	=> $this->input->post('status'),
+        				                    'cate_id'		=> '|'.implode('|',$cate_id).'|',
+    										'cate_name'		=> '|'.implode('|',$cate_imp).'|',
         				                    'url'			=> $url,
         				                    'order'			=> $this->input->post('order')
-    			);
+    						 );
+    			
     			if($this->page_model->check_exist($info['name'])) {
     				die('This name is exist!');
     			}elseif ($this->page_model->check_order_exist($info['order'])){
@@ -108,7 +122,7 @@ class Page_admin extends Admin_controller {
     		}
     	}
     	#get info.
-    	$cate_info			=	$this->page_model->get_cate();
+    	$cate_info			=	$this->page_model->get_tree_cate();
     	
     	$data['cate_info']	=	$cate_info;
     	$data['total']		=	count($this->page_model->get_all_page());
@@ -117,36 +131,59 @@ class Page_admin extends Admin_controller {
     
     
     function edit($page_id	=	''){
-    	/* if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    	if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    		#set rules
     		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean');
+    		$this->form_validation->set_rules('title', 'Title', 'trim|xss_clean');
+    		$this->form_validation->set_rules('keyword', 'Keyword', 'trim|xss_clean');
+    		$this->form_validation->set_rules('description', 'Description', 'trim|xss_clean');
+    		$this->form_validation->set_rules('content', 'Content', 'required|trim|xss_clean');
     
     		if($this->form_validation->run() == TRUE){
     			$url	=	'category/'.ascii_link($this->input->post('name'));
+    			$cate_id	=	$this->input->post('category');
+    			$cate_name	=	$this->get_cate_match($cate_id);
+    			 
+    			#get serie of category name.
+    			$cate_imp	=	array();
+    			foreach ($cate_name as $k => $v){
+    				$cate_imp[]	=	$v->name;
+    			}
     			$info = array(
-        		    	                'name'   		=> $this->input->post('name'),
-        		    				    'name_ascii'   	=> ascii_link($this->input->post('name')),
-        		    				    'status'	 	=> $this->input->post('status'),
-        		    				    'url'			=> $url,
-        		    				    'order'			=> $this->input->post('order')
-    			);
+        	                				'name'   		=> $this->input->post('name'),
+        				                    'name_ascii'   	=> ascii_link($this->input->post('name')),
+        				                    'title'			=> $this->input->post('title'),
+        				                    'keyword'		=> $this->input->post('keyword'),
+        				                    'description'	=> $this->input->post('description'),
+        				                    'content'		=> $this->input->post('content'),
+        				                    'active'	 	=> $this->input->post('status'),
+        				                    'cate_id'		=> '|'.implode('|',$cate_id).'|',
+    										'cate_name'		=> '|'.implode('|',$cate_imp).'|',
+        				                    'url'			=> $url,
+        				                    'order'			=> $this->input->post('order')
+    						 );
     
-    			if($this->category_model->check_exist_edit($cate_id, $info['name'])) {
-    				die('This username is exist!');
-    			}elseif ($this->category_model->check_order_exist_edit($cate_id, $info['order'])){
+    			if($this->page_model->check_exist_edit($page_id, $info['name'])) {
+    				die('This name is exist!');
+    			}elseif ($this->page_model->check_order_exist_edit($page_id, $info['order'])){
     				die('This order is exist !');
     			}else{
-    				$this->category_model->edit_category($cate_id, $info);
+    				$this->page_model->edit_page($page_id, $info);
     				die('yes');
     			}
     		}else {
     			die(validation_errors());
     		}
-    	} */
-    	$cate_info			=	$this->page_model->get_cate();
+    	}
+    	#get info from DB.
+    	$cate_info			=	$this->page_model->get_tree_cate();
     	$page_info			=	$this->page_model->get_match($page_id);
+    	$cate_id			=	explode('|',$page_info->cate_id);
     	
     	$data['cate_info']	=	$cate_info;
     	$data['page_info']	=	$page_info;
+    	$data['cate_id']	=	$cate_id;
+    	$data['page_id']	=	$page_id;
     	$data['hello']		=	"";
     	$this->load->view('admin/edit', $data);
     }
@@ -220,6 +257,30 @@ class Page_admin extends Admin_controller {
     	}
     	 
     	redirect(admin_url('page'), 'refresh');
+    }
+    
+    
+    function search(){
+    	$keyword					=	$this->input->post('search');
+    	$cate_id					=	'|'.$this->input->post('category').'|';
+    	#get info.
+    	$search_list				= 	$this->page_model->get_search_list($keyword, $cate_id);
+    	$cate_info					=	$this->page_model->get_tree_cate();
+    	#assign data.
+    	$data['keyword']			=	$keyword;
+    	$data['cate_info']			=	$cate_info;
+    	$data['cate_id']			=	$this->input->post('category');
+    	$data['search_list']		=	$search_list;
+    	$data['act']				=	"page";
+		$data['tpl_file']			=	"admin/search_index";
+		$this->load->view('admin/admin_layout/index', $data);	
+    }
+    
+    
+    
+    function get_cate_match($cate_id = array()){
+    	$cate_match = $this->page_model->get_cate_match($cate_id);
+    	return $cate_match;
     }
     
     
