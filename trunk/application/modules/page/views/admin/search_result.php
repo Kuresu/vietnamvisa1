@@ -14,7 +14,7 @@
                 	<select name="category" class="" style="width: 150px;" >
                 		<option value="all">List all</option>
                 		<?php foreach($cate_info as $leaf) {?>
-						<option value="<?php echo $leaf->id;?>">
+						<option value="<?php echo $leaf->id;?>" <?php if($cate_id == $leaf->id){echo "selected";}?>>
 							<?php
 								for($i=0; $i<$leaf->level-1; $i++) {
 									echo '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
@@ -26,7 +26,7 @@
 					<?php }?>
                 	</select>
             <?php }?>
-       		<input type="text" name="search" onfocus="if (this.value == 'Keyword') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Keyword';}"  value="Keyword" style="width:165px; padding:3px;" />
+       		<input type="text" name="search" onfocus="if (this.value == 'Keyword') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Keyword';}"  value="<?php if(isset($keyword)){echo $keyword;}else{echo "Keyword";}?>" style="width:165px; padding:3px;" />
         	<input type="submit" name="" value="Filter" class="btn" />
         </span>
        
@@ -44,18 +44,6 @@
 	    		?>
 	    		<font class="number">(<?php echo $total_amount;?>)</font> <a href="javascript:;">All</a><font class="line">|</font><font class="number">(<?php echo $active;?>)</font> <a href="javascript:;"><font color="#0b9901">Active</font></a><font class="line">|</font><font class="number">(<?php echo $total_amount - $active;?>)</font> <a href="javascript:;"><font color="#c60001">Pending</font></a>
 	        </span>
-	        <span class="right1">
-	        	<select style="width:50px;" name="perpage" id="perpage" onchange="changePageNumber()">
-	            	<option value="6" <?php echo ($current_perpage==6)?'selected':'';?>>6</option>
-	                <option value="12" <?php echo ($current_perpage==12)?'selected':'';?>>12</option>
-	                <option value="24" <?php echo ($current_perpage==24)?'selected':'';?>>24</option>
-	                <option value="all" <?php echo ($current_perpage=='all')?'selected':'';?>>All</option>
-	            </select>
-	            <div class="pagination">
-	                <?php if(isset($pagination)){echo $pagination;}?>
-	            </div>
-	        </span>
-	        
 	    </div>
 	</form>
     <div class="tableout">
@@ -69,8 +57,8 @@
 	            <div class="column" style="width: 8%;">Order</div>
 	            <div class="column" style="width: 5%;">Status</div>
 	        </div>
-	        <?php if(count($page_list)>0){?>
-	        <?php foreach ($page_list as $k => $v){?>
+	        <?php if(count($search_list[0])>0){?>
+	        <?php foreach ($search_list as $k => $v){?>
 	        <div class="linecate2">
 	        	<div class="column" style="width: 2%;"><input name="id[]" value="<?php echo $v->id;?>" type="checkbox" /></div>
 	            <div class="column" style="width:4%;"><?php $pagin	=	$this->uri->segment(3); if(isset($pagin)){echo $k+1+$pagin;}?></div>
@@ -96,7 +84,7 @@
 		            				echo $content;
 		            			}
 		            		?>
-	            		</span>
+		            	</span>
 		            </div>
 		            <div class="column " style="width:15%;"><?php echo $v->cate_name;?></div>
 		            <div class="column" style="width:8%;">
@@ -105,7 +93,7 @@
 		            <div class="column" style="width:5%;">
 		            <?php if($v->active == 'yes'){?>
 		            	<a href="javascript:void(0);" onclick="page_status('<?php echo $v->id;?>', 'no')"><img src="<?php echo base_url();?>public/admin/img/active.png" title="Active" alt="Yes" class="icon png" /></a>
-					<?php }else{?>		            	
+					<?php }else {?>		            	
 		            	<a href="javascript:void(0);" onclick="page_status('<?php echo $v->id;?>', 'yes')"><img src="<?php echo base_url();?>public/admin/img/pending.png" title="Suspend" alt="No" class="icon png" /></a>
 		            <?php }?>
 		            </div>
@@ -140,10 +128,6 @@
 		$("#list-page-form").submit();
 	}
 
-	var inform	=	'<?php echo $inform;?>';
-	if(inform == 'edit page success'){alert("Edit Successfully !");}
-	
-	if(inform == 'delete page success') {alert("Delete Successfully !");}
 
 	$('#action_page_form').iframer({
 	    onComplete: function(msg){

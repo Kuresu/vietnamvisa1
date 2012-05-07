@@ -37,8 +37,9 @@
 	        	<div class="column" style="width: 2%;"><input class="check_all" onclick="check_all('.check_all')" type="checkbox"></div>
 	            <div class="column" style="width: 4%;">No.</div>
 	            <div class="column" style="width: 25%;">Name</div>
-	            <div class="column" style="width: 40%;">Url</div>
-	            <div class="column" style="width: 20%;">Order</div>
+	            <div class="column" style="width: 30%;">Url</div>
+	            <div class="column" style="width: 15%;">Parent</div>
+	            <div class="column" style="width: 15%;">Order</div>
 	            <div class="column" style="width: 5%;">Status</div>
 	        </div>
 	        <?php if(count($search_list[0])>0){?>
@@ -54,8 +55,9 @@
 			                    <img src="<?php echo base_url();?>public/admin/img/edit.gif" /><a href="javascript:void(0)" onclick="open_form('<?php echo admin_url(); ?>/edit-category/<?php echo $v->id;?>')">Edit</a>|<img src="<?php echo base_url();?>public/admin/img/delete.gif" /><a href="<?php echo admin_url();?>/delete-category/<?php echo $v->id;?>" onclick="return confirm('Do you want delete this category?');"><font color="#be0000">Delete</font></a>
 			                </div>
 			            </div>
-			            <div class="column" style="width:40%;"><span class="art cate_url_"><?php echo $v->url;?></span></div>
-			            <div class="column" style="width:20%;">
+			            <div class="column" style="width:30%;"><span style="color: green;"><?php echo $v->url;?></span></div>
+			            <div class="column" style="width:15%;"><span style="color: grey; font-weight: bold;"><?php if($v->parent_id == 0){echo " _ _ ";}else {$parent = $this->category_model->get_match_parent($v->parent_id); echo $parent['name'];}?></span></div>
+			            <div class="column" style="width:15%;">
 			            	<input type="text" name="order" id="<?php echo $v->id;?>" class="order" value="<?php echo $v->order;?>" maxlength="2" style="width:45px; float:left;" />
 			            </div>
 			            <div class="column" style="width:5%;">

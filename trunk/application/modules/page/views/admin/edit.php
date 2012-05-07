@@ -5,7 +5,7 @@
 
 <div id="div_message"></div>
 
-		<form action="<?php echo  admin_url();?>/edit-page" method="post" id="edit-page-form">
+		<form action="<?php echo  admin_url();?>/edit-page/<?php echo $page_id; ?>" method="post" id="edit-page-form">
 			<div class="article_ct">
 				<ul class="metatags">
 			    	<li>
@@ -28,11 +28,19 @@
 		                <span class="left"><b>Category* : </b></span>
 		                <span class="right">
 		                	<?php if(count($cate_info)>0){?>
-		                	<select name="category" class="add-status" style="width: 150px;">
-		                		<?php for($i=0; $i<=count($cate_info)-1; $i++){?>
-		                		<option value="<?php echo $cate_info[$i]->name;?>" <?php if($page_info->cate_name == $cate_info[$i]->name){echo "selected";}?>><?php echo $cate_info[$i]->name;?></option>
-		                		<?php }?>
-		                	</select>
+			                	<select name="category[]" class="" style="width: 150px;" multiple="multiple">
+			                		<?php foreach($cate_info as $leaf) {?>
+										<option value="<?php echo $leaf->id;?>" <?php for($j=1; $j<=count($cate_id)-1; $j++){if($leaf->id == $cate_id[$j]) echo "selected";} ?> >
+											<?php
+												for($i=0; $i<$leaf->level-1; $i++) {
+													echo '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+												} 
+												if($leaf->level>0) echo '&nbsp&nbsp&nbsp&nbsp|__ ';
+												echo $leaf->name;
+											?>
+										</option>
+									<?php }?>
+			                	</select>
 		                	<?php }?>
 		                </span>
 		            </li>
@@ -57,7 +65,7 @@
 		            </li>
 			        <li>
 			        	<span class="left"><b>Content* : </b></span>
-			            <span style="padding: 25px 5px 5px 5px;"><textarea name="content" id="add-content-page"><?php echo $page_info->content;?></textarea></span>
+			            <span style="padding: 25px 5px 5px 5px;"><textarea name="content" id="content"><?php echo $page_info->content;?></textarea></span>
 			        </li>               
 			    </ul>
 			    <div class="btarticle">
@@ -67,17 +75,19 @@
 			</div>
 		</form>
 <script type="text/javascript">
-$('#add-page-form').iframer({
+$('#edit-page-form').iframer({
     onComplete: function(msg){
     	if(msg == 'yes') {
     		$('#light_adct').hide();$('#fade_adct').hide();
-    		alert('Add successfully!');
+    		alert('Edit successfully!');
             window.location	=	admin_url+'page';
     	}
     	else show_error('div_message', msg)
     }
 });
-	
+	if(CKEDITOR.instances['content']) {						
+		CKEDITOR.remove(CKEDITOR.instances['content']);
+	}
 	CKEDITOR.replace( 'content', {
     filebrowserBrowseUrl : '<?php echo base_url()."public/ckfinder/ckfinder.html"; ?>',
     filebrowserImageBrowseUrl : '<?php echo base_url()."public/ckfinder/ckfinder.html?Type=Images";?>',
@@ -86,7 +96,7 @@ $('#add-page-form').iframer({
     filebrowserImageUploadUrl : '<?php echo base_url()."public/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images";?>',
     filebrowserFlashUploadUrl : '<?php echo base_url()."ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash";?>',
     filebrowserWindowWidth : '800',
-    filebrowserWindowHeight : '480'
+    filebrowserWindowHeight : '700'
 } );
 CKFinder.SetupCKEditor( editor, "<?php echo base_url().'public/ckfinder/' ?> " );
 </script>
