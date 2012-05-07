@@ -18,6 +18,7 @@
  *
  * @return boolean
  */
+session_start();
 function CheckAuthentication()
 {
 	// WARNING : DO NOT simply return "true". By doing so, you are allowing
@@ -30,7 +31,7 @@ function CheckAuthentication()
 	// user logs in your system. To be able to use session variables don't
 	// forget to add session_start() at the top of this file.
 
-	return false;
+	return true;
 }
 
 // LicenseKey : Paste your license key here. If left blank, CKFinder will be
@@ -104,8 +105,8 @@ Set the maximum size of uploaded images. If an uploaded image is larger, it
 gets scaled down proportionally. Set to 0 to disable this feature.
 */
 $config['Images'] = Array(
-		'maxWidth' => 1600,
-		'maxHeight' => 1200,
+		'maxWidth' => 350,
+		'maxHeight' => 350,
 		'quality' => 80);
 
 /*
@@ -293,7 +294,7 @@ $config['ChmodFolders'] = 0755 ;
 
 /*
 Force ASCII names for files and folders.
-If enabled, characters with diactric marks, like å, ä, ö, ć, č, đ, š
+If enabled, characters with diactric marks, like Ã¥, Ã¤, Ã¶, Ä‡, Ä�, Ä‘, Å¡
 will be automatically converted to ASCII letters.
 */
 $config['ForceAscii'] = false;
