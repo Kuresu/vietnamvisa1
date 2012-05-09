@@ -408,3 +408,8 @@ ul.metatags li{ float:left; width:100%; margin-top:15px;}
 ul.metatags li span.left{ float:left; width:25%; line-height:20px;}
 ul.metatags li span.right{ float:left; width:70%;}
 ul.metatags li span.right input, select{ border:1px #dfdfdf solid; -moz-border-radius:3px; -webkit-border-radius:3px; margin:0; padding:3px 0; font:12px Arial, Helvetica, sans-serif;}
+
+.small_thumb {position:relative;}
+.fullsize_thumb {position:absolute;top:-10px;left:60px;display:none;}
+.fullsize_thumb img {border:1px solid #3D3D3D;}
+.small_thumb:hover .fullsize_thumb{display:block}
