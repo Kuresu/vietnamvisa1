@@ -64,4 +64,20 @@
 		);
 	}
 	
+	
+	
+	function slider_status(slide_id, slide_status){
+		$.post(
+				admin_url+'slider/change-status/',
+				{id: slide_id, status: slide_status},
+				function(msg){
+					if(msg == "yes") {
+						load_content('row_'+slide_id, admin_url+'slider/load-row/'+slide_id);
+			            $('.linecate2').has('#row_'+slide_id).css('background-color', '#FFFFE0');
+			            window.location	=	admin_url+'slider';
+					}
+				}
+		);
+	}
+	
 
