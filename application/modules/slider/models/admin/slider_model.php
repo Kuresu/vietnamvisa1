@@ -20,22 +20,6 @@ class Slider_model extends CI_Model{
     }
     
     
-    function get_page_list($perpage = 'all', $offset){
-    	$this->db->select();
-    	if($perpage != 'all'){
-    		$this->db->limit($perpage, $offset);
-    	}
-    	$this->db->order_by('id', 'DESC');
-    	$query	= $this->db->get($this->table);
-    	$result	= $query->result();
-    
-    	if(!empty($result)){
-    		return $result;
-    	}
-    	return false;
-    }
-        
-    
     function check_exist($name){
     	$res	=	$this->db->select()
 					    	 ->where('name', $name)
@@ -124,8 +108,8 @@ class Slider_model extends CI_Model{
     }
     
     
-    function delete($page_id){
-    	return $this->db->where('id', $page_id)->delete($this->table);
+    function delete($slide_id){
+    	return $this->db->where('id', $slide_id)->delete($this->table);
     }
     
     function update_order($id, $info = array()){
@@ -157,111 +141,7 @@ class Slider_model extends CI_Model{
     	return false;
     }
     
-    
-    function get_search_list($keyword = "Keyword", $cate_id = '|all|'){
-    	$key_res	=	$this->get_search_list_by_category($cate_id);
-    	if(count($key_res[0]) > 0 && isset($key_res)){
-    		if($keyword != 'Keyword'){
-    			foreach ($key_res as $k => $v){
-    				$check	=	$this->get_search_list_by_keyword($v->id, $keyword);
-    			}
-    			return $check;
-    		}
-    		return $key_res;
-    	}else {
-    		return false;
-    	}
-    }
-    
-    function get_search_list_by_category($cate_id = '|all|'){
-    	$this->db->select();
-    	if($cate_id != '|all|'){
-    		$this->db->like('cate_id', $cate_id);
-    	}
-    	$query	=	$this->db->get($this->table);
-    	$res	=	$query->result();
-    	if(!empty($res)){
-    		return $res;
-    	}
-    	return false;
-    }
-    
-    function get_search_list_by_keyword($id, $keyword){
-    	$res	=	$this->db->select()
-    						 ->where('id', $id)
-    						 ->like('name', $keyword)
-    						 ->or_like('name_ascii', $keyword)
-    						 ->get($this->table)
-    						 ->result();
-    	if(!empty($res)){
-    		return $res;
-    	}
-    	return false;
-    }
-    
-   
-    
-    
-    # use for add cate name to a page,
-    function get_cate_match($cate_id = array()){
-    	$cate	=	$this->db->select()
-    						 ->where_in('id', $cate_id)
-    						 ->get($this->table_cate)
-    						 ->result();
-    	return $cate;
-    }
-    
-    
-    #get cate tree
-    function check_is_parent($id){
-    	$check = $this->db->where('parent_id', $id)
-			    		  ->get($this->table_cate)
-			    		  ->row_array();
-    	return $check;
-    }
-    
-    
-    
-    function get_tree_cate() {
-    	$parent = 0;
-    	$children = array();
-    	$children = $this->get_children($children, $parent);
-    	foreach($children as $item) {
-    		if($this->check_is_parent($item->id)) {
-    			$item->is_parent = 1;
-    		} else {
-    			$item->is_parent = 0;
-    		}
-    	}
-    	return $children;
-    }
-    
-    
-    
-    function get_children($list = array(), $parent = 0, $level = 0) {
-    	#arrange list.
-    	$this->db->order_by("parent_id", "ASC");
-    
-	    #get item those has parent_id == 0 (Grand Parents)
-	    $query = $this->db->where('parent_id', $parent)
-	    				  ->get($this->table_cate);
-	    
-	    #if item who have parent_id == 0 exist, it will be assign into an array() of many objects as name $list[] (Parents)
-	    if($query->row_array()) {
-	    	$results = $query->result();		# Get all objects those belong to their parent.
-		    foreach($results as $xyz) {			# Loop through all objects.
-		    $xyz->level = $level;				# Add one more property to each object.
-		    $list[] 	= $xyz;					# Assign each object to array $list[]('cause $xyz are objects)
-		    $list 		= $this->get_children($list, $xyz->id, $level+1);	# Then at last, get the list of Childrens
-		    }
-	    } else {
-	    	return $list;
-	    }
-    	return $list;
-    }
-    
-    
-    
+
     
     
 }
