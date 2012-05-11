@@ -3,6 +3,7 @@
 class Category_model extends CI_Model{
 	
 	var	$table		=	"category";		
+	var $table_page	=	"page";
 	
 	function __construct(){
         parent::__construct(); 
@@ -36,9 +37,54 @@ class Category_model extends CI_Model{
     }
     
     
-    function delete($cate_id){
-    	return $this->db->where('id', $cate_id)->delete($this->table);
+    
+    function get_page_match($cate_id){
+    	$match	=	'|'.$cate_id.'|';
+    	$page	=	$this->db->select()
+    						 ->like('cate_id', $match)
+    						 ->get($this->table_page)
+    						 ->result();
+    	if(!empty($page)){
+    		return $page;
+    	}
+    	return 0;
     }
+    
+    
+    function update_page($id, $info = array()){
+    	return $this->db->where('id', $id)->update($this->table_page, $info);
+    }
+    
+    
+    function delete_page($page_id){
+    	return $this->db->where('id', $page_id)->delete($this->table_page);
+    }
+    
+    
+    function delete($cate_id){
+    	$list = $this->get_tree_by_parent($cate_id);
+    	#delete children
+    	foreach($list as $k => $v){
+    		$this->db->where('id', $v->id)->delete($this->table);
+    	}
+    	#delete itself.	
+    	$this->db->where('id', $cate_id)->delete($this->table);
+    }
+    
+    
+    function get_tree_by_parent($parent_id){
+		$children = array();
+		$children = $this->get_children($children, $parent_id);
+		foreach($children as $item) {
+			if($this->check_is_parent($item->id)) {
+				$item->is_parent = 1;
+			} else {
+				$item->is_parent = 0;
+			}
+		}
+		return $children;
+    }
+    
     
     
     function check_exist($name){

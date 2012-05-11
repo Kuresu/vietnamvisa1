@@ -63,6 +63,15 @@
 		                	</select>
 		                </span>
 		            </li>
+		            <li>
+		                <span class="left"><b>Hit : </b></span>
+		                <span class="right">
+		                	<select name="hit" class="edit-hit" style="width: 150px;">
+		                		<option value="yes" <?php if($page_info->hit == 'yes'){echo "selected";}?>>Yes</option>
+		                		<option value="no" <?php if($page_info->hit == 'no'){echo "selected";}?>>No</option>
+		                	</select>
+		                </span>
+		            </li>
 			        <li>
 			        	<span class="left"><b>Content* : </b></span>
 			            <span style="padding: 25px 5px 5px 5px;"><textarea name="content" id="content"><?php echo $page_info->content;?></textarea></span>

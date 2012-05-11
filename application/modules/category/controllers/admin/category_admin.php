@@ -53,11 +53,11 @@ class Category_admin extends Admin_controller {
     	
     	#get info.
     	$cate_list					= 	$this->category_model->get_cate_list($perpage, $offset);
-    	$edit_cate					=	$this->session->userdata('edit_cate');
-    	$this->session->unset_userdata('edit_cate');
+    	$delete_cate				=	$this->session->userdata('delete_cate');
+    	$this->session->unset_userdata('delete_cate');
     	 
-    	if(isset($edit_cate) && $edit_cate == 'edit'){
-    		$inform	=	'edit cate success';
+    	if(isset($delete_cate) && $delete_cate == 'delete'){
+    		$inform	=	'delete cate success';
     	}else {
     		$inform = "";
     	}
@@ -146,9 +146,122 @@ class Category_admin extends Admin_controller {
     
     
     function delete($cate_id){
+    	#check if this cate are parents or not => get all list of its children.
+    	$children	=	$this->category_model->get_tree_by_parent($cate_id);
+    	
+    	if($children){
+    		#check each category those hold pages inside.
+	    	foreach ($children as $c_k => $c_v){
+		    	#check pages match with this cate.
+		    	$page	=	$this->category_model->get_page_match($c_v->id);
+		    	if($page){
+		    		foreach ($page as $k => $v){
+		    			#check if a page have been belong to how many cate?
+		    			$category_id	=	explode('|', $v->cate_id);
+		    			$list_cate_id			=	array();
+		    			$list_cate_name			=	array();
+		    			#if page have been belong more than one category.
+		    			if(count($category_id)>3){
+		    				#update cate_id and cate_name for each page
+		    				for ($i=1; $i<count($category_id)-1; $i++){
+		    					if($c_v->id != $category_id[$i]){
+		    						$list_cate_id[]		=	$category_id[$i];
+		    						$match_cate			=	$this->category_model->get_match($category_id[$i]);
+		    						if($match_cate){
+		    							$list_cate_name[]	=	$match_cate->name;
+		    						}
+		    					}
+		    				}# end for
+		    				
+		    				if(count($list_cate_id)>1){$new_cate_id	=	implode('|', $list_cate_id);}else {$new_cate_id = $list_cate_id[0];}
+		    				if(count($list_cate_name)>1){$new_cate_name	=	implode('|', $list_cate_name);}else {$new_cate_name = $list_cate_name[0];}
+		
+		    				$info			=	array(
+		    											'cate_id'	=> 	'|'.$new_cate_id.'|',
+		    											'cate_name'	=>	'|'.$new_cate_name.'|'
+		    										 );
+		    				$this->category_model->update_page($v->id, $info);
+		    			}else{
+		    				$this->category_model->delete_page($v->id);
+		    			}# end if(count)
+		    			
+		    		}# end foreach($page)
+		    	}# end if($page)
+	    	}# end foreach($children)
+	    	
+	    	#update the father for match pages.
+	    	
+	    	$page	=	$this->category_model->get_page_match($cate_id);
+	    	if($page){
+	    		foreach ($page as $k => $v){
+	    			#check if a page have been belong to how many cate?
+	    			$category_id			=	explode('|', $v->cate_id);
+		    		$list_cate_id			=	array();
+		    		$list_cate_name			=	array();
+		    		#if page have been belong more than one category.
+	    			if(count($category_id)>3){
+	    				#update cate_id and cate_name for each page
+	    				for ($i=1; $i<count($category_id)-1; $i++){
+	    					if($cate_id != $category_id[$i]){
+    							$list_cate_id[]		=	$category_id[$i];
+    							$match_cate			=	$this->category_model->get_match($category_id[$i]);
+    							if($match_cate){
+		    							$list_cate_name[]	=	$match_cate->name;
+		    						}
+		    						
+		    					}
+		    				}# end for
+		    			if(count($list_cate_id)>1){$new_cate_id	=	implode('|', $list_cate_id);}else {$new_cate_id = $list_cate_id[0];}
+			    		if(count($list_cate_name)>1){$new_cate_name	=	implode('|', $list_cate_name);}else {$new_cate_name = $list_cate_name[0];}
+		    			
+		    			$info			=	array(
+		    										'cate_id'	=> 	'|'.$new_cate_id.'|',
+		    	    							    'cate_name'	=>	'|'.$new_cate_name.'|'
+		    	    							 );
+		    	    	$this->category_model->update_page($v->id, $info);
+		    		}else{
+		    			$this->category_model->delete_page($v->id);
+		    		}# end if(count)
+	    		}# end foreach
+	    	}# end if($page)
+    	}else {
+    		#check pages match with this cate.
+    		$page	=	$this->category_model->get_page_match($cate_id);
+    		if($page){
+    			foreach ($page as $k => $v){
+    				#check if a page have been belong to how many cate?
+    				$category_id	=	explode('|', $v->cate_id);
+    				$list_cate_id			=	array();
+    				$list_cate_name			=	array();
+    				#if page have been belong more than one category.
+    				if(count($category_id)>3){
+    					#update cate_id and cate_name for each page
+    					for ($i=1; $i<count($category_id)-1; $i++){
+	    					if($cate_id != $category_id[$i]){
+	    						$list_cate_id[]		=	$category_id[$i];
+	    						$match_cate			=	$this->category_model->get_match($category_id[$i]);
+	    						if($match_cate){
+	    							$list_cate_name[]	=	$match_cate->name;
+	    						}
+	    					}
+    					}# end for
+    					if(count($list_cate_id)>1){$new_cate_id	=	implode('|', $list_cate_id);}else {$new_cate_id = $list_cate_id[0];}
+    					if(count($list_cate_name)>1){$new_cate_name	=	implode('|', $list_cate_name);}else {$new_cate_name = $list_cate_name[0];}
+    					
+    					$info			=	array( 
+    							    				'cate_id'	=> 	'|'.$new_cate_id.'|',
+    							    				'cate_name'	=>	'|'.$new_cate_name.'|'
+    											 );
+    					$this->category_model->update_page($v->id, $info);
+    				}else{
+    					$this->category_model->delete_page($v->id);
+    				}# end if(count)
+    			}# end foreach
+    		}# end if($page)
+    	}# end if($children).
+    	
     	#delete in DB.
     	$this->category_model->delete($cate_id);
-    	
     	$delete	=	"delete";
     	$this->session->set_userdata('delete_cate', $delete);
     	redirect(admin_url('category'),'refresh');

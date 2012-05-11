@@ -1,6 +1,6 @@
 
-	<h1>Page Manager</h1>
-	<form action="<?php echo admin_url();?>/page/search-results" method="post" >
+	<h1>Faqs Manager</h1>
+	<form action="<?php echo admin_url();?>/faqs/search-results" method="post" >
     <div class="toppage">
     	<span class="left">
         	<select style="width: 130px;" id="action">
@@ -9,17 +9,13 @@
                 <option value="suspend">Deactivate</option>
                 <option value="delete">Delete</option>
             </select>
-            <input onclick="$('[name=action]').val($('#action').val()); $('#action_page_form').submit()" value="Apply" class="btn" type="button">
-       		<?php if(count($cate_info)>0){?>
+            <input onclick="$('[name=action]').val($('#action').val()); $('#action_faq_form').submit()" value="Apply" class="btn" type="button">
+       		<?php if(count($fcate_info[0])>0){?>
                 	<select name="category" class="" style="width: 150px;" >
                 		<option value="all">List all</option>
-                		<?php foreach($cate_info as $leaf) {?>
+                		<?php foreach($fcate_info as $leaf) {?>
 						<option value="<?php echo $leaf->id;?>">
 							<?php
-								for($i=0; $i<$leaf->level-1; $i++) {
-									echo '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
-								} 
-								if($leaf->level>0) echo '&nbsp&nbsp&nbsp&nbsp|__ ';
 								echo $leaf->name;
 							?>
 						</option>
@@ -31,21 +27,21 @@
         </span>
        
         <span class="btnadd">
-        	<a onclick="open_form('<?php echo admin_url(); ?>/add-new-page')" href="javascript:void(0)">Add new page</a>
+        	<a onclick="open_form('<?php echo admin_url(); ?>/add-new-faqs')" href="javascript:void(0)">Add new faq</a>
         </span>
     </div>
     </form>
-    <form action="<?php echo admin_url();?>/page/" method="post" id="list-page-form">
+    <form action="<?php echo admin_url();?>/faqs/" method="post" id="list-faq-form">
 	    <div class="topart">
 	    	<span class="left">
 	    		<?php 
-	    			$total_amount	=	count($this->page_model->get_all_page());
-	    			$active			=	$this->page_model->count_active();
+	    			$total_amount	=	count($this->faqs_model->get_all());
+	    			$active			=	$this->faqs_model->count_active();
 	    		?>
-	    		<font class="number">(<?php echo $total_amount;?>)</font> <a href="javascript:;">All</a><font class="line">|</font><font class="number">(<?php echo $active;?>)</font> <a href="javascript:;"><font color="#0b9901">Active</font></a><font class="line">|</font><font class="number">(<?php echo $total_amount - $active;?>)</font> <a href="javascript:;"><font color="#c60001">Pending</font></a>
+	    		<font class="number">(<?php if ($total_amount >0) {echo $total_amount;}else {echo "0";}?>)</font> <a href="javascript:;">All</a><font class="line">|</font><font class="number">(<?php if (count($active)>0) {echo $active;}else {echo "0";}?>)</font> <a href="javascript:;"><font color="#0b9901">Active</font></a><font class="line">|</font><font class="number">(<?php echo $total_amount - $active;?>)</font> <a href="javascript:;"><font color="#c60001">Pending</font></a>
 	        </span>
 	        <span class="right1">
-	        	<select style="width:50px;" name="perpage" id="perpage" onchange="changePageNumber()">
+	        	<select style="width:50px;" name="perpage" id="perpage" onchange="changeFaqsNumber()">
 	            	<option value="6" <?php echo ($current_perpage==6)?'selected':'';?>>6</option>
 	                <option value="12" <?php echo ($current_perpage==12)?'selected':'';?>>12</option>
 	                <option value="24" <?php echo ($current_perpage==24)?'selected':'';?>>24</option>
@@ -59,33 +55,46 @@
 	    </div>
 	</form>
     <div class="tableout">
-    	<form action="<?php echo admin_url();?>/page/do-action" method="post" id="action_page_form">
+    	<form action="<?php echo admin_url();?>/faqs/do-action" method="post" id="action_faq_form">
 			<div class="title1">
 	        	<div class="column" style="width: 2%;"><input class="check_all" onclick="check_all('.check_all')" type="checkbox"></div>
 	            <div class="column" style="width: 4%;">No.</div>
-	            <div class="column" style="width: 25%;">Name</div>
-	            <div class="column" style="width: 40%;">Description</div>
-	            <div class="column" style="width: 15%;">Category</div>
+	            <div class="column" style="width: 30%;">Question</div>
+	            <div class="column" style="width: 40%;">Answer</div>
+	            <div class="column" style="width: 10%;">Category</div>
 	            <div class="column" style="width: 8%;">Order</div>
 	            <div class="column" style="width: 5%;">Status</div>
 	        </div>
-	        <?php if(count($page_list[0])>0){?>
-	        <?php foreach ($page_list as $k => $v){?>
+	        <?php if(count($faqs_list[0])>0){?>
+	        <?php foreach ($faqs_list as $k => $v){?>
 	        <div class="linecate2">
 	        	<div class="column" style="width: 2%;"><input name="id[]" value="<?php echo $v->id;?>" type="checkbox" /></div>
 	            <div class="column" style="width:4%;"><?php $pagin	=	$this->uri->segment(3); if(isset($pagin)){echo $k+1+$pagin;}?></div>
 	            
 	            <div id="row_<?php echo $v->id;?>">
-		            <div class="column" style="width:25%;" onmouseover="Hovercat('<?php echo $v->id;?>')" onmouseout="Outcat('<?php echo $v->id;?>')">
-		            	<a href="javascript:;" class="art "><?php echo $v->name;?></a><br />
+		            <div class="column" style="width:30%;" onmouseover="Hovercat('<?php echo $v->id;?>')" onmouseout="Outcat('<?php echo $v->id;?>')">
+		            	<a href="javascript:;" class="art ">
+		            		<?php 
+		            			$content = $v->question;
+		            			$content = strip_tags($content);
+		            			if(strlen($content) > 60){
+		            				$content = substr($content,0,60);
+		            				$posw=strrpos($content," ");
+		            				if($posw > 0)$content = substr($content,0,$posw);
+		            				echo $content.'...';
+		            			}else {
+		            				echo $content;
+		            			}
+		            		?>
+		            	</a><br />
 		                <div class="action" id="neocat-<?php echo $v->id;?>">
-		                    <img src="<?php echo base_url();?>public/admin/img/edit.gif" /><a href="javascript:void(0)" onclick="open_form('<?php echo admin_url(); ?>/edit-page/<?php echo $v->id;?>')">Edit</a>|<img src="<?php echo base_url();?>public/admin/img/icon_view.png" class="png" /><a href="#">View</a>|<img src="<?php echo base_url();?>public/admin/img/delete.gif" /><a href="<?php echo admin_url();?>/page/delete-page/<?php echo $v->id;?>" onclick="return confirm('Do you want delete this page?');"><font color="#be0000">Delete</font></a>
+		                    <img src="<?php echo base_url();?>public/admin/img/edit.gif" /><a href="javascript:void(0)" onclick="open_form('<?php echo admin_url(); ?>/edit-faqs/<?php echo $v->id;?>')">Edit</a>|<img src="<?php echo base_url();?>public/admin/img/delete.gif" /><a href="<?php echo admin_url();?>/delete-faqs/<?php echo $v->id;?>" onclick="return confirm('Do you want delete this faq?');"><font color="#be0000">Delete</font></a>
 		                </div>
 		            </div>
 		            <div class="column" style="width:40%;">
 		            	<span style="color: green;">
 		            		<?php 
-		            			$content = $v->description;
+		            			$content = $v->answers;
 		            			$content = strip_tags($content);
 		            			if(strlen($content) > 80){
 		            				$content = substr($content,0,80);
@@ -98,15 +107,15 @@
 		            		?>
 	            		</span>
 		            </div>
-		            <div class="column " style="width:15%;"><?php echo $v->cate_name;?></div>
+		            <div class="column " style="width:10%;"><?php echo $v->cate_name;?></div>
 		            <div class="column" style="width:8%;">
 		            	<input type="text" name="order" class="order" id="<?php echo $v->id;?>" value="<?php echo $v->order;?>" style="width:45px; float:left;" />
 		            </div>
 		            <div class="column" style="width:5%;">
 		            <?php if($v->active == 'yes'){?>
-		            	<a href="javascript:void(0);" onclick="page_status('<?php echo $v->id;?>', 'no')"><img src="<?php echo base_url();?>public/admin/img/active.png" title="Active" alt="Yes" class="icon png" /></a>
+		            	<a href="javascript:void(0);" onclick="faqs_status('<?php echo $v->id;?>', 'no')"><img src="<?php echo base_url();?>public/admin/img/active.png" title="Active" alt="Yes" class="icon png" /></a>
 					<?php }else{?>		            	
-		            	<a href="javascript:void(0);" onclick="page_status('<?php echo $v->id;?>', 'yes')"><img src="<?php echo base_url();?>public/admin/img/pending.png" title="Suspend" alt="No" class="icon png" /></a>
+		            	<a href="javascript:void(0);" onclick="faqs_status('<?php echo $v->id;?>', 'yes')"><img src="<?php echo base_url();?>public/admin/img/pending.png" title="Suspend" alt="No" class="icon png" /></a>
 		            <?php }?>
 		            </div>
 	            </div>
@@ -136,19 +145,18 @@
 	</div>
 	
 <script type="text/javascript">
-	function changePageNumber() {
-		$("#list-page-form").submit();
+	function changeFaqsNumber() {
+		$("#list-faq-form").submit();
 	}
 
 	var inform	=	'<?php echo $inform;?>';
-	if(inform == 'edit page success'){alert("Edit Successfully !");}
 	
-	if(inform == 'delete page success') {alert("Delete Successfully !");}
+	if(inform == 'delete faq success') {alert("Delete Successfully !");}
 
-	$('#action_page_form').iframer({
+	$('#action_faq_form').iframer({
 	    onComplete: function(msg){
 	    	if(msg == 'yes') {
-	    		window.location	=	admin_url+'page';
+	    		window.location	=	admin_url+'faqs';
 	    	}
 	    	else show_error('div_message', msg)
 	    }
@@ -166,17 +174,17 @@
             }
 			
             if(event.keyCode == 13) { // Enter pressed
-	            var page_order = $(this).val(); 
-	            var page_id = $(this).attr('id');
-	            $('input[name="page_id"]').val(page_id);
-	            $('input[name="page_order"]').val(page_order);
-	            $('#change_order_page').submit();
+	            var faq_order = $(this).val(); 
+	            var faq_id = $(this).attr('id');
+	            $('input[name="faq_id"]').val(faq_id);
+	            $('input[name="faq_order"]').val(faq_order);
+	            $('#change_order_faq').submit();
         	}
         });
 	})
 </script>
 <?php
-    echo form_open(admin_url('page/change-order'), array('id' => 'change_order_page'), array('page_id' => 0, 'page_order' => 0));
+    echo form_open(admin_url('faqs/change-order'), array('id' => 'change_order_faq'), array('faq_id' => 0, 'faq_order' => 0));
     echo form_close();
 ?>
 
