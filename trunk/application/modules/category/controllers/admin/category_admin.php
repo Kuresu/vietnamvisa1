@@ -130,6 +130,36 @@ class Category_admin extends Admin_controller {
     				die('This order is exist !');
     			}else{
     				$this->category_model->edit_category($cate_id, $info);
+    				
+    				#update those pages who have belong to this category.
+    				$page	=	$this->category_model->get_page_match($cate_id);
+    				if($page){
+    					foreach ($page as $k => $v){
+    						$category_id	=	explode('|', $v->cate_id);
+    						$list_cate_id			=	array();
+    						$list_cate_name			=	array();
+    						#if page have been belong more than one category.
+    						#update cate_id and cate_name for each page
+    						for ($i=1; $i<count($category_id)-1; $i++){
+    							if($v->id != $category_id[$i]){
+    								$list_cate_id[]		=	$category_id[$i];
+    								$match_cate			=	$this->category_model->get_match($category_id[$i]);
+    								if($match_cate){
+    									$list_cate_name[]	=	$match_cate->name;
+    								}
+    							}
+    						}# end for
+    						
+    						if(count($list_cate_id)>1){$new_cate_id	=	implode('|', $list_cate_id);}else {$new_cate_id = $list_cate_id[0];}
+    						if(count($list_cate_name)>1){$new_cate_name	=	implode('|', $list_cate_name);}else {$new_cate_name = $list_cate_name[0];}
+    						
+    						$info			=	array(
+							    						'cate_id'	=> 	'|'.$new_cate_id.'|',
+							    						'cate_name'	=>	'|'.$new_cate_name.'|'
+							    					 );
+    						$this->category_model->update_page($v->id, $info);
+    					}
+    				}
     				die('yes');
     			}
     		}else {
