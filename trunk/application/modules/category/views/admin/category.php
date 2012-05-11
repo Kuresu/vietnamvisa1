@@ -54,7 +54,7 @@
 	            <div class="column" style="width: 15%;">Order</div>
 	            <div class="column" style="width: 5%;">Status</div>
 	        </div>
-	        <?php if(isset($cate_list)){?>
+	        <?php if(isset($cate_list[0])){?>
 		        <?php foreach ($cate_list as $k => $v){?>
 		        <div class="linecate2">
 		        	<div class="column" style="width: 2%;"><input name="id[]" value="<?php echo $v->id;?>" type="checkbox" /></div>
@@ -84,7 +84,7 @@
 		        </div>
 		        <?php }?>
 	        <?php } else {?>
-	        	<div class="column" style="width: 2%;"><span>There are no match result</span></div>
+	        	<p style="padding: 10px;font-size: 16px; font-style: italic; color: green;" >There are no results match !</p>
 	        <?php }?>
 	        <div class="bottom1">
 	        	<div class="column" style="width: 2%;"><input class="check_all" onclick="check_all(this)" type="checkbox"></div>
@@ -113,7 +113,7 @@
 
 
 	var inform	=	'no';
-	if(inform == 'edit cate success'){alert("Edit Successfully !");}
+	if(inform == 'delete cate success'){alert("Delete Successfully !");}
 
 	$('#cate_form').iframer({
 	    onComplete: function(msg){

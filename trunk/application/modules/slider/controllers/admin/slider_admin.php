@@ -60,6 +60,7 @@ class Slider_admin extends Admin_controller {
     					}else{
     						$config['upload_path']		= 	$album_dir;
     						$config['allowed_types']	= 	'jpg|png|jpeg|gif';
+    						$config['file_name']		=	ascii_link($_FILES["slide"]["name"]);
     						$config['max_size']			= 	'5120';
     							
     						$this->load->library('upload', $config);
@@ -72,7 +73,7 @@ class Slider_admin extends Admin_controller {
     						$info['thumbnail']		=	$config['upload_path'].$uploaded_data['file_name'];
     						
     						} else {
-    							die('Upload process has failed. Please try again!');
+    							die($this->upload->display_errors());
     						}
     							
     						#insert into DB.

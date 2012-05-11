@@ -50,7 +50,7 @@
 		                </div>
 		            </div>
 		            <div class="column small_thumb " style="width:15%; padding: 5px 0px 0px 0px;">
-		            	<img src="<?php if(file_exists($v->thumbnail)){echo base_url().$v->thumbnail;}else{echo img_link('no-image.jpg','admin');}?>" width="50"  />
+		            	<img src="<?php if(file_exists($v->thumbnail)){echo base_url().$v->thumbnail;}else{echo img_link('no-image.jpg','admin');}?>"  height="35"  />
 	            		<div class="fullsize_thumb">
 							<img  src="<?php if(file_exists($v->source)){echo base_url().$v->source;}else{echo img_link('no-image.jpg','admin');}?>"  style="border:0px; width: 150px;"  alt="" title=""/>
 						</div>

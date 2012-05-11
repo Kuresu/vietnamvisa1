@@ -106,7 +106,8 @@ class Page_admin extends Admin_controller {
         				                    'cate_id'		=> '|'.implode('|',$cate_id).'|',
     										'cate_name'		=> '|'.implode('|',$cate_imp).'|',
         				                    'url'			=> $url,
-        				                    'order'			=> $this->input->post('order')
+        				                    'order'			=> $this->input->post('order'),
+        				                    'hit'			=> $this->input->post('hit')
     						 );
     			
     			if($this->page_model->check_exist($info['name'])) {
@@ -160,7 +161,8 @@ class Page_admin extends Admin_controller {
         				                    'cate_id'		=> '|'.implode('|',$cate_id).'|',
     										'cate_name'		=> '|'.implode('|',$cate_imp).'|',
         				                    'url'			=> $url,
-        				                    'order'			=> $this->input->post('order')
+        				                    'order'			=> $this->input->post('order'),
+        				                    'hit'			=> $this->input->post('hit')
     						 );
     
     			if($this->page_model->check_exist_edit($page_id, $info['name'])) {
