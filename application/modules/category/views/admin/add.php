@@ -36,13 +36,11 @@
 		            <li>
 		                <span class="left"><b>Order* : </b></span>
 		                <span class="right">
-		                	<?php if(isset($total)){?>
 		                	<select name="order" class="add-status" style="width: 150px;">
 		                		<?php for($i=1; $i<=30; $i++){?>
 		                		<option value="<?php echo $i;?>" selected="selected"><?php echo $i;?></option>
 		                		<?php }?>
 		                	</select>
-		                	<?php }?>
 		                </span>
 		            </li>
 		            <li>

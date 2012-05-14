@@ -87,13 +87,20 @@ class Page_admin extends Admin_controller {
     		if($this->form_validation->run() == TRUE){
     			$url		=	'page/'.ascii_link($this->input->post('name'));
     			$cate_id	=	$this->input->post('category');
+    			if($cate_id){$cate_temp = '|'.implode('|',$cate_id).'|';}else{$cate_temp = "";}
     			$cate_name	=	$this->get_cate_match($cate_id);
     			
-    			#get serie of category name.
-    			$cate_imp	=	array();
-    			foreach ($cate_name as $k => $v){
-    				$cate_imp[]	=	$v->name;
+    			if($cate_name){
+    				#get serie of category name.
+    				$cate_imp	=	array();
+    				foreach ($cate_name as $k => $v){
+    					$cate_imp[]	=	$v->name;
+    				}
+    				$cate_imp_temp	=	'|'.implode('|',$cate_imp).'|';	
+    			}else{
+    				$cate_imp_temp	=	"";
     			}
+    			
     			
     			$info = array(
         	                				'name'   		=> $this->input->post('name'),
@@ -103,8 +110,8 @@ class Page_admin extends Admin_controller {
         				                    'description'	=> $this->input->post('description'),
         				                    'content'		=> $this->input->post('content'),
         				                    'active'	 	=> $this->input->post('status'),
-        				                    'cate_id'		=> '|'.implode('|',$cate_id).'|',
-    										'cate_name'		=> '|'.implode('|',$cate_imp).'|',
+        				                    'cate_id'		=> $cate_temp,
+    										'cate_name'		=> $cate_imp_temp,
         				                    'url'			=> $url,
         				                    'order'			=> $this->input->post('order'),
         				                    'hit'			=> $this->input->post('hit')
@@ -141,14 +148,24 @@ class Page_admin extends Admin_controller {
     		$this->form_validation->set_rules('content', 'Content', 'required|trim|xss_clean');
     
     		if($this->form_validation->run() == TRUE){
-    			$url	=	'category/'.ascii_link($this->input->post('name'));
+    			$url		=	'page/'.ascii_link($this->input->post('name'));
     			$cate_id	=	$this->input->post('category');
+    			if($cate_id){
+    				$cate_temp = '|'.implode('|',$cate_id).'|';
+    			}else{
+    				$cate_temp = "";
+    			}
     			$cate_name	=	$this->get_cate_match($cate_id);
     			 
-    			#get serie of category name.
-    			$cate_imp	=	array();
-    			foreach ($cate_name as $k => $v){
-    				$cate_imp[]	=	$v->name;
+    			if($cate_name){
+    				#get serie of category name.
+    				$cate_imp	=	array();
+	    			foreach ($cate_name as $k => $v){
+	    				$cate_imp[]	=	$v->name;
+	    			}
+	    			$cate_imp_temp	=	'|'.implode('|',$cate_imp).'|';
+    			}else{
+    				$cate_imp_temp	=	"";
     			}
     			$info = array(
         	                				'name'   		=> $this->input->post('name'),
@@ -158,8 +175,8 @@ class Page_admin extends Admin_controller {
         				                    'description'	=> $this->input->post('description'),
         				                    'content'		=> $this->input->post('content'),
         				                    'active'	 	=> $this->input->post('status'),
-        				                    'cate_id'		=> '|'.implode('|',$cate_id).'|',
-    										'cate_name'		=> '|'.implode('|',$cate_imp).'|',
+        				                    'cate_id'		=> $cate_temp,
+    										'cate_name'		=> $cate_imp_temp,
         				                    'url'			=> $url,
         				                    'order'			=> $this->input->post('order'),
         				                    'hit'			=> $this->input->post('hit')

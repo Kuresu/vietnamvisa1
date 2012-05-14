@@ -7,7 +7,6 @@
 	            	<option value="">Choose action</option>                               
 	                <option value="active">Activate</option>
 	                <option value="suspend">Deactivate</option>
-	                <option value="delete">Delete</option>
 	            </select>
 	            <input onclick="$('[name=action]').val($('#action').val()); $('#cate_form').submit()" value="Apply" class="btn" type="button">
 	       		<input type="text" name="search" onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}"  value="Search..." style="width:165px; padding:3px;" />
@@ -93,7 +92,6 @@
 	                   	<option value="">Choose action</option>                               
                 		<option value="active">Activate</option>
                 		<option value="suspend">Deactivate</option>
-                		<option value="delete">Delete</option>
 	                </select>
 	                <input type="submit" name="" value="Apply" class="btn" />
 	            </div>
@@ -112,7 +110,7 @@
 	}
 
 
-	var inform	=	'no';
+	var inform	=	'<?php echo $inform;?>';
 	if(inform == 'delete cate success'){alert("Delete Successfully !");}
 
 	$('#cate_form').iframer({

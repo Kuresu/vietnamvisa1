@@ -24,10 +24,10 @@
 			        	<span class="left"><b>Description : </b></span>
 			            <span class="right"><textarea name="description" id="add-des-page" style="width: 100%; height: 100px;"><?php echo $page_info->description;?></textarea></span>
 			        </li>
+			        <?php if(count($cate_info)>0){?>
 			        <li>
-		                <span class="left"><b>Category* : </b></span>
+		                <span class="left"><b>Category : </b></span>
 		                <span class="right">
-		                	<?php if(count($cate_info)>0){?>
 			                	<select name="category[]" class="" style="width: 150px;" multiple="multiple">
 			                		<?php foreach($cate_info as $leaf) {?>
 										<option value="<?php echo $leaf->id;?>" <?php for($j=1; $j<=count($cate_id)-1; $j++){if($leaf->id == $cate_id[$j]) echo "selected";} ?> >
@@ -41,9 +41,9 @@
 										</option>
 									<?php }?>
 			                	</select>
-		                	<?php }?>
 		                </span>
 		            </li>
+		            <?php }?>
 		            <li>
 		                <span class="left"><b>Order* : </b></span>
 		                <span class="right">
