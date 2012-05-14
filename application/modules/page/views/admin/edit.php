@@ -7,6 +7,9 @@
 
 		<form action="<?php echo  admin_url();?>/edit-page/<?php echo $page_id; ?>" method="post" id="edit-page-form">
 			<div class="article_ct">
+				<div class="btarticle">
+			        <input type="submit" value="Save & Continute" class="btn add-new-page" />
+		    	</div>
 				<ul class="metatags">
 			    	<li>
 			        	<span class="left"><b>Name* : </b></span>
