@@ -102,8 +102,7 @@ class Category_admin extends Admin_controller {
     			die(validation_errors());
     		}
     	}
-    	$data['tree_cate']	=	$this->category_model->get_tree();
-    	$data['total']		=	count($this->category_model->get_all_cate());	
+    	$data['tree_cate']	=	$this->category_model->get_tree();	
     	$data['hello']		=	"";
         $this->load->view('admin/add', $data);
     }
@@ -374,6 +373,7 @@ class Category_admin extends Admin_controller {
     }
     
    
+    
     
 }
 //End Page_admin
