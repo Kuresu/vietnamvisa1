@@ -77,7 +77,7 @@
 			            <div class="column" style="width:25%;" onmouseover="Hovercat('<?php echo $v->id;?>')" onmouseout="Outcat('<?php echo $v->id;?>')">
 			            	<a href="javascript:;" class="art cate_name_<?php echo $v->id;?>"><?php echo $v->name;?></a><br />
 			                <div class="action" id="neocat-<?php echo $v->id;?>">
-			                    <img src="<?php echo base_url();?>public/admin/img/edit.gif" /><a href="javascript:void(0)" onclick="open_form('<?php echo admin_url(); ?>/edit-menu/<?php echo $v->id;?>')">Edit</a>|<img src="<?php echo base_url();?>public/admin/img/delete.gif" /><a href="<?php echo admin_url();?>/delete-category/<?php echo $v->id;?>" onclick="return confirm('Do you want delete this category?');"><font color="#be0000">Delete</font></a>
+			                    <img src="<?php echo base_url();?>public/admin/img/edit.gif" /><a href="javascript:void(0)" onclick="open_form('<?php echo admin_url(); ?>/edit-menu/<?php echo $v->id;?>')">Edit</a>|<img src="<?php echo base_url();?>public/admin/img/delete.gif" /><a href="<?php echo admin_url();?>/delete-menu/<?php echo $v->id;?>" onclick="return confirm('Do you want delete this menu?');"><font color="#be0000">Delete</font></a>
 			                </div>
 			            </div>
 			            <div class="column" style="width:30%;"><span style="color: green;"><?php echo $v->url;?></span></div>
@@ -124,7 +124,7 @@
 
 
 	var inform	=	'<?php echo $inform;?>';
-	if(inform == 'delete cate success'){alert("Delete Successfully !");}
+	if(inform == 'delete menu success'){alert("Delete Successfully !");}
 
 	$('#menu_form').iframer({
 	    onComplete: function(msg){

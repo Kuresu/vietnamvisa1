@@ -32,8 +32,6 @@ class Menu_model extends CI_Model{
     	if(!empty($number)){
     		return $number;
     	}
-
-
     }
     
     
@@ -54,37 +52,14 @@ class Menu_model extends CI_Model{
     
     
     
-    function get_page_match($cate_id){
-    	$match	=	'|'.$cate_id.'|';
-    	$page	=	$this->db->select()
-    						 ->like('cate_id', $match)
-    						 ->get($this->table_page)
-    						 ->result();
-    	if(!empty($page)){
-    		return $page;
-    	}
-    	return 0;
-    }
-    
-    
-    function update_page($id, $info = array()){
-    	return $this->db->where('id', $id)->update($this->table_page, $info);
-    }
-    
-    
-    function delete_page($page_id){
-    	return $this->db->where('id', $page_id)->delete($this->table_page);
-    }
-    
-    
-    function delete($cate_id){
-    	$list = $this->get_tree_by_parent($cate_id);
+    function delete($menu_id){
+    	$list = $this->get_tree_by_parent($menu_id);
     	#delete children
     	foreach($list as $k => $v){
     		$this->db->where('id', $v->id)->delete($this->table);
     	}
     	#delete itself.	
-    	$this->db->where('id', $cate_id)->delete($this->table);
+    	$this->db->where('id', $menu_id)->delete($this->table);
     }
     
     
@@ -126,9 +101,9 @@ class Menu_model extends CI_Model{
     }
     
     
-    function check_exist_edit($cate_id, $name){
+    function check_exist_edit($menu_id, $name){
     	$res	=	$this->db->select()
-    						 ->where('id !=', $cate_id)
+    						 ->where('id !=', $menu_id)
     						 ->where('name', $name)
     						 ->get($this->table)
     						 ->row_array();
@@ -138,9 +113,9 @@ class Menu_model extends CI_Model{
     	return false;
     }
     
-    function check_order_exist_edit($cate_id, $order){
+    function check_order_exist_edit($menu_id, $order){
     	$res	=	$this->db->select()
-    						 ->where('id !=', $cate_id)
+    						 ->where('id !=', $menu_id)
 					    	 ->where('order', $order)
 					    	 ->get($this->table)
 					    	 ->row_array();
@@ -156,14 +131,14 @@ class Menu_model extends CI_Model{
     }
     
     
-    function edit_category($cate_id, $info = array() ){
-    	return $this->db->where('id', $cate_id)
+    function edit_category($menu_id, $info = array() ){
+    	return $this->db->where('id', $menu_id)
     					->update($this->table, $info);
     }
     
     
-    function change_status($cate_id, $info = array()){
-    	return $this->db->where('id', $cate_id)
+    function change_status($menu_id, $info = array()){
+    	return $this->db->where('id', $menu_id)
     					->update($this->table, $info);
     }
     
@@ -223,19 +198,6 @@ class Menu_model extends CI_Model{
     
     function count_active(){
     	return $this->db->where('active', 'yes')->count_all_results($this->table);
-    }
-    
-    
-    function get_search_list($keyword){
-    	$search	=	$this->db->select()
-    						 ->like('name', $keyword)
-    						 ->or_like('name_ascii', $keyword)
-    						 ->get($this->table)
-    						 ->result();
-    	if(!empty($search)){
-    		return $search;
-    	}
-    	return false;
     }
     
     
