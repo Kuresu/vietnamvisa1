@@ -24,9 +24,9 @@
 				$(".menu2").click(function(){$("#sub2").slideToggle('slow');});
 				$(".menu3").click(function(){$("#sub3").slideToggle('slow');});
 				$(".menu4").click(function(){$("#sub4").slideToggle('slow');});
-				$(".menu5").click(function(){$("#sub5").slideToggle('slow');});
-				$(".menu6").click(function(){$(".sub").slideToggle('slow');});
-				$(".menu7").click(function(){$("#sub7").slideToggle('slow');});
+				$(".menu5").click(function(){$(".sub5").slideToggle('slow');});
+				$(".menu6").click(function(){$(".sub6").slideToggle('slow');});
+				$(".menu7").click(function(){$(".sub").slideToggle('slow');});
 				$(".menu8").click(function(){$("#sub8").slideToggle('slow');});
 				$(".menu9").click(function(){$("#sub9").slideToggle('slow');});
 				$(".menu10").click(function(){$("#sub10").slideToggle('slow');});
