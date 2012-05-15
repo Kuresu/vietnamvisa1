@@ -35,6 +35,14 @@ ul.menuleft li a.trash{ float:left; background: url(../img/icon9.png) no-repeat 
 ul.menuleft li.sub{ float:left; width:188px; height:30px; margin-top:1px; background:#ecf4ff; border:1px #d8e8ff solid; -moz-border-radius:5px; -webkit-border-radius:5px; line-height:30px; font-weight:normal; text-indent:20px;}
 ul.menuleft li.sub a{ color:#1d6d96; text-decoration:none;}
 ul.menuleft li.sub a:hover, ul.menuleft li.sub a.current{ color:#ffa200;}
+
+ul.menuleft li.sub5{ float:left; width:188px; height:30px; margin-top:1px; background:#ecf4ff; border:1px #d8e8ff solid; -moz-border-radius:5px; -webkit-border-radius:5px; line-height:30px; font-weight:normal; text-indent:20px;}
+ul.menuleft li.sub5 a{ color:#1d6d96; text-decoration:none;}
+ul.menuleft li.sub5 a:hover, ul.menuleft li.sub5 a.current{ color:#ffa200;}
+
+ul.menuleft li.sub6{ float:left; width:188px; height:30px; margin-top:1px; background:#ecf4ff; border:1px #d8e8ff solid; -moz-border-radius:5px; -webkit-border-radius:5px; line-height:30px; font-weight:normal; text-indent:20px;}
+ul.menuleft li.sub6 a{ color:#1d6d96; text-decoration:none;}
+ul.menuleft li.sub6 a:hover, ul.menuleft li.sub6 a.current{ color:#ffa200;}
 /*-------------Calendar---------------*/
 
 .calendar{ position:relative; width:190px; top:5px; left:5px;}
