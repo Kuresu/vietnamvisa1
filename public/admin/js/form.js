@@ -125,4 +125,34 @@
 		);
 	}
 	
+	
+	function qcate_status(qcate_id, qcate_status){
+		$.post(
+				admin_url+'qcate/change-status/',
+				{id: qcate_id, status: qcate_status},
+				function(msg){
+					if(msg == "yes") {
+						load_content('row_'+qcate_id, admin_url+'qcate/load-row/'+qcate_id);
+			            $('.linecate2').has('#row_'+qcate_id).css('background-color', '#FFFFE0');
+			            window.location	=	admin_url+'question-category';
+					}
+				}
+		);
+	}
+	
+	
+	function question_status(quest_id, quest_status){
+		$.post(
+				admin_url+'question/change-status/',
+				{id: quest_id, status: quest_status},
+				function(msg){
+					if(msg == "yes") {
+						load_content('row_'+quest_id, admin_url+'qcate/load-row/'+quest_id);
+			            $('.linecate2').has('#row_'+quest_id).css('background-color', '#FFFFE0');
+			            window.location	=	admin_url+'question';
+					}
+				}
+		);
+	}
+	
 
