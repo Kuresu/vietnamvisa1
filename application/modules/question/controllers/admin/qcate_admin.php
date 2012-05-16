@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+ * ---------------------------------------------------------------
+ * Author  : Anthony Tran
+ * Email   : Incredibletran@gmail.com - Incredibletran@hotmail.com
+ * Version : 1.0
+ * ---------------------------------------------------------------
+*/
 require_once(APPPATH.'controllers/admin_controller'.EXT);
 class Qcate_admin extends Admin_controller {
 	
@@ -103,8 +109,7 @@ class Qcate_admin extends Admin_controller {
     
     
     function delete($qcate_id){
-    	#delete its' question.
-    	$this->qcate_model->delete_many_question($qcate_id);
+    	
     	$question_list	=	$this->qcate_model->get_question_list($qcate_id);
     	
     	if($question_list){
@@ -112,6 +117,9 @@ class Qcate_admin extends Admin_controller {
     			$this->qcate_model->delete_answer($question_list[$i]->id);
     		}
     	}
+    	
+    	#delete its' question.
+    	$this->qcate_model->delete_many_question($qcate_id);
     	
     	#delete cate in DB.
     	$this->qcate_model->delete($qcate_id);
@@ -187,4 +195,5 @@ class Qcate_admin extends Admin_controller {
     
     
 }
-//End Slider_admin
+
+/*----------------------------------------------End-----------------------------------------*/

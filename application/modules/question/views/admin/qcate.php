@@ -1,5 +1,5 @@
 
-	<h1>Faqs Category Manager</h1>
+	<h1>Question Category Manager</h1>
     <div class="toppage">
     	<span class="left">
         	<select style="width: 130px;" id="action">

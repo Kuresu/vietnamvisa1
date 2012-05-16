@@ -87,7 +87,7 @@
 		            </div>
 		            <div class="column" style="width:40%;">
 		            	<?php if(isset($answer_match['answer'])){?>
-		            	<span style="color: green;">
+		            	<span style="color: green; font-family:inherit; font-style: italic; ">
 		            		<?php 
 		            			$content = $answer_match['answer'];
 		            			$content = strip_tags($content);

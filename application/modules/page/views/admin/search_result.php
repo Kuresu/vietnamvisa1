@@ -52,7 +52,8 @@
 	        	<div class="column" style="width: 2%;"><input class="check_all" onclick="check_all('.check_all')" type="checkbox"></div>
 	            <div class="column" style="width: 4%;">No.</div>
 	            <div class="column" style="width: 25%;">Name</div>
-	            <div class="column" style="width: 40%;">Description</div>
+	            <div class="column" style="width: 20%;">Url</div>
+	            <div class="column" style="width: 20%;">Description</div>
 	            <div class="column" style="width: 15%;">Category</div>
 	            <div class="column" style="width: 8%;">Order</div>
 	            <div class="column" style="width: 5%;">Status</div>
@@ -70,8 +71,11 @@
 		                    <img src="<?php echo base_url();?>public/admin/img/edit.gif" /><a href="javascript:void(0)" onclick="open_form('<?php echo admin_url(); ?>/edit-page/<?php echo $v->id;?>')">Edit</a>|<img src="<?php echo base_url();?>public/admin/img/icon_view.png" class="png" /><a href="#">View</a>|<img src="<?php echo base_url();?>public/admin/img/delete.gif" /><a href="<?php echo admin_url();?>/page/delete-page/<?php echo $v->id;?>" onclick="return confirm('Do you want delete this page?');"><font color="#be0000">Delete</font></a>
 		                </div>
 		            </div>
-		            <div class="column" style="width:40%;">
-		            	<span style="color: green;">
+		            <div class="column" style="width:20%">
+		            	<?php echo $v->url;?>
+		            </div>
+		            <div class="column" style="width:20%;">
+		            	<span style="color: grey;">
 		            		<?php 
 		            			$content = $v->description;
 		            			$content = strip_tags($content);
@@ -84,16 +88,16 @@
 		            				echo $content;
 		            			}
 		            		?>
-		            	</span>
+	            		</span>
 		            </div>
-		            <div class="column " style="width:15%;"><?php echo $v->cate_name;?></div>
+		            <div class="column " style="width:15%;color: navy;"><?php echo $v->cate_name;?></div>
 		            <div class="column" style="width:8%;">
 		            	<input type="text" name="order" class="order" id="<?php echo $v->id;?>" value="<?php echo $v->order;?>" style="width:45px; float:left;" />
 		            </div>
 		            <div class="column" style="width:5%;">
 		            <?php if($v->active == 'yes'){?>
 		            	<a href="javascript:void(0);" onclick="page_status('<?php echo $v->id;?>', 'no')"><img src="<?php echo base_url();?>public/admin/img/active.png" title="Active" alt="Yes" class="icon png" /></a>
-					<?php }else {?>		            	
+					<?php }else{?>		            	
 		            	<a href="javascript:void(0);" onclick="page_status('<?php echo $v->id;?>', 'yes')"><img src="<?php echo base_url();?>public/admin/img/pending.png" title="Suspend" alt="No" class="icon png" /></a>
 		            <?php }?>
 		            </div>

@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+ * ---------------------------------------------------------------
+ * Author  : Anthony Tran
+ * Email   : Incredibletran@gmail.com - Incredibletran@hotmail.com
+ * Version : 1.0
+ * ---------------------------------------------------------------
+*/
 require_once(APPPATH.'controllers/admin_controller'.EXT);
 class Faqs_admin extends Admin_controller {
 	
@@ -55,7 +61,7 @@ class Faqs_admin extends Admin_controller {
     	$faqs_list					= 	$this->faqs_model->get_faqs_list($perpage, $offset);
     	$fcate_info					=	$this->faqs_model->get_fcate();
     
-	    $delete_faq				=	$this->session->userdata('delete_faq');
+	    $delete_faq					=	$this->session->userdata('delete_faq');
 	    $this->session->unset_userdata('delete_faq');
 	     
 	    if(isset($delete_faq) && $delete_faq == 'delete faq'){
@@ -237,7 +243,18 @@ class Faqs_admin extends Admin_controller {
     	#get info.
     	$search_list				= 	$this->faqs_model->get_search_list($keyword, $cate_id);
     	$fcate_info					=	$this->faqs_model->get_fcate();
+    	
+    	$delete_faq					=	$this->session->userdata('delete_faq');
+    	$this->session->unset_userdata('delete_faq');
+    	
+    	if(isset($delete_faq) && $delete_faq == 'delete faq'){
+    		$inform	=	'delete faq success';
+    	}else {
+    		$inform = "";
+    	}
+    	
     	#assign data.
+    	$data['inform']				=	$inform;
     	$data['keyword']			=	$keyword;
     	$data['fcate_info']			=	$fcate_info;
     	$data['cate_id']			=	$cate_id;
@@ -250,4 +267,5 @@ class Faqs_admin extends Admin_controller {
     
     
 }
-//End Slider_admin
+
+/*-----------------------------------------------End---------------------------------------------------*/
