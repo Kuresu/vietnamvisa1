@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+ * ---------------------------------------------------------------
+ * Author  : Anthony Tran
+ * Email   : Incredibletran@gmail.com - Incredibletran@hotmail.com
+ * Version : 1.0
+ * ---------------------------------------------------------------
+*/
 require_once(APPPATH.'controllers/admin_controller'.EXT);
 class Tags_admin extends Admin_controller {
 	
@@ -213,4 +219,5 @@ class Tags_admin extends Admin_controller {
     
     
 }
-//End Page_admin
+
+/*---------------------------------------------End----------------------------------------------*/

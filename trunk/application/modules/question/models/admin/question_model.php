@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+ * ---------------------------------------------------------------
+ * Author  : Anthony Tran
+ * Email   : Incredibletran@gmail.com - Incredibletran@hotmail.com
+ * Version : 1.0
+ * ---------------------------------------------------------------
+*/
 class Question_model extends CI_Model{
 	
 	var	$table			=	"ans_question";	
@@ -216,4 +222,5 @@ class Question_model extends CI_Model{
     }
     
 }
-//End Slider_model
+
+/*---------------------------------------------End-------------------------------------------*/

@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+ * ---------------------------------------------------------------
+ * Author  : Anthony Tran
+ * Email   : Incredibletran@gmail.com - Incredibletran@hotmail.com
+ * Version : 1.0
+ * ---------------------------------------------------------------
+*/
 class Page_model extends CI_Model{
 	
 	var	$table		=	"page";
@@ -175,6 +181,7 @@ class Page_model extends CI_Model{
     	if($cate_id != '|all|'){
     		$this->db->like('cate_id', $cate_id);
     	}
+    	$this->db->order_by('id','DESC');
     	$query	=	$this->db->get($this->table);
     	$res	=	$query->result();
     	if(!empty($res)){
@@ -187,7 +194,8 @@ class Page_model extends CI_Model{
     	$res	=	$this->db->select()
     						 ->where('id', $id)
     						 ->like('name', $keyword)
-    						 ->or_like('name_ascii', $keyword)
+    						 ->or_like('description', $keyword)
+    						 ->order_by('id','DESC')
     						 ->get($this->table)
     						 ->result();
     	if(!empty($res)){
@@ -262,4 +270,5 @@ class Page_model extends CI_Model{
     
     
 }
-//End Page_model
+
+/*--------------------------------------------------End-----------------------------------------------------*/

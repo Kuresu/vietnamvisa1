@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+ * ---------------------------------------------------------------
+ * Author  : Anthony Tran
+ * Email   : Incredibletran@gmail.com - Incredibletran@hotmail.com
+ * Version : 1.0
+ * ---------------------------------------------------------------
+*/
 require_once(APPPATH.'controllers/admin_controller'.EXT);
 class Page_admin extends Admin_controller {
 	
@@ -285,7 +291,18 @@ class Page_admin extends Admin_controller {
     	#get info.
     	$search_list				= 	$this->page_model->get_search_list($keyword, $cate_id);
     	$cate_info					=	$this->page_model->get_tree_cate();
+    	$delete_page				=	$this->session->userdata('delete_page');
+    	
+    	$this->session->unset_userdata('delete_page');
+    	 
+    	if(isset($delete_page) && $delete_page == 'delete page'){
+    		$inform	=	'delete page success';
+    	}else {
+    		$inform = "";
+    	}
+    	
     	#assign data.
+    	$data['inform']				=	$inform;
     	$data['keyword']			=	$keyword;
     	$data['cate_info']			=	$cate_info;
     	$data['cate_id']			=	$this->input->post('category');
@@ -304,4 +321,5 @@ class Page_admin extends Admin_controller {
     
     
 }
-//End Page_admin
+
+/*-------------------------------------------------End-----------------------------------------------------*/

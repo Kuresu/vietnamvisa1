@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+ * ---------------------------------------------------------------
+ * Author  : Anthony Tran
+ * Email   : Incredibletran@gmail.com - Incredibletran@hotmail.com
+ * Version : 1.0
+ * ---------------------------------------------------------------
+*/
 require_once(APPPATH.'controllers/admin_controller'.EXT);
 class Question_admin extends Admin_controller {
 	
@@ -22,7 +28,7 @@ class Question_admin extends Admin_controller {
     		if($this->session->userdata('filter_question_parent')) {
     			$filter_parent = $this->session->userdata('filter_question_parent');
     		} else {
-    			$filter_parent = '';
+    			$filter_parent = 'all';
     			$this->session->set_userdata('filter_question_parent',$filter_parent);
     		}
     	}
@@ -291,4 +297,5 @@ class Question_admin extends Admin_controller {
     
     
 }
-//End Slider_admin
+
+/*--------------------------------------------End--------------------------------------------*/

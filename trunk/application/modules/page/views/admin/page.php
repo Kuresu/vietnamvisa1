@@ -27,7 +27,7 @@
                 	</select>
             <?php }?>
        		<input type="text" name="search" onfocus="if (this.value == 'Keyword') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Keyword';}"  value="Keyword" style="width:165px; padding:3px;" />
-        	<input type="submit" name="" value="Filter" class="btn" />
+        	<input type="submit" name="" value="Search" class="btn" />
         </span>
        
         <span class="btnadd">

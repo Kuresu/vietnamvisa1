@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+ * ---------------------------------------------------------------
+ * Author  : Anthony Tran
+ * Email   : Incredibletran@gmail.com - Incredibletran@hotmail.com
+ * Version : 1.0
+ * ---------------------------------------------------------------
+*/
 class Auth_model extends CI_Model{
 	
 	var	$table				=	"admin";		
@@ -49,5 +55,5 @@ class Auth_model extends CI_Model{
 	}
 	
 }
-/* End of file auth_model.php */
-/* Location: ./application/models/admin/auth_model.php */
+
+/*------------------------------------------End----------------------------------------------------*/

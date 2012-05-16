@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+ * ---------------------------------------------------------------
+ * Author  : Anthony Tran
+ * Email   : Incredibletran@gmail.com - Incredibletran@hotmail.com
+ * Version : 1.0
+ * ---------------------------------------------------------------
+*/
 class Homead_model extends CI_Model{
 	
 	var	$table_admin		=	"admin";		
@@ -38,4 +44,4 @@ class Homead_model extends CI_Model{
 
 }
 
-//End Homead_model
+/*-------------------------------------------------End---------------------------------------------*/

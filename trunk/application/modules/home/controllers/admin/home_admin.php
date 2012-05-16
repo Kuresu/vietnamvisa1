@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * ---------------------------------------------------------------
+ * Author  : Anthony Tran
+ * Email   : Incredibletran@gmail.com - Incredibletran@hotmail.com
+ * Version : 1.0
+ * ---------------------------------------------------------------
+*/
 require_once(APPPATH.'controllers/admin_controller'.EXT);
 class Home_admin extends Admin_controller {
 	
@@ -64,4 +70,5 @@ class Home_admin extends Admin_controller {
 	
 	
 }
-/* End of file Home_admin.php */
+
+/*--------------------------------------End-------------------------------------------------*/
