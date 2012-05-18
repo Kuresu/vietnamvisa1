@@ -152,7 +152,7 @@
 	$('#action_page_form').iframer({
 	    onComplete: function(msg){
 	    	if(msg == 'yes') {
-	    		alert('The Action have been successfully executed!');
+	    		alert('The Action has been successfully executed!');
 	    		window.location	=	'<?php echo $url_page_status;?>';
 	    	}
 	    	else show_error('div_message', msg)

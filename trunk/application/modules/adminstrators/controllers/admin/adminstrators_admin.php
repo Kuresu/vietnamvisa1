@@ -128,7 +128,7 @@ class Adminstrators_admin extends Admin_controller {
 			#set rules.
     		$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
     		$this->form_validation->set_rules('password', 'Password', 'trim|xss_clean|min_length[6]|max_length[12]');    		                      
-    		$this->form_validation->set_rules('email', 'Email', 'valid_email|trim|xss_clean');
+    		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim|xss_clean');
     		
     		if($this->form_validation->run() == TRUE) {
                 $info	=	array();
