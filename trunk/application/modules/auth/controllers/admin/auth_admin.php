@@ -18,7 +18,7 @@ class Auth_admin extends CI_Controller {
 	}
 
 	function index(){
-		redirect('auth_admin/login');
+		redirect('auth_admin/login', 'refresh');
 	}
 	
 	

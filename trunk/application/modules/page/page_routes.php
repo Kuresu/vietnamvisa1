@@ -1,21 +1,21 @@
 <?php 
 
-	$route['home_admin/page']							=	"page/admin/page_admin/index";
+	$route[ADMIN_SIDE.'/page']							=	"page/admin/page_admin/index";
 	
-	$route['home_admin/page/([0-9\-]+)']				=	"page/admin/page_admin/index/$1";
+	$route[ADMIN_SIDE.'/page/([0-9\-]+)']				=	"page/admin/page_admin/index/$1";
 	
-	$route['home_admin/add-new-page']					=	"page/admin/page_admin/add";
+	$route[ADMIN_SIDE.'/add-new-page']					=	"page/admin/page_admin/add";
 	
-	$route['home_admin/edit-page/(:num)']				=	"page/admin/page_admin/edit/$1";
+	$route[ADMIN_SIDE.'/edit-page/(:num)']				=	"page/admin/page_admin/edit/$1";
 	
-	$route['home_admin/page/change-status']				=	"page/admin/page_admin/change_status";
+	$route[ADMIN_SIDE.'/page/change-status']			=	"page/admin/page_admin/change_status";
 
-	$route['home_admin/page/do-action']					=	"page/admin/page_admin/do_action";
+	$route[ADMIN_SIDE.'/page/do-action']				=	"page/admin/page_admin/do_action";
 	
-	$route['home_admin/page/delete-page/([0-9\-]+)']	=	"page/admin/page_admin/delete/$1";
+	$route[ADMIN_SIDE.'/page/delete-page/([0-9\-]+)']	=	"page/admin/page_admin/delete/$1";
 	
-	$route['home_admin/page/change-order']				=	"page/admin/page_admin/change_order";
+	$route[ADMIN_SIDE.'/page/change-order']				=	"page/admin/page_admin/change_order";
 	
-	$route['home_admin/page/search-results']			=	"page/admin/page_admin/search";
+	$route[ADMIN_SIDE.'/page/search-results']			=	"page/admin/page_admin/search";
 	
-	$route['home_admin/page/load-row/(:any)']			=	"page/admin/page_admin/load_row/$1";
+	$route[ADMIN_SIDE.'/page/load-row/(:any)']			=	"page/admin/page_admin/load_row/$1";
