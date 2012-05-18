@@ -1,10 +1,12 @@
 <?php
 # for client side
-$route['home']			=	"home/home";
+$route['home']						=	"home/home";
 
 # for admin side
-$route['home_admin']	=	"home/admin/home_admin";
+//$default							=	"home_admin";
 
-$route['home_admin/change-password']	=	"home/admin/home_admin/change_password";
+$route[ADMIN_SIDE]					=	"home/admin/home_admin";
+
+$route[ADMIN_SIDE.'/change-password']	=	"home/admin/home_admin/change_password";
 
 ?>
