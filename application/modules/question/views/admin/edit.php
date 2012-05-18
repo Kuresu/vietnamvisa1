@@ -82,7 +82,7 @@ $('#edit-question-form').iframer({
     	if(msg == 'yes') {
     		$('#light_adct').hide();$('#fade_adct').hide();
     		alert('Answer Successfully!');
-            window.location	=	admin_url+'question';
+            window.location	=	'<?php echo $current_url;?>';
     	}
     	else show_error('div_message', msg)
     }

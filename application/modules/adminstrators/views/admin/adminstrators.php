@@ -58,7 +58,7 @@
 		            <div class="column" style="width:15%;" onmouseover="Hovercat('<?php echo $v->id;?>')" onmouseout="Outcat('<?php echo $v->id;?>')">
 		            	<a href="javascript:;" class="art admin_name_<?php echo $v->id;?>"><?php echo $v->username;?></a><br />
 		                <div class="action" id="neocat-<?php echo $v->id;?>">
-		                    <img src="<?php echo base_url();?>public/admin/img/edit.gif" /><a href="javascript:void(0)" class="change-adminstrator" id="<?php echo $v->id;?>" onclick ="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">Edit</a>|<img src="<?php echo base_url();?>public/admin/img/delete.gif" /><a href="<?php echo admin_url();?>/delete-adminstrator/<?php echo $v->id;?>" onclick="return confirm('Do you want delete this account?');"><font color="#be0000">Delete</font></a>
+		                    <img src="<?php echo base_url();?>public/admin/img/edit.gif" /><a href="javascript:void(0)" onclick="open_form('<?php echo admin_url(); ?>/edit-adminstrator/<?php echo $v->id;?>')">Edit</a>|<img src="<?php echo base_url();?>public/admin/img/delete.gif" /><a href="<?php echo admin_url();?>/delete-adminstrator/<?php echo $v->id;?>" onclick="return confirm('Do you want delete this account?');"><font color="#be0000">Delete</font></a>
 		                </div>
 		            </div>
 		            <div class="column" style="width:20%;"><span class="art admin_fullname_<?php echo $v->id;?>"><?php echo $v->fullname;?></span></div>
@@ -109,14 +109,14 @@
 	});
 
 	var inform	=	'<?php echo $inform;?>';
-	if(inform == 'edit success'){alert("Edit Successfully !");}
 	
 	if(inform == 'delete success') {alert("Delete Successfully !");}
 
 	$('#action_form').iframer({
 	    onComplete: function(msg){
 	    	if(msg == 'yes') {
-	    		window.location	=	admin_url+'adminstrators-management';
+		    	alert('The Action has been successfully executed!');
+	    		window.location	=	'<?php echo $current_url;?>';
 	    	}
 	    	else show_error('div_message', msg)
 	    }

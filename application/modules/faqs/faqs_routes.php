@@ -18,6 +18,8 @@
 	
 	$route['home_admin/faqs/search-results']			=	"faqs/admin/faqs_admin/search";
 	
+	$route['home_admin/faqs/load-row/(:any)']			=	"faqs/admin/faqs_admin/load_row/$1";
+	
 	# faqs categories.
 	
 	$route['home_admin/faqs-category']					=	"faqs/admin/fcate_admin/index";
@@ -33,4 +35,6 @@
 	$route['home_admin/fcate/change-order']				=	"faqs/admin/fcate_admin/change_order";
 	
 	$route['home_admin/fcate/do-action']				=	"faqs/admin/fcate_admin/do_action";
+	
+	$route['home_admin/fcate/load-row/(:any)']			=	"faqs/admin/fcate_admin/load_row/$1";
 	

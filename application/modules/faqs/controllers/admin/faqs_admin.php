@@ -58,6 +58,8 @@ class Faqs_admin extends Admin_controller {
     	$offset 					= 	($this->uri->segment(3)=='') ? 0 : $this->uri->segment(3);
     	
     	#get info.
+    	$faq_url					=	$this->selfURL();
+    	$this->session->set_userdata('faq_url', $faq_url);
     	$faqs_list					= 	$this->faqs_model->get_faqs_list($perpage, $offset);
     	$fcate_info					=	$this->faqs_model->get_fcate();
     
@@ -70,6 +72,7 @@ class Faqs_admin extends Admin_controller {
 	    	$inform = "";
 	    }
     	
+	    $data['current_url']		=	$faq_url;
 	    $data['fcate_info']			=	$fcate_info;
 	    $data['pagination']			=	$pagination;
 	    $data['current_perpage']	=	$perpage;
@@ -154,7 +157,8 @@ class Faqs_admin extends Admin_controller {
     	#get info from DB.
     	$faq_info			=	$this->faqs_model->get_match($faq_id);
     	$fcate_info			=	$this->faqs_model->get_fcate();
-
+		
+    	$data['current_url']=	$this->session->userdata('faq_url');
     	$data['cate_info']	=	$fcate_info;
     	$data['faq_info']	=	$faq_info;
     	$data['faq_id']		=	$faq_id;
@@ -169,7 +173,9 @@ class Faqs_admin extends Admin_controller {
      
 	    $delete	=	"delete faq";
 	    $this->session->set_userdata('delete_faq', $delete);
-	    redirect(admin_url('faqs'),'refresh');
+	    
+	    $url	=	$this->session->userdata('faq_url');
+	    redirect($url,'refresh');
     }
     
     
@@ -189,8 +195,8 @@ class Faqs_admin extends Admin_controller {
     
     
     function load_row($id = ''){
-    
-    	$data['faq'] = $this->faqs_model->get_match($id);
+    	$data['current_url']	=	$this->session->userdata('faq_url');
+    	$data['faq'] 			= 	$this->faqs_model->get_match($id);
     	$this->load->view('admin/row', $data);
     }
     
@@ -211,7 +217,8 @@ class Faqs_admin extends Admin_controller {
     		$this->faqs_model->update_order($faq_id, array('order' => $faq_order));
     	}
     
-    	redirect(admin_url('faqs'), 'refresh');
+    	$url	=	$this->session->userdata('faq_url');
+	    redirect($url,'refresh');
     }
     
     
@@ -254,6 +261,7 @@ class Faqs_admin extends Admin_controller {
     	}
     	
     	#assign data.
+    	$data['current_url']		=	$this->session->userdata('faq_url');
     	$data['inform']				=	$inform;
     	$data['keyword']			=	$keyword;
     	$data['fcate_info']			=	$fcate_info;
@@ -264,7 +272,21 @@ class Faqs_admin extends Admin_controller {
     	$this->load->view('admin/admin_layout/index', $data);
     }
     
+    function selfURL(){
+    	if(!isset($_SERVER['REQUEST_URI'])){
+    		$serverrequri = $_SERVER['PHP_SELF'];
+    	}else{
+    		$serverrequri =    $_SERVER['REQUEST_URI'];
+    	}
+    	$protocol 	= strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    	$host     	= $_SERVER['HTTP_HOST'];
+    	$port 		= ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
     
+    
+    	$currentUrl = $protocol . '://' . $host . $port .$_SERVER['REQUEST_URI'];
+    
+    	return $currentUrl;
+    }
     
 }
 

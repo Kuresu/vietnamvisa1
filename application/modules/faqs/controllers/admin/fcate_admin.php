@@ -100,10 +100,9 @@ class Fcate_admin extends Admin_controller {
     	}
     	
     	#get info from DB.
-    	$fcate_info			=	$this->fcate_model->get_match($fcate_id);
-    	 
-    	$data['fcate_info']	=	$fcate_info;
-    	$data['fcate_id']	=	$fcate_id;
+    	$fcate_info				=	$this->fcate_model->get_match($fcate_id);
+    	
+    	$data['fcate_info']		=	$fcate_info;
     	$this->load->view('admin/fcate_edit', $data);
     }
     

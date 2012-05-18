@@ -17,3 +17,5 @@
 	$route['home_admin/menu/change-order']				=	"menu/admin/menu_admin/change_order";
 	
 	$route['home_admin/menu/search-results']			=	"menu/admin/menu_admin/search";
+	
+	$route['home_admin/menu/load-row/(:any)']			=	"menu/admin/menu_admin/load_row/$1";

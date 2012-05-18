@@ -125,7 +125,8 @@
 	$('#action_tag_form').iframer({
 	    onComplete: function(msg){
 	    	if(msg == 'yes') {
-	    		window.location	=	admin_url+'tags';
+	    		alert('The Action has been successfully executed!');
+	    		window.location	=	'<?php echo $current_url;?>';
 	    	}
 	    	else alert('damn');
 	    }

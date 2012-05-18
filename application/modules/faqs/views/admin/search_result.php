@@ -101,9 +101,9 @@
 		            </div>
 		            <div class="column" style="width:5%;">
 		            <?php if($v->active == 'yes'){?>
-		            	<a href="javascript:void(0);" onclick="faqs_status('<?php echo $v->id;?>', 'no')"><img src="<?php echo base_url();?>public/admin/img/active.png" title="Active" alt="Yes" class="icon png" /></a>
+		            	<a href="javascript:void(0);" onclick="faqs_status('<?php echo $v->id;?>', 'no', '<?php echo $current_url;?>')"><img src="<?php echo base_url();?>public/admin/img/active.png" title="Active" alt="Yes" class="icon png" /></a>
 					<?php }else{?>		            	
-		            	<a href="javascript:void(0);" onclick="faqs_status('<?php echo $v->id;?>', 'yes')"><img src="<?php echo base_url();?>public/admin/img/pending.png" title="Suspend" alt="No" class="icon png" /></a>
+		            	<a href="javascript:void(0);" onclick="faqs_status('<?php echo $v->id;?>', 'yes', '<?php echo $current_url;?>')"><img src="<?php echo base_url();?>public/admin/img/pending.png" title="Suspend" alt="No" class="icon png" /></a>
 		            <?php }?>
 		            </div>
 	            </div>
@@ -139,7 +139,8 @@
 	$('#action_faq_form').iframer({
 	    onComplete: function(msg){
 	    	if(msg == 'yes') {
-	    		window.location	=	admin_url+'faqs';
+	    		alert('The Action has been successfully executed!');
+	    		window.location	=	'<?php echo $current_url;?>';
 	    	}
 	    	else show_error('div_message', msg)
 	    }

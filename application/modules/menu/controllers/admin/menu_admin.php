@@ -73,6 +73,8 @@ class Menu_admin extends Admin_controller {
     	#get info.
     	$list						= 	$this->menu_model->get_menu_list($filter_parent, $perpage, $offset);
     	$cate_info					=	$this->menu_model->get_tree();
+    	$menu_url					=	$this->selfURL();
+    	$this->session->set_userdata('menu_url', $menu_url);
     	$delete_menu				=	$this->session->userdata('delete_menu');
     	$this->session->unset_userdata('delete_menu');
     	 
@@ -83,7 +85,8 @@ class Menu_admin extends Admin_controller {
     	}
     	
     	#assign data.
-    	$data['current_filter_parent']	= $this->session->userdata('filter_menu_parent');
+    	$data['current_url']			=	$menu_url;
+    	$data['current_filter_parent']	= 	$this->session->userdata('filter_menu_parent');
     	$data['current_perpage']		=	$perpage;
     	$data['menu_list']				=	$list;
     	$data['pagination']				=	$pagination;
@@ -167,9 +170,10 @@ class Menu_admin extends Admin_controller {
     		}
     	}
     	
-    	$data['tree_cate']	=	$this->menu_model->get_tree_edit($menu_id);
-    	$data['menu_info']	=	$this->menu_model->get_match($menu_id);
-    	$data['hello']		=	"";
+    	$data['current_url']	=	$this->session->userdata('menu_url');
+    	$data['tree_cate']		=	$this->menu_model->get_tree_edit($menu_id);
+    	$data['menu_info']		=	$this->menu_model->get_match($menu_id);
+    	$data['hello']			=	"";
     	$this->load->view('admin/edit', $data);
     }
     
@@ -180,7 +184,9 @@ class Menu_admin extends Admin_controller {
     	$this->menu_model->delete($menu_id);
     	$delete	=	"delete";
     	$this->session->set_userdata('delete_menu', $delete);
-    	redirect(admin_url('menu'),'refresh');
+    	
+    	$url	=	$this->session->userdata('menu_url');
+    	redirect($url, 'refresh');
     }
     
     
@@ -240,7 +246,8 @@ class Menu_admin extends Admin_controller {
     		$this->menu_model->update_order($menu_id, array('order' => $order));
     	}
     	
-    	redirect(admin_url('menu'), 'refresh');
+    	$url	=	$this->session->userdata('menu_url');
+    	redirect($url, 'refresh');
     }
     
     
@@ -250,6 +257,7 @@ class Menu_admin extends Admin_controller {
     	$search_list				= 	$this->menu_model->get_search_list($keyword);
     	
     	#assign data.
+    	$data['current_url']		=	$this->session->userdata('menu_url');
     	$data['search_list']		=	$search_list;
     	$data['act']				=	"category";
     	$data['tpl_file']			=	"admin/search_index";
@@ -257,6 +265,22 @@ class Menu_admin extends Admin_controller {
     }
     
    
+    
+    function selfURL(){
+    	if(!isset($_SERVER['REQUEST_URI'])){
+    		$serverrequri = $_SERVER['PHP_SELF'];
+    	}else{
+    		$serverrequri =    $_SERVER['REQUEST_URI'];
+    	}
+    	$protocol 	= strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    	$host     	= $_SERVER['HTTP_HOST'];
+    	$port 		= ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+    
+    
+    	$currentUrl = $protocol . '://' . $host . $port .$_SERVER['REQUEST_URI'];
+    
+    	return $currentUrl;
+    }
     
     
 }
