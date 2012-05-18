@@ -58,6 +58,8 @@ class Tags_admin extends Admin_controller {
     	$offset 					= 	($this->uri->segment(3)=='') ? 0 : $this->uri->segment(3);
     	 
     	#get info.
+    	$tag_url					=	$this->selfURL();
+    	$this->session->set_userdata('tag_url', $tag_url);
     	$tags_list					= 	$this->tags_model->get_tag_list($perpage, $offset);
     	$delete_tag					=	$this->session->userdata('delete_tag');
     	$this->session->unset_userdata('delete_tag');
@@ -69,6 +71,7 @@ class Tags_admin extends Admin_controller {
     	}
     	
     	#assign data.
+    	$data['current_url']		=	$tag_url;
     	$data['tags_list']			=	$tags_list;
     	$data['pagination']			=	$pagination;
     	$data['current_perpage']	=	$perpage;
@@ -140,8 +143,10 @@ class Tags_admin extends Admin_controller {
     		}
     	}
     	#get info from DB.
-    	$tag_info			=	$this->tags_model->get_match($tag_id);
-    	$data['tag_info']	=	$tag_info;
+    	$tag_info				=	$this->tags_model->get_match($tag_id);
+    	
+    	$data['current_url']	=	$this->session->userdata('tag_url');
+    	$data['tag_info']		=	$tag_info;
     	$this->load->view('admin/edit', $data);
     }
     
@@ -188,7 +193,8 @@ class Tags_admin extends Admin_controller {
      
 	    $delete	=	"delete tag";
 	    $this->session->set_userdata('delete_tag', $delete);
-	    redirect(admin_url('tags'),'refresh');
+	    $url	=	$this->session->userdata('tag_url');
+	    redirect($url,'refresh');
     }
     
     
@@ -214,6 +220,23 @@ class Tags_admin extends Admin_controller {
     	$data['act']				=	"tags";
 		$data['tpl_file']			=	"admin/search_index";
 		$this->load->view('admin/admin_layout/index', $data);	
+    }
+    
+    
+    function selfURL(){
+    	if(!isset($_SERVER['REQUEST_URI'])){
+    		$serverrequri = $_SERVER['PHP_SELF'];
+    	}else{
+    		$serverrequri =    $_SERVER['REQUEST_URI'];
+    	}
+    	$protocol 	= strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    	$host     	= $_SERVER['HTTP_HOST'];
+    	$port 		= ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+    
+    
+    	$currentUrl = $protocol . '://' . $host . $port .$_SERVER['REQUEST_URI'];
+    
+    	return $currentUrl;
     }
     
     

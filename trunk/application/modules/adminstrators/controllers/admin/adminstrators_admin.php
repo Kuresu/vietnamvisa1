@@ -58,6 +58,9 @@ class Adminstrators_admin extends Admin_controller {
     	$offset 					= 	($this->uri->segment(3)=='') ? 0 : $this->uri->segment(3);
 
     	#get info.
+    	$current_url				=	$this->selfURL();
+    	$this->session->set_userdata('url_adminstrator', $current_url);
+    	
     	$accs_list					= 	$this->adminstrators_model->get_acc_list($perpage, $offset);
     	$edit_result				=	$this->session->userdata('edit_result');
     	$delete_result				=	$this->session->userdata('delete_result');
@@ -77,8 +80,7 @@ class Adminstrators_admin extends Admin_controller {
     	$data['current_perpage']	=	$perpage;
     	$data['accs_list']			=	$accs_list;
     	$data['inform']				=	$inform;
-    	
-    	
+    	$data['current_url']		=	$current_url;
     	$data['act']				=	"adminstrators";
     	$data['tpl_file']			=	"admin/index";
     	$this->load->view('admin/admin_layout/index', $data);
@@ -120,11 +122,11 @@ class Adminstrators_admin extends Admin_controller {
     }
     
     
-    function edit(){
+    function edit($id = ""){
     	
     	if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			#set rules.
-    		$this->form_validation->set_rules('username', 'Username', 'trim|xss_clean');
+    		$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
     		$this->form_validation->set_rules('password', 'Password', 'trim|xss_clean|min_length[6]|max_length[12]');    		                      
     		$this->form_validation->set_rules('email', 'Email', 'valid_email|trim|xss_clean');
     		
@@ -136,25 +138,26 @@ class Adminstrators_admin extends Admin_controller {
                 $info['email']		=	$_POST['email'];
                 $info['active']		=	$_POST['change_status'];
                 $info['time']		=	date('Y-m-d');
-                $acc_id				=	$_POST['acc_id'];
                 if($_POST['password'] != ""){
                 	$info['password']	=	md5($_POST['password']);
                 }else {
                 	$info['password']	=	"";
                 }
                 
-                
-                #update into DB.
-                $this->adminstrators_model->edit_adminstrator($acc_id, $info);
-                
-                #redirect where it starts.
-                $edit				=	'edit';
-                $this->session->set_userdata('edit_result', $edit);
-                redirect('home_admin/adminstrators-management/', 'refresh');
+                if($this->adminstrators_model->check_exist_edit($id, $info['username'])) {
+                	die('This username is exist!');
+                }else {
+                	#update into DB.
+                	$this->adminstrators_model->edit_adminstrator($id, $info);
+                	die('yes');
+                }
+            }else {
+            	die(validation_errors());
             }
         }
 		#assign data.
-        $data['admin']       = $this->adminstrators_model->get_match_admin($acc_id);
+		$data['current_url']	=	$this->session->userdata('url_adminstrator');
+        $data['admin']       	= 	$this->adminstrators_model->get_match($id);
         $this->load->view('admin/edit', $data);
     }
     
@@ -165,7 +168,9 @@ class Adminstrators_admin extends Admin_controller {
     		
     	$delete	=	"delete";
     	$this->session->set_userdata('delete_result', $delete);
-    	redirect(admin_url('adminstrators-management'),'refresh');
+    	
+    	$url	=	$this->session->userdata('url_adminstrator');
+    	redirect($url,'refresh');
     }
     
     
@@ -208,6 +213,23 @@ class Adminstrators_admin extends Admin_controller {
     			
     		die('yes');
     	}
+    }
+    
+    
+    function selfURL(){
+    	if(!isset($_SERVER['REQUEST_URI'])){
+    		$serverrequri = $_SERVER['PHP_SELF'];
+    	}else{
+    		$serverrequri =    $_SERVER['REQUEST_URI'];
+    	}
+    	$protocol 	= strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    	$host     	= $_SERVER['HTTP_HOST'];
+    	$port 		= ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+    
+    		
+    	$currentUrl = $protocol . '://' . $host . $port .$_SERVER['REQUEST_URI'];
+    		
+    	return $currentUrl;
     }
     
     

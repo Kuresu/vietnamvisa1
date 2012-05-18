@@ -58,6 +58,8 @@ class Category_admin extends Admin_controller {
     	$offset 					= 	($this->uri->segment(3)=='') ? 0 : $this->uri->segment(3);
     	
     	#get info.
+    	$current_url				=	$this->selfURL();
+    	$this->session->set_userdata('url_edit_cate', $current_url);
     	$cate_list					= 	$this->category_model->get_cate_list($perpage, $offset);
     	$delete_cate				=	$this->session->userdata('delete_cate');
     	$this->session->unset_userdata('delete_cate');
@@ -69,13 +71,13 @@ class Category_admin extends Admin_controller {
     	}
     	
     	#assign data.
-    	$data['current_perpage']	=	$perpage;
-    	$data['cate_list']			=	$cate_list;
-    	$data['pagination']			=	$pagination;
-    	$data['inform']				=	$inform;
-    	
-    	$data['act']				=	"category";
-    	$data['tpl_file']			=	"admin/index";
+    	$data['current_perpage']			=	$perpage;
+    	$data['cate_list']					=	$cate_list;
+    	$data['pagination']					=	$pagination;
+    	$data['inform']						=	$inform;
+    	$data['current_url_status_cate']	=	$current_url;
+    	$data['act']						=	"category";
+    	$data['tpl_file']					=	"admin/index";
     	$this->load->view('admin/admin_layout/index', $data);
     }
     
@@ -171,11 +173,11 @@ class Category_admin extends Admin_controller {
     			die(validation_errors());
     		}
     	}
-    	
-    	$data['tree_cate']	=	$this->category_model->get_tree_edit($cate_id);
-    	$data['cate_id']	=	$cate_id;
-    	$data['cate_info']	=	$this->category_model->get_match($cate_id);
-    	$data['hello']		=	"";
+    	$data['current_url']	=	$this->session->userdata('url_edit_cate');
+    	$data['tree_cate']		=	$this->category_model->get_tree_edit($cate_id);
+    	$data['cate_id']		=	$cate_id;
+    	$data['cate_info']		=	$this->category_model->get_match($cate_id);
+    	$data['hello']			=	"";
     	$this->load->view('admin/edit', $data);
     }
     
@@ -313,6 +315,7 @@ class Category_admin extends Admin_controller {
     		$info['status']	=	$status;
     			
     		$this->category_model->change_status($id, $info);
+    		
     		die('yes');
     	}
     }
@@ -320,8 +323,8 @@ class Category_admin extends Admin_controller {
     
     
     function load_row($id = ''){
-    	 
-    	$data['cate'] = $this->category_model->get_match($id);
+    	$data['current_url']	=	$this->session->userdata('url_edit_cate'); 
+    	$data['cate'] 			= 	$this->category_model->get_match($id);
     	$this->load->view('admin/row', $data);
     }
     
@@ -362,7 +365,8 @@ class Category_admin extends Admin_controller {
     		$this->category_model->update_order($cate_id, array('order' => $order));
     	}
     	
-    	redirect(admin_url('category'), 'refresh');
+    	$url	=	$this->session->userdata('url_edit_cate');
+    	redirect($url, 'refresh');
     }
     
     
@@ -370,8 +374,20 @@ class Category_admin extends Admin_controller {
 		$keyword					=	$this->input->post('search');
     	#get info.
     	$search_list				= 	$this->category_model->get_search_list($keyword);
+		
+		$delete_cate				=	$this->session->userdata('delete_cate');
+		$this->session->unset_userdata('delete_cate');
+		
+		if(isset($delete_cate) && $delete_cate == 'delete'){
+			$inform	=	'delete cate success';
+		}else {
+			$inform = "";
+		}
     	
     	#assign data.
+    	$data['inform']				=	$inform;
+    	$data['keyword']			=	$keyword;
+    	$data['current_url']		=	$this->session->userdata('url_edit_cate');
     	$data['search_list']		=	$search_list;
     	$data['act']				=	"category";
     	$data['tpl_file']			=	"admin/search_index";
@@ -379,7 +395,21 @@ class Category_admin extends Admin_controller {
     }
     
    
+    function selfURL(){
+    	if(!isset($_SERVER['REQUEST_URI'])){
+    		$serverrequri = $_SERVER['PHP_SELF'];
+    	}else{
+    		$serverrequri =    $_SERVER['REQUEST_URI'];
+    	}
+    	$protocol 	= strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    	$host     	= $_SERVER['HTTP_HOST'];
+    	$port 		= ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
     
+    		
+    	$currentUrl = $protocol . '://' . $host . $port .$_SERVER['REQUEST_URI'];
+    		
+    	return $currentUrl;
+    }
     
 }
 

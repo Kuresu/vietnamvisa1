@@ -21,7 +21,9 @@ class Slider_admin extends Admin_controller {
     function index(){
     	#get data.
     	$slide_list					=	$this->slider_model->get_all();
-    
+    	
+	    $slide_url					=	$this->selfURL();
+	    $this->session->set_userdata('slide_url', $slide_url);
 	    $delete_slide				=	$this->session->userdata('delete_slide');
 	    $this->session->unset_userdata('delete_slide');
 	     
@@ -31,6 +33,7 @@ class Slider_admin extends Admin_controller {
 	    	$inform = "";
 	    }
     	
+	    $data['current_url']		=	$slide_url;
     	$data['slide_list']			=	$slide_list;
     	$data['inform']				=	$inform;
     	$data['act']				=	"slider";
@@ -67,17 +70,16 @@ class Slider_admin extends Admin_controller {
     						$config['upload_path']		= 	$album_dir;
     						$config['allowed_types']	= 	'jpg|png|jpeg|gif';
     						$config['file_name']		=	ascii_link($_FILES["slide"]["name"]);
-    						$config['max_size']			= 	'5120';
+    						$config['max_size']			= 	'2048';
     							
     						$this->load->library('upload', $config);
     						$this->upload->initialize($config);
     						$image						= 	$this->upload->do_upload("slide");
     						if($image) {
-    						#upload execute.
-    						$uploaded_data 			= 	$this->upload->data();
-    						$info['source']			=	$config['upload_path'].$uploaded_data['file_name'];
-    						$info['thumbnail']		=	$config['upload_path'].$uploaded_data['file_name'];
-    						
+	    						#upload execute.
+	    						$uploaded_data 			= 	$this->upload->data();
+	    						$info['source']			=	$config['upload_path'].$uploaded_data['file_name'];
+	    						$info['thumbnail']		=	$config['upload_path'].$uploaded_data['file_name'];
     						} else {
     							die($this->upload->display_errors());
     						}
@@ -131,7 +133,10 @@ class Slider_admin extends Admin_controller {
     					
 	    				    #delete old image.
 	    					$old_slide					=	$this->input->post('slide_hidden');
-	    					unlink($old_slide);
+    				    	if(file_exists($old_slide)){
+    				    		unlink($old_slide);
+    				    	}
+	    					
 	    						
 	    				    #update new image.
 	    					$config['upload_path']		= 	$album_dir;
@@ -170,7 +175,8 @@ class Slider_admin extends Admin_controller {
     	
     	#get info from DB.
     	$slide_info			=	$this->slider_model->get_match($slide_id);
-    	 
+
+    	$data['current_url']=	$this->session->userdata('slide_url');
     	$data['slide_info']	=	$slide_info;
     	$data['slide_id']	=	$slide_id;
     	$this->load->view('admin/edit', $data);
@@ -181,14 +187,19 @@ class Slider_admin extends Admin_controller {
     function delete($slide_id){
     	#delete in album.
     	$slide		=	$this->slider_model->get_match($slide_id);
-    	unlink($slide->source);
+    	if(file_exists($slide->source)){
+    		unlink($slide->source);
+    	}
+    	
     	
     	#delete in DB.
     	$this->slider_model->delete($slide_id);
      
 	    $delete	=	"delete slide";
 	    $this->session->set_userdata('delete_slide', $delete);
-	    redirect(admin_url('slider'),'refresh');
+	    
+	    $url	=	$this->session->userdata('slide_url');
+	    redirect($url,'refresh');
     }
     
     
@@ -208,8 +219,7 @@ class Slider_admin extends Admin_controller {
     
     
     function load_row($id = ''){
-    
-    	$data['page'] = $this->slider_model->get_match($id);
+    	$data['slider'] = $this->slider_model->get_match($id);
     	$this->load->view('admin/row', $data);
     }
     
@@ -230,7 +240,8 @@ class Slider_admin extends Admin_controller {
     		$this->slider_model->update_order($slide_id, array('order' => $slide_order));
     	}
     
-    	redirect(admin_url('slider'), 'refresh');
+    	$url	=	$this->session->userdata('slide_url');
+	    redirect($url,'refresh');
     }
     
     
@@ -252,6 +263,24 @@ class Slider_admin extends Admin_controller {
     		 
     		die('yes');
     	}
+    }
+    
+    
+    
+    function selfURL(){
+    	if(!isset($_SERVER['REQUEST_URI'])){
+    		$serverrequri = $_SERVER['PHP_SELF'];
+    	}else{
+    		$serverrequri =    $_SERVER['REQUEST_URI'];
+    	}
+    	$protocol 	= strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    	$host     	= $_SERVER['HTTP_HOST'];
+    	$port 		= ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+    
+    
+    	$currentUrl = $protocol . '://' . $host . $port .$_SERVER['REQUEST_URI'];
+    
+    	return $currentUrl;
     }
     
     

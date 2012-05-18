@@ -92,7 +92,7 @@ $('#edit-page-form').iframer({
     	if(msg == 'yes') {
     		$('#light_adct').hide();$('#fade_adct').hide();
     		alert('Edit successfully!');
-            window.location	=	admin_url+'page';
+            window.location	=	'<?php echo $edit_url_page;?>';
     	}
     	else show_error('div_message', msg)
     }

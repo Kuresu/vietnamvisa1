@@ -1,11 +1,11 @@
 <div class="editcate_top">
-		    <h2>Add New Faq's Category:</h2>
+		    <h2>Edit Faq's Category:</h2>
 		    <a href = "javascript:void(0)" onclick ="$('#light_adct').hide();$('#fade_adct').hide()"><img src="<?php echo base_url();?>public/admin/img/close.png" class="png" /></a>
 </div>
 
 <div id="div_message"></div>
 
-		<form action="<?php echo  admin_url();?>/edit-fcate/<?php echo $fcate_id; ?>" method="post" id="edit-fcate-form">
+		<form action="<?php echo  admin_url();?>/edit-fcate/<?php echo $fcate_info->id; ?>" method="post" id="edit-fcate-form">
 			<div class="article_ct">
 				<ul class="metatags">
 		            <li>
@@ -26,8 +26,8 @@
 		                <span class="left"><b>Status* : </b></span>
 		                <span class="right">
 		                	<select name="status" class="edit-status" style="width: 150px;">
-		                		<option value="yes" <?php if($fcate_info->active == 'yes'){echo "seledted";}?>>Active</option>
-		                		<option value="no" <?php if($fcate_info->active == 'no'){echo "seledted";}?>>Suspend</option>
+		                		<option value="yes" <?php if($fcate_info->active == 'yes'){echo "selected";}?>>Active</option>
+		                		<option value="no" <?php if($fcate_info->active == 'no'){echo "selected";}?>>Suspend</option>
 		                	</select>
 		                </span>
 		            </li>

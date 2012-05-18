@@ -58,6 +58,8 @@ class Page_admin extends Admin_controller {
     	$offset 					= 	($this->uri->segment(3)=='') ? 0 : $this->uri->segment(3);
     	 
     	#get info.
+    	$current_url				=	$this->selfURL();
+    	$this->session->set_userdata('current_url_page', $current_url);
     	$cate_info					=	$this->page_model->get_tree_cate();
     	$page_list					= 	$this->page_model->get_page_list($perpage, $offset);
     	$delete_page				=	$this->session->userdata('delete_page');
@@ -70,6 +72,7 @@ class Page_admin extends Admin_controller {
     	}
     	
     	#assign data.
+    	$data['url_page_status']	=	$current_url;
     	$data['cate_info']			=	$cate_info;
     	$data['page_list']			=	$page_list;
     	$data['pagination']			=	$pagination;
@@ -201,15 +204,16 @@ class Page_admin extends Admin_controller {
     		}
     	}
     	#get info from DB.
-    	$cate_info			=	$this->page_model->get_tree_cate();
-    	$page_info			=	$this->page_model->get_match($page_id);
-    	$cate_id			=	explode('|',$page_info->cate_id);
+    	$cate_info				=	$this->page_model->get_tree_cate();
+    	$page_info				=	$this->page_model->get_match($page_id);
+    	$cate_id				=	explode('|',$page_info->cate_id);
     	
-    	$data['cate_info']	=	$cate_info;
-    	$data['page_info']	=	$page_info;
-    	$data['cate_id']	=	$cate_id;
-    	$data['page_id']	=	$page_id;
-    	$data['hello']		=	"";
+    	$data['edit_url_page']	=	$this->session->userdata('current_url_page');
+    	$data['cate_info']		=	$cate_info;
+    	$data['page_info']		=	$page_info;
+    	$data['cate_id']		=	$cate_id;
+    	$data['page_id']		=	$page_id;
+    	$data['hello']			=	"";
     	$this->load->view('admin/edit', $data);
     }
     
@@ -229,8 +233,8 @@ class Page_admin extends Admin_controller {
     
     
     function load_row($id = ''){
-    
-    	$data['page'] = $this->page_model->get_match($id);
+    	$data['current_url']	=	$this->session->userdata('current_url_page');
+    	$data['page'] 			= $this->page_model->get_match($id);
     	$this->load->view('admin/row', $data);
     }
     
@@ -262,7 +266,8 @@ class Page_admin extends Admin_controller {
      
 	    $delete	=	"delete page";
 	    $this->session->set_userdata('delete_page', $delete);
-	    redirect(admin_url('page'),'refresh');
+	    $url	=	$this->session->userdata('current_url_page');
+    	redirect($url, 'refresh');
     }
     
     
@@ -280,8 +285,9 @@ class Page_admin extends Admin_controller {
     	} else {
     		$this->page_model->update_order($page_id, array('order' => $page_order));
     	}
-    	 
-    	redirect(admin_url('page'), 'refresh');
+
+    	$url	=	$this->session->userdata('current_url_page');
+    	redirect($url, 'refresh');
     }
     
     
@@ -291,8 +297,8 @@ class Page_admin extends Admin_controller {
     	#get info.
     	$search_list				= 	$this->page_model->get_search_list($keyword, $cate_id);
     	$cate_info					=	$this->page_model->get_tree_cate();
-    	$delete_page				=	$this->session->userdata('delete_page');
     	
+    	$delete_page				=	$this->session->userdata('delete_page');
     	$this->session->unset_userdata('delete_page');
     	 
     	if(isset($delete_page) && $delete_page == 'delete page'){
@@ -302,6 +308,7 @@ class Page_admin extends Admin_controller {
     	}
     	
     	#assign data.
+    	$data['current_url']		=	$this->session->userdata('current_url_page');
     	$data['inform']				=	$inform;
     	$data['keyword']			=	$keyword;
     	$data['cate_info']			=	$cate_info;
@@ -319,6 +326,22 @@ class Page_admin extends Admin_controller {
     	return $cate_match;
     }
     
+    
+    function selfURL(){
+    	if(!isset($_SERVER['REQUEST_URI'])){
+    		$serverrequri = $_SERVER['PHP_SELF'];
+    	}else{
+    		$serverrequri =    $_SERVER['REQUEST_URI'];
+    	}
+    	$protocol 	= strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    	$host     	= $_SERVER['HTTP_HOST'];
+    	$port 		= ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+    
+    
+    	$currentUrl = $protocol . '://' . $host . $port .$_SERVER['REQUEST_URI'];
+    
+    	return $currentUrl;
+    }
     
 }
 

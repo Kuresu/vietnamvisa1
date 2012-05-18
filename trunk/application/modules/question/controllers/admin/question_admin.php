@@ -74,8 +74,10 @@ class Question_admin extends Admin_controller {
     	#get info.
     	$quest_list					= 	$this->question_model->get_quest_list($filter_parent, $perpage, $offset);
     	$qcate_info					=	$this->question_model->get_qcate();
-    
-	    $delete_question				=	$this->session->userdata('delete_question');
+    	
+    	$question_url				=	$this->selfURL();
+    	$this->session->set_userdata('question_url', $question_url);
+	    $delete_question			=	$this->session->userdata('delete_question');
 	    $this->session->unset_userdata('delete_question');
 	     
 	    if(isset($delete_question) && $delete_question == 'delete question'){
@@ -85,6 +87,7 @@ class Question_admin extends Admin_controller {
 	    }
     	
 	    #assign data.
+	    $data['current_url']			=	$question_url;
 	    $data['current_filter_parent']	= 	$this->session->userdata('filter_question_parent');
 	    $data['qcate_info']				=	$qcate_info;
 	    $data['pagination']				=	$pagination;
@@ -182,13 +185,14 @@ class Question_admin extends Admin_controller {
     	}
     	
     	#get info from DB.
-    	$answer_info		=	$this->question_model->get_match_answer($quest_id);
-    	$quest_info			=	$this->question_model->get_match($quest_id);
-    	$qcate_info			=	$this->question_model->get_qcate();
-
-    	$data['cate_info']	=	$qcate_info;
-    	$data['quest_info']	=	$quest_info;
-    	$data['answer_info']=	$answer_info;
+    	$answer_info			=	$this->question_model->get_match_answer($quest_id);
+    	$quest_info				=	$this->question_model->get_match($quest_id);
+    	$qcate_info				=	$this->question_model->get_qcate();
+		
+    	$data['current_url']	=	$this->session->userdata('question_url');
+    	$data['cate_info']		=	$qcate_info;
+    	$data['quest_info']		=	$quest_info;
+    	$data['answer_info']	=	$answer_info;
     	$this->load->view('admin/edit', $data);
     }
     
@@ -203,7 +207,9 @@ class Question_admin extends Admin_controller {
      
 	    $delete	=	"delete question";
 	    $this->session->set_userdata('delete_question', $delete);
-	    redirect(admin_url('question'),'refresh');
+	    
+	    $url	=	$this->session->userdata('question_url');
+	    redirect($url, 'refresh');
     }
     
     
@@ -223,30 +229,11 @@ class Question_admin extends Admin_controller {
     
     
     function load_row($id = ''){
-    
-    	$data['question'] = $this->question_model->get_match($id);
+    	$data['current_url']	=	$this->session->userdata('question_url');
+    	$data['question'] 		= 	$this->question_model->get_match($id);
     	$this->load->view('admin/row', $data);
     }
     
-    
-    
-    function change_order() {
-    	$faq_id 		= 	$this->input->post('faq_id');
-    	$faq_order 		= 	$this->input->post('faq_order');
-    
-    	$faq 			= 	$this->question_model->get_match($faq_id); //cate will be changed order position.
-    	$order		 	= 	$this->question_model->get_match_order($faq_order); // Check 'order' exists or not?
-    
-    	if (count($order) > 0) {
-    		$this->question_model->update_order($order['id'], array('order' => $faq->order));
-    		$this->question_model->update_order($faq_id, array('order' => $faq_order));
-    		 
-    	} else {
-    		$this->question_model->update_order($faq_id, array('order' => $faq_order));
-    	}
-    
-    	redirect(admin_url('faqs'), 'refresh');
-    }
     
     
     function do_action(){
@@ -276,25 +263,23 @@ class Question_admin extends Admin_controller {
     	}
     }
     
+
     
-    function search(){
-    	$keyword					=	$this->input->post('search');
-    	$cate_id					=	$this->input->post('category');
-    	
-    	#get info.
-    	$search_list				= 	$this->question_model->get_search_list($keyword, $cate_id);
-    	$fcate_info					=	$this->question_model->get_fcate();
-    	#assign data.
-    	$data['keyword']			=	$keyword;
-    	$data['fcate_info']			=	$fcate_info;
-    	$data['cate_id']			=	$cate_id;
-    	$data['search_list']		=	$search_list;
-    	$data['act']				=	"faqs";
-    	$data['tpl_file']			=	"admin/search_index";
-    	$this->load->view('admin/admin_layout/index', $data);
+    function selfURL(){
+    	if(!isset($_SERVER['REQUEST_URI'])){
+    		$serverrequri = $_SERVER['PHP_SELF'];
+    	}else{
+    		$serverrequri =    $_SERVER['REQUEST_URI'];
+    	}
+    	$protocol 	= strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    	$host     	= $_SERVER['HTTP_HOST'];
+    	$port 		= ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+    
+    
+    	$currentUrl = $protocol . '://' . $host . $port .$_SERVER['REQUEST_URI'];
+    
+    	return $currentUrl;
     }
-    
-    
     
 }
 

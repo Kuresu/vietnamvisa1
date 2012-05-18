@@ -22,7 +22,8 @@ class Qcate_admin extends Admin_controller {
     	
     	$qcate_list					= 	$this->qcate_model->get_all();
     	
-    
+    	$qcate_url				=	$this->selfURL();
+    	$this->session->set_userdata('qcate_url', $qcate_url);
 	    $delete_qcate				=	$this->session->userdata('delete_qcate');
 	    $this->session->unset_userdata('delete_qcate');
 	     
@@ -32,6 +33,7 @@ class Qcate_admin extends Admin_controller {
 	    	$inform = "";
 	    }
     	
+	    $data['current_url']		=	$qcate_url;
     	$data['qcate_list']			=	$qcate_list;
     	$data['inform']				=	$inform;
     	$data['act']				=	"qcate";
@@ -100,9 +102,10 @@ class Qcate_admin extends Admin_controller {
     	}
     	
     	#get info from DB.
-    	$qcate_info			=	$this->qcate_model->get_match($qcate_id);
-    	 
-    	$data['qcate_info']	=	$qcate_info;
+    	$qcate_info				=	$this->qcate_model->get_match($qcate_id);
+
+    	$data['current_url']	=	$this->session->userdata('qcate_url');
+    	$data['qcate_info']		=	$qcate_info;
     	$this->load->view('admin/qcate_edit', $data);
     }
     
@@ -126,7 +129,9 @@ class Qcate_admin extends Admin_controller {
      
 	    $delete	=	"delete qcate";
 	    $this->session->set_userdata('delete_qcate', $delete);
-	    redirect(admin_url('question-category'),'refresh');
+	    
+	    $url	=	$this->session->userdata('qcate_url');
+	    redirect($url, 'refresh');
     }
     
     
@@ -192,6 +197,22 @@ class Qcate_admin extends Admin_controller {
     	}
     }
     
+    
+    function selfURL(){
+    	if(!isset($_SERVER['REQUEST_URI'])){
+    		$serverrequri = $_SERVER['PHP_SELF'];
+    	}else{
+    		$serverrequri =    $_SERVER['REQUEST_URI'];
+    	}
+    	$protocol 	= strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    	$host     	= $_SERVER['HTTP_HOST'];
+    	$port 		= ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
+    
+    
+    	$currentUrl = $protocol . '://' . $host . $port .$_SERVER['REQUEST_URI'];
+    
+    	return $currentUrl;
+    }
     
     
 }

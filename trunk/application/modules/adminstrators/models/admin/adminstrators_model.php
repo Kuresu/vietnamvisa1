@@ -87,6 +87,18 @@ class Adminstrators_model extends CI_Model{
     	return false;
     }
     
+    function check_exist_edit($id, $username){
+    	$res	=	$this->db->select()
+    						 ->where('id !=', $id)
+					    	 ->where('username', $username)
+					    	 ->get($this->table_admin)
+					    	 ->row_array();
+    	if(!empty($res)){
+    		return true;
+    	}
+    	return false;
+    }
+    
     
     function add_adminstrator($info = array()){
     	return $this->db->insert($this->table_admin, $info);

@@ -6,7 +6,6 @@
             	<option value="">Choose action</option>                               
                 <option value="active">Activate</option>
                 <option value="suspend">Deactivate</option>
-                <option value="delete">Delete</option>
             </select>
             <input onclick="$('[name=action]').val($('#action').val()); $('#action_slide_form').submit()" value="Apply" class="btn" type="button">
         </span>
@@ -94,7 +93,6 @@
 	                   	<option value="">Choose action</option>                               
                 		<option value="active">Activate</option>
                 		<option value="suspend">Deactivate</option>
-                		<option value="delete">Delete</option>
 	                </select>
 	                <input type="submit" name="" value="Apply" class="btn" />
 	            </div>
@@ -113,7 +111,8 @@
 	$('#action_slide_form').iframer({
 	    onComplete: function(msg){
 	    	if(msg == 'yes') {
-	    		window.location	=	admin_url+'slider';
+		    	alert('The Action has been successfully executed');
+	    		window.location	=	'<?php echo $current_url;?>';
 	    	}
 	    	else show_error('div_message', msg)
 	    }
