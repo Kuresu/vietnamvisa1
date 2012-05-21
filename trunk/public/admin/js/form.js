@@ -195,4 +195,20 @@
 		);
 	}
 	
+	
+	function testimonials_status(testimonials_id, testimonials_status){
+		$.post(
+				admin_url+'testimonials/change-status/',
+				{id: testimonials_id, status: testimonials_status},
+				function(msg){
+					if(msg == "yes") {
+						load_content('row_'+testimonials_id, admin_url+'testimonials/load-row/'+testimonials_id);
+			            $('.linecate2').has('#row_'+testimonials_id).css('background-color', '#FFFFE0');
+			            alert('Status have been successfully set!');
+			            //window.location	=	status_url;
+					}
+				}
+		);
+	}
+	
 
