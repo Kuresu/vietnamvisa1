@@ -145,3 +145,50 @@ function download_link($doc_ascii_name = '', $ext = '/')
 	
     return base_url().'download/'.$sid.'/'.$doc_ascii_name.$ext;
 }
+
+
+function convert_type_date($date = ""){
+	#format type of date form mm/dd/yyyy to Month, Date, Year.
+	$split	=	explode('/', $date);
+ 
+switch ($split[0]){
+	case 1 :
+		$day	=	"January";
+		break;
+	case 2 :
+		$day	=	"February";
+		break;
+	case 3 :
+		$day	=	"March";
+		break;
+	case 4 :
+		$day	=	"April";
+		break;
+	case 5 :
+		$day	=	"May";
+		break;
+	case 6 :
+		$day	=	"June";
+		break;
+	case 7 :
+		$day	=	"July";
+		break;
+	case 8 :
+		$day	=	"August";
+		break;
+	case 9 :
+		$day	=	"September";
+		break;
+	case 10 :
+		$day	=	"October";
+		break;
+	case 11 :
+		$day	=	"November";
+		break;
+	case 12 :
+		$day	=	"December";
+		break;
+}
+ 
+return $day.' '. $split[1].', '.$split[2];
+}
