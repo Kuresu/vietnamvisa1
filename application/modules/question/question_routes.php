@@ -4,8 +4,6 @@
 	
 	$route[ADMIN_SIDE.'/question/([0-9\-]+)']				=	"question/admin/question_admin/index/$1";
 	
-	$route[ADMIN_SIDE.'/add-new-question']					=	"question/admin/question_admin/add";
-	
 	$route[ADMIN_SIDE.'/edit-question/(:num)']				=	"question/admin/question_admin/edit/$1";
 	
 	$route[ADMIN_SIDE.'/question/change-status']			=	"question/admin/question_admin/change_status";
@@ -13,8 +11,6 @@
 	$route[ADMIN_SIDE.'/question/do-action']				=	"question/admin/question_admin/do_action";
 	
 	$route[ADMIN_SIDE.'/delete-question/(:num)']			=	"question/admin/question_admin/delete/$1";
-	
-	$route[ADMIN_SIDE.'/question/change-order']				=	"question/admin/question_admin/change_order";
 	
 	$route[ADMIN_SIDE.'/question/search-results']			=	"question/admin/question_admin/search";
 	
