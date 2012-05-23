@@ -83,49 +83,11 @@ class Testimonials_admin extends Admin_controller {
     	$this->load->view('admin/admin_layout/index', $data);
     }
     
-    
-    function add(){
-    	if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    		$this->form_validation->set_rules('testimonials', 'testimonials', 'required|trim|xss_clean');
-    		$this->form_validation->set_rules('answer', 'Answer', 'required|trim|xss_clean');
-    		
-    		if($this->form_validation->run() == true){
-    			$cate_id	=	$this->input->post('category');		
-    			$cate_info	=	$this->testimonials_model->get_match_fcate($cate_id);
-    			$info = array(
-    			    			 'testimonials'   		=> $this->input->post('testimonials'),
-    			    			 'testimonials_ascii'   => ascii_link($this->input->post('testimonials')),
-    							 'answers'   		=> $this->input->post('answer'),
-    			    			 'active'	 		=> $this->input->post('status'),
-    			    			 'order'			=> $this->input->post('order'),
-    			    			 'cate_id'			=> $cate_id, 
-    							 'cate_name'		=> $cate_info->name,
-    						 );
-    			
-    			if($this->testimonials_model->check_exist(ascii_link($info['testimonials']))) {
-    				die('This testimonials is exist!');
-    			}elseif ($this->testimonials_model->check_order_exist($info['order'])){
-    				die('This order is exist !');
-    			}else{
-    				$this->testimonials_model->add_faq($info);
-    				die('yes');
-    			}
-    		}else{
-    			die(validation_errors());
-    		}
-    	}
-    	#get data.
-    	$fcate_info					=	$this->testimonials_model->get_fcate();
-    	
-    	$data['cate_info']			=	$fcate_info;
-    	$this->load->view('admin/add', $data);
-    }
-    
-    
+
     
     function edit($testimonials_id = ""){
     	if($_SERVER['REQUEST_METHOD'] == "POST"){
-    		$this->form_validation->set_rules('brief', 'testimonials Brief', 'required|trim|xss_clean');
+    		$this->form_validation->set_rules('brief', 'Testimonials Brief', 'required|trim|xss_clean');
     		$this->form_validation->set_rules('content', 'Content', 'required|trim|xss_clean');
     		
     		if($this->form_validation->run() == true){

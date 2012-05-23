@@ -100,45 +100,6 @@ class Question_admin extends Admin_controller {
     }
     
     
-    function add(){
-    	if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    		$this->form_validation->set_rules('question', 'Question', 'required|trim|xss_clean');
-    		$this->form_validation->set_rules('answer', 'Answer', 'required|trim|xss_clean');
-    		
-    		if($this->form_validation->run() == true){
-    			$cate_id	=	$this->input->post('category');		
-    			$cate_info	=	$this->question_model->get_match_fcate($cate_id);
-    			$info = array(
-    			    			 'question'   		=> $this->input->post('question'),
-    			    			 'question_ascii'   => ascii_link($this->input->post('question')),
-    							 'answers'   		=> $this->input->post('answer'),
-    			    			 'active'	 		=> $this->input->post('status'),
-    			    			 'order'			=> $this->input->post('order'),
-    			    			 'cate_id'			=> $cate_id, 
-    							 'cate_name'		=> $cate_info->name,
-    						 );
-    			
-    			if($this->question_model->check_exist(ascii_link($info['question']))) {
-    				die('This question is exist!');
-    			}elseif ($this->question_model->check_order_exist($info['order'])){
-    				die('This order is exist !');
-    			}else{
-    				$this->question_model->add_faq($info);
-    				die('yes');
-    			}
-    		}else{
-    			die(validation_errors());
-    		}
-    	}
-    	#get data.
-    	$fcate_info					=	$this->question_model->get_fcate();
-    	
-    	$data['cate_info']			=	$fcate_info;
-    	$this->load->view('admin/add', $data);
-    }
-    
-    
-    
     function edit($quest_id = ""){
     	if($_SERVER['REQUEST_METHOD'] == "POST"){
     		$this->form_validation->set_rules('brief', 'Question Brief', 'required|trim|xss_clean');

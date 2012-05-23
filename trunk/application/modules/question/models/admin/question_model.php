@@ -104,11 +104,6 @@ class Question_model extends CI_Model{
 
     
     
-    function add_faq($info = array()){
-    	return $this->db->insert($this->table, $info);
-    }
-    
-    
     function edit_question($quest_id, $info = array()){
     	return $this->db->where('id', $quest_id)
     					->update($this->table, $info);
