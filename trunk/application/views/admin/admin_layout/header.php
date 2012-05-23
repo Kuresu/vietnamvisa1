@@ -13,8 +13,8 @@
 		<script type="text/javascript" src="<?php echo js_link('common.js','admin');?>"></script>
 		<script type="text/javascript" src="<?php echo js_link('hoverdiv.js','admin');?>"></script>
 		<script type="text/javascript" src="<?php echo js_link('jquery.iframer.js','admin');?>"></script>
-		<script type="text/javascript" src="<?php echo js_link('jquery.validationEngine.js','admin');?>" charset="utf-8"></script>
-		<script type="text/javascript" src="<?php echo js_link('jquery.validationEngine-en.js','admin');?>" charset="utf-8"></script>
+		<script type="text/javascript" src="<?php echo js_link('easyTooltip.js','admin');?>"></script>
+		<script type="text/javascript" src="<?php echo js_link('tinyScrollbar.js','admin');?>"></script>
 		
 		<script type="text/javascript">
 			var base_url = '<?php echo base_url(); ?>';
@@ -23,14 +23,15 @@
 				$(".menu1").click(function(){$("#sub1").slideToggle('slow');});
 				$(".menu2").click(function(){$("#sub2").slideToggle('slow');});
 				$(".menu3").click(function(){$("#sub3").slideToggle('slow');});
-				$(".menu4").click(function(){$("#sub4").slideToggle('slow');});
+				$(".menu4").click(function(){$(".sub4").slideToggle('slow');});
 				$(".menu5").click(function(){$(".sub5").slideToggle('slow');});
 				$(".menu6").click(function(){$(".sub6").slideToggle('slow');});
 				$(".menu7").click(function(){$(".sub").slideToggle('slow');});
-				$(".menu8").click(function(){$("#sub8").slideToggle('slow');});
+				$(".menu8").click(function(){$(".sub8").slideToggle('slow');});
 				$(".menu9").click(function(){$("#sub9").slideToggle('slow');});
 				$(".menu10").click(function(){$("#sub10").slideToggle('slow');});
 			});
+			
 		</script>
 	</head>
 	
