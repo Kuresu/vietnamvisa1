@@ -36,6 +36,10 @@ ul.menuleft li.sub{ float:left; width:188px; height:30px; margin-top:1px; backgr
 ul.menuleft li.sub a{ color:#1d6d96; text-decoration:none;}
 ul.menuleft li.sub a:hover, ul.menuleft li.sub a.current{ color:#ffa200;}
 
+ul.menuleft li.sub4{ float:left; width:188px; height:30px; margin-top:1px; background:#ecf4ff; border:1px #d8e8ff solid; -moz-border-radius:5px; -webkit-border-radius:5px; line-height:30px; font-weight:normal; text-indent:20px;}
+ul.menuleft li.sub4 a{ color:#1d6d96; text-decoration:none;}
+ul.menuleft li.sub4 a:hover, ul.menuleft li.sub4 a.current{ color:#ffa200;}
+
 ul.menuleft li.sub5{ float:left; width:188px; height:30px; margin-top:1px; background:#ecf4ff; border:1px #d8e8ff solid; -moz-border-radius:5px; -webkit-border-radius:5px; line-height:30px; font-weight:normal; text-indent:20px;}
 ul.menuleft li.sub5 a{ color:#1d6d96; text-decoration:none;}
 ul.menuleft li.sub5 a:hover, ul.menuleft li.sub5 a.current{ color:#ffa200;}
@@ -425,3 +429,23 @@ ul.metatags li span.right input, select{ border:1px #dfdfdf solid; -moz-border-r
 .fullsize_thumb {position:absolute;top:-10px;left:60px;display:none;}
 .fullsize_thumb img {border:1px solid #3D3D3D;}
 .small_thumb:hover .fullsize_thumb{display:block}
+
+#easyTooltip{
+	padding:5px 10px;
+	border:1px solid #195fa4;
+	background:#195fa4 url(../img/bg.gif) repeat-x;
+	color:#fff;
+	width:200px;
+	height:auto;
+}
+
+#scrollbar1 { width: 620px; clear: both; margin: 20px; }
+#scrollbar1 .viewport { width: 600px; height: 300px; overflow: hidden; position: relative; }
+#scrollbar1 .overview { list-style: none; position: absolute; left: 0; top: 0; }
+#scrollbar1 .thumb .end,
+#scrollbar1 .thumb { background-color: #003D5D; }
+#scrollbar1 .scrollbar { position: relative; float: right; width: 5px; }
+#scrollbar1 .track { background-color: #D8EEFD; height: 100%; width:13px; position: relative; padding: 0 1px; }
+#scrollbar1 .thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
+#scrollbar1 .thumb .end { overflow: hidden; height: 5px; width: 13px; }
+#scrollbar1 .disable{ display: none; }
