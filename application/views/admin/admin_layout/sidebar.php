@@ -11,7 +11,7 @@
         
         <li class="<?php echo ($act=='menu') ? 'current' : '';?>"><a href="<?php echo admin_url();?>/menu" class="adv png">Menu</a></li>
         
-        <li><a href="#" class="cate png">Email template</a></li>
+        <li class="<?php echo ($act=='email') ? 'current' : '';?>"><a href="<?php echo admin_url();?>/email" class="cate png">Email template</a></li>
         
         <li class="menu5"><a href="#" class="article png">Faqs</a></li>
         <li class="sub5" ><a href="<?php echo admin_url();?>/faqs" class="<?php echo ($act=='faqs') ? 'current' : '';?>" >Faq</a></li>
@@ -28,6 +28,7 @@
         <li class="menu8"><a href="#" class="article png">Country</a></li>
         <li class="sub8"><a href="<?php echo admin_url();?>/country" class="<?php echo ($act=='country') ? 'current' : '';?>" >Country</a></li>
         <li class="sub8"><a href="<?php echo admin_url();?>/embassy" class="<?php echo ($act=='embassy') ? 'current' : '';?>">Embassy</a></li>
+        <li class="sub8"><a href="<?php echo admin_url();?>/country/change-list" class="<?php echo ($act=='change_list') ? 'current' : '';?>">Allow To Vietnam</a></li>
        
         <li class="<?php echo ($act=='slider') ? 'current' : '';?>"><a href="<?php echo admin_url();?>/slider" class="event png">Slider</a></li>
         
