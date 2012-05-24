@@ -51,7 +51,7 @@
 		                </span>
 		            </li>
 		            <li>
-		                <span class="left"><b>Show Off* : </b></span>
+		                <span class="left"><b>Allow To Vietnam* : </b></span>
 		                <span class="right">
 		                	<select name="show_off" class="edit-status" style="width: 150px;">
 		                		<option value="yes" <?php if($country_info->show_off == 'yes'){echo "selected";}?>>Yes</option>

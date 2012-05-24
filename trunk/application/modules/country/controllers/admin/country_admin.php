@@ -371,6 +371,41 @@ class Country_admin extends Admin_controller {
     }
     
     
+    
+    function change_list(){
+    	if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    		$id_list_allow		=	$this->input->post('cityName');
+    		$id_list_notallow	=	$this->input->post('cityNameDel');
+    		$flag1 = false;
+    		$flag2 = false;
+    		if($id_list_allow != ""){
+    			$this->country_model->update_many($id_list_allow, array('show_off' => 'yes'));
+    			$flag1			=	true;
+    		}
+    		if($id_list_notallow != ""){
+    			$this->country_model->update_many($id_list_notallow, array('show_off' => 'no'));
+    			$flag2			=	true;
+    			
+    		}
+    		if($flag1 == true || $flag2 == true ){
+    			$data['mes']	=	"<script>alert('Update have been done successfully!');</script>";
+    		}else{
+    			$data['mes']	=	"<script>alert('Please choose countries you want to change.');</script>";
+    		}
+    		
+    		
+    	}
+    	$allow					=	$this->country_model->get_allow();
+    	$not_allow				=	$this->country_model->get_not_allow();
+    	
+    	$data['allow']			=	$allow;
+    	$data['not_allow']		=	$not_allow;
+    	$data['act']			=	"change_list";
+    	$data['tpl_file']		=	"admin/change_index";
+    	$this->load->view('admin/admin_layout/index', $data);
+    }
+    
+    
 }
 
 /*-----------------------------------------------End---------------------------------------------------*/

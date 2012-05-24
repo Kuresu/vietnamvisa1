@@ -7,6 +7,9 @@
 
 		<form action="<?php echo  admin_url();?>/edit-slider/<?php echo $slide_id; ?>" method="post" id="edit-slide-form" enctype="multipart/form-data">
 			<div class="article_ct">
+				<div class="btarticle">
+			        <input type="submit" value="Save & Continute" class="btn edit-slide" />
+		    	</div>
 				<ul class="metatags">
 			    	<li>
 			        	<span class="left"><b>Name* : </b></span>
@@ -43,6 +46,7 @@
 			    </ul>
 			    <div style="display: none;">
 			    	<input type="text" value="<?php echo $slide_info->source;?>" name="slide_hidden" />
+			    	<input type="text" value="<?php echo $slide_info->thumbnail;?>" name="thumb_hidden" />
 			    </div>
 			    <div class="btarticle">
 			    	<input type="button" value="Cancel" class="btn" onclick="$('#light_adct').hide();$('#fade_adct').hide();" />

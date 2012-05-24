@@ -20,6 +20,8 @@
 	
 	$route[ADMIN_SIDE.'/country/load-row/(:any)']		=	"country/admin/country_admin/load_row/$1";
 	
+	$route[ADMIN_SIDE.'/country/change-list']			=	"country/admin/country_admin/change_list";
+	
 	# embassy
 	
 	$route[ADMIN_SIDE.'/embassy']						=	"country/admin/embassy_admin/index";
