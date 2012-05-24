@@ -211,4 +211,21 @@
 		);
 	}
 	
+	
+	
+	function email_status(email_id, email_status){
+		$.post(
+				admin_url+'email/change-status/',
+				{id: email_id, status: email_status},
+				function(msg){
+					if(msg == "yes") {
+						load_content('row_'+email_id, admin_url+'email/load-row/'+email_id);
+			            $('.linecate2').has('#row_'+email_id).css('background-color', '#FFFFE0');
+			            alert('Status have been successfully set!');
+			            //window.location	=	status_url;
+					}
+				}
+		);
+	}
+	
 
