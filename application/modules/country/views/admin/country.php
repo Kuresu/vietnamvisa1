@@ -54,8 +54,9 @@
 	        	<div class="column" style="width: 2%;"><input class="check_all" onclick="check_all('.check_all')" type="checkbox"></div>
 	            <div class="column" style="width: 4%;">No.</div>
 	            <div class="column" style="width: 30%;">Name</div>
-	            <div class="column" style="width: 30%;">Continent</div>
-	            <div class="column" style="width: 25%;">Flag Icon</div>
+	            <div class="column" style="width: 20%;">Continent</div>
+	            <div class="column" style="width: 15%;">Allow To Vietnam</div>
+	            <div class="column" style="width: 15%;">Flag Icon</div>
 	            <div class="column" style="width: 5%;">Status</div>
 	        </div>
 	        <?php if(count($country_list[0])>0){?>
@@ -71,10 +72,13 @@
 		                    <img src="<?php echo base_url();?>public/admin/img/edit.gif" /><a href="javascript:void(0)" onclick="open_form('<?php echo admin_url(); ?>/edit-country/<?php echo $v->id;?>')">Edit</a>|<img src="<?php echo base_url();?>public/admin/img/delete.gif" /><a href="<?php echo admin_url();?>/delete-country/<?php echo $v->id;?>" onclick="return confirm('Do you want delete this country?');"><font color="#be0000">Delete</font></a>
 		                </div>
 		            </div>
-		            <div class="column" style="width:30%;">
+		            <div class="column" style="width:21%;">
 		            	<span style="color: green;"><?php echo $v->continent;?></span>
 		            </div>
-		            <div class="column " style="width:25%;">
+		            <div class="column" style="width:15%;">
+		            	<span style="color: gray; font-weight:bold;"><?php echo ($v->show_off == 'yes') ? "Yes" : "No";?></span>
+		            </div>
+		            <div class="column " style="width:15%;">
 		            	<img style="margin: 5px 0 0 0;" title="<?php echo $v->name;?>" src="<?php if(file_exists($v->flag_icon)){echo base_url().$v->flag_icon;}else{echo base_url().'uploads/flag/noflag.png';} ?>" />
 		            </div>
 		            <div class="column" style="width:5%;">

@@ -15,6 +15,7 @@ class Slider_admin extends Admin_controller {
         $this->load->model(array('admin/slider_model'));
         $this->load->library(array('session','upload'));
 		$this->load->helper(array('link','upload','text'));
+		ini_set("memory_limit","120M");
     }
     
     
@@ -51,8 +52,12 @@ class Slider_admin extends Admin_controller {
     				#make a directory.
     				$info		=	array();
     				$album_dir 	= 	'uploads/slider/';
+    				$thumb_dir	=	'uploads/slider/thumbs/';
     				if(!is_dir($album_dir)){
     					create_dir($album_dir);
+    				}
+    				if(!is_dir($thumb_dir)){
+    					create_dir($thumb_dir);
     				}
     				
     				#check format of the image
@@ -67,6 +72,7 @@ class Slider_admin extends Admin_controller {
     					}elseif ($this->slider_model->check_order_exist($this->input->post('order'))){
     						die('This order is exist !');
     					}else{
+    						#upload.
     						$config['upload_path']		= 	$album_dir;
     						$config['allowed_types']	= 	'jpg|png|jpeg|gif';
     						$config['file_name']		=	ascii_link($_FILES["slide"]["name"]);
@@ -75,13 +81,30 @@ class Slider_admin extends Admin_controller {
     						$this->load->library('upload', $config);
     						$this->upload->initialize($config);
     						$image						= 	$this->upload->do_upload("slide");
+    						$image_data 				= 	$this->upload->data();
     						if($image) {
 	    						#upload execute.
-	    						$uploaded_data 			= 	$this->upload->data();
-	    						$info['source']			=	$config['upload_path'].$uploaded_data['file_name'];
-	    						$info['thumbnail']		=	$config['upload_path'].$uploaded_data['file_name'];
+	    						$info['source']			=	$config['upload_path'].$image_data['file_name'];
+	    						
     						} else {
     							die($this->upload->display_errors());
+    						}
+							
+    						#create thumb.
+    						$config['image_library'] 	= 	'gd2';
+    						$config['source_image']		= 	$image_data['full_path'];
+    						$config['new_image']		=	$thumb_dir;
+    						$config['maintain_ratio'] 	= 	TRUE;
+    						$config['width']	 		= 	75;
+    						$config['height']			= 	50;
+    							
+    						$this->load->library('image_lib', $config); 
+							$thumb = $this->image_lib->resize();
+
+    						$info['thumbnail']			=	$config['new_image'].$image_data['orig_name'];
+    						
+    						if(! $thumb){
+    							die($this->image_lib->display_errors());
     						}
     							
     						#insert into DB.
@@ -122,7 +145,8 @@ class Slider_admin extends Admin_controller {
     				if($_FILES["slide"]["name"]){
     					$info		=	array();
     					$album_dir 	= 	'uploads/slider/';
-    				
+    					$thumb_dir	=	'uploads/slider/thumbs/';
+    					
     					#check format of the image
     					$ext = get_ext($_FILES["slide"]["name"]);
     				    if(!in_array($ext, array('png', 'gif', 'jpg', 'jpeg'))) {
@@ -133,8 +157,10 @@ class Slider_admin extends Admin_controller {
     					
 	    				    #delete old image.
 	    					$old_slide					=	$this->input->post('slide_hidden');
-    				    	if(file_exists($old_slide)){
+    				    	$thumb_old					=	$this->input->post('thumb_hidden');
+    				    	if(file_exists($old_slide) && file_exists($thumb_old)){
     				    		unlink($old_slide);
+    				    		unlink($thumb_old);
     				    	}
 	    					
 	    						
@@ -146,13 +172,28 @@ class Slider_admin extends Admin_controller {
 	    				    $this->load->library('upload', $config);
 	    				    $this->upload->initialize($config);
 	    					$image						= 	$this->upload->do_upload("slide");
+	    					$image_data 				= 	$this->upload->data();
 	    					if($image) {
 		    					#upload execute.
-		    					$uploaded_data 				= 	$this->upload->data();
-		    					$info['source']				=	$config['upload_path'].$uploaded_data['file_name'];
-		    					$info['thumbnail']			=	$config['upload_path'].$uploaded_data['file_name'];
+		    					$info['source']				=	$config['upload_path'].$image_data['file_name'];
 	    					}else{
-	    				    	die('Upload process has failed. Please try again!');
+	    				    	die($this->upload->display_errors());
+	    					}
+	    					
+	    					#update thumb.
+	    					$config['image_library'] 	= 	'gd2';
+	    					$config['source_image']		= 	$image_data['full_path'];
+	    					$config['new_image']		=	$thumb_dir;
+	    					$config['maintain_ratio'] 	= 	TRUE;
+	    					$config['width']	 		= 	75;
+	    					$config['height']			= 	50;
+	    						
+	    					$this->load->library('image_lib', $config);
+	    					$thumb = $this->image_lib->resize();
+	    					
+	    					$info['thumbnail']			=	$config['new_image'].$image_data['orig_name'];
+	    					if(! $thumb){
+	    						die($this->image_lib->display_errors());
 	    					}
     					}
     				}else {
@@ -187,8 +228,9 @@ class Slider_admin extends Admin_controller {
     function delete($slide_id){
     	#delete in album.
     	$slide		=	$this->slider_model->get_match($slide_id);
-    	if(file_exists($slide->source)){
+    	if(file_exists($slide->source) && file_exists($slide->thumbnail)){
     		unlink($slide->source);
+    		unlink($slide->thumbnail);
     	}
     	
     	

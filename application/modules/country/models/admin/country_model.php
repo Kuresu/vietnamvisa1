@@ -27,6 +27,31 @@ class Country_model extends CI_Model{
     }
     
     
+    function get_allow(){
+    	$res	=	$this->db->select('id, name, show_off')
+    						 ->where('show_off', 'yes')
+    						 ->get($this->table)
+    						 ->result();
+    	if(!empty($res)){
+    		return $res;
+    	}
+    	return false;
+    }
+    
+    
+    function get_not_allow(){
+    	$res	=	$this->db->select('id, name, show_off')
+					    	 ->where('show_off', 'no')
+					    	 ->get($this->table)
+					    	 ->result();
+    	if(!empty($res)){
+    		return $res;
+    	}
+    	return false;
+    }
+    
+    
+    
     function get_menu_filter($filter_continent = -1){
     	$this->db->select();
     	if($filter_continent!=-1) {
